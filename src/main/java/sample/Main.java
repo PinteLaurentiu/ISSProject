@@ -11,7 +11,6 @@ public class Main extends Application {
         model.showLogin();
     }
 
-
     public static void main(String[] args) {
         launch(args);
     }

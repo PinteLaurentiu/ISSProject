@@ -6,6 +6,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import sample.Model;
 
+import java.io.IOException;
+
 public class Login {
     public TextField usernameText;
     public TextField passwordText;
@@ -28,7 +30,7 @@ public class Login {
 
     }
 
-    public void register(ActionEvent actionEvent) {
+    public void register(ActionEvent actionEvent) throws IOException {
         model.showRegister();
     }
 
