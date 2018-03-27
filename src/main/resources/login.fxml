@@ -39,7 +39,7 @@
          </font>
       </Button>
       <Button layoutX="101.0" layoutY="357.0" mnemonicParsing="false" onAction="#register" prefHeight="25.0"
-              prefWidth="160.0" text="Not a user? view.Register"/>
+              prefWidth="160.0" text="Not a user? Register"/>
       <CheckBox fx:id="showPasswordCheckBox" layoutX="200.0" layoutY="264.0" mnemonicParsing="false"
                 onAction="#showPassword" text="Show Password">
          <font>

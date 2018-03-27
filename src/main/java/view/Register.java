@@ -6,6 +6,8 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import sample.Model;
 
+import java.io.IOException;
+
 public class Register {
 
     public TextField numeText;
@@ -22,7 +24,7 @@ public class Register {
 
     }
 
-    public void register(ActionEvent actionEvent) {
+    public void register(ActionEvent actionEvent) throws IOException {
         if(passwordText1.getText().equals(passworText2.getText())){
             new AlertBox("view.Register", "User added successfully");
             model.showLogin();
@@ -30,10 +32,9 @@ public class Register {
         else{
             new AlertBox("Password", "Password must match");
         }
-
     }
 
-    public void cancelRegister(ActionEvent actionEvent) {
+    public void cancelRegister(ActionEvent actionEvent) throws IOException {
         model.showLogin();
     }
 }
