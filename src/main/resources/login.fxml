@@ -20,7 +20,7 @@
    <Pane blendMode="DARKEN" layoutX="222.0" layoutY="44.0" opacity="0.46" prefHeight="412.0" prefWidth="361.0"
          style="-fx-background-color: #b3d9ff;" stylesheets="@style.css">
       <effect>
-         <Shadow blurType="GAUSSIAN" color="#9091a1" height="20.0" radius="9.5" width="20.0"/>
+         <Shadow blurType="GAUSSIAN" color="#b6b7c8" height="20.0" radius="9.5" width="20.0"/>
       </effect>
    </Pane>
    <Pane layoutX="221.0" layoutY="44.0" prefHeight="412.0" prefWidth="361.0" stylesheets="@style.css">
