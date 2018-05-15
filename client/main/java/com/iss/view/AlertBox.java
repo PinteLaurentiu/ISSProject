@@ -1,4 +1,4 @@
-package view;
+package com.iss.view;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

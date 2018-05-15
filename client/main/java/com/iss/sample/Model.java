@@ -1,4 +1,4 @@
-package sample;
+package com.iss.sample;
 
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
@@ -8,8 +8,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import view.Login;
-import view.Register;
+import com.iss.view.Login;
+import com.iss.view.Register;
 
 import java.io.IOException;
 
