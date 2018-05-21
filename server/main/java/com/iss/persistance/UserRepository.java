@@ -13,12 +13,12 @@ public class UserRepository extends HibernateRepository<User, Integer> {
         super(dataSource, User.class);
     }
 
-    public boolean login(User user){
+    public boolean login(String user, String password){
         try(Session session = dataSource.getSession()){
             Transaction transaction = session.beginTransaction();
             ProcedureCall procedureCall = session.createStoredProcedureCall("login");
-            procedureCall.registerParameter(0,String.class, ParameterMode.IN).bindValue(user.getEmail());
-            procedureCall.registerParameter(1, String.class, ParameterMode.IN).bindValue(user.getPassword());
+            procedureCall.registerParameter(0,String.class, ParameterMode.IN).bindValue(user);
+            procedureCall.registerParameter(1, String.class, ParameterMode.IN).bindValue(password);
             boolean logged = ((java.math.BigInteger)procedureCall.getSingleResult()).intValue() == 1;
 
             transaction.commit();

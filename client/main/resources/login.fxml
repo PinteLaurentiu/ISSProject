@@ -13,7 +13,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0"
       prefWidth="790.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.iss.view.Login">
+      fx:controller="com.iss.UI.Login">
    <ImageView fitHeight="544.0" fitWidth="805.0" layoutY="-13.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@background2.jpg"/>
    </ImageView>

@@ -1,7 +1,21 @@
 package com.iss;
 
-public class Main {
+import com.iss.UI.Login;
+import com.iss.service.ProxyFactory;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.stage.Stage;
+
+public class Main extends Application {
+
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+        primaryStage.setTitle("Blood Donation");
+        primaryStage.setOnCloseRequest(x -> Platform.exit());
+        Login.show(primaryStage,new ProxyFactory("http://localhost:8080"));
+    }
+
     public static void main(String[] args) {
-        System.out.println("Pinte ii barbiduc / client");
+        launch(args);
     }
 }

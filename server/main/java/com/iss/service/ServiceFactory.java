@@ -2,49 +2,30 @@ package com.iss.service;
 
 import com.iss.database_connection.DatabaseException;
 import com.iss.persistance.RepositoryFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
-public class ServiceFactory {
+@Component
+public class ServiceFactory extends BaseServiceFactory{
 
-    private HashMap<String, IService> services;
-    private HashMap<String, ObservableService> crudServices;
     private RepositoryFactory repositoryFactory;
 
+    @Autowired
     public ServiceFactory(RepositoryFactory repositoryFactory) {
-        this.services = new HashMap<>();
-        this.crudServices = new HashMap<>();
+        super();
         this.repositoryFactory = repositoryFactory;
     }
 
-    public <T extends ICrudService<T2,K>,T2,K> T get(Class<? extends ICrudService<T2,K>> tClass) {
-        //noinspection unchecked
-        return (T) getObservable(tClass).getTarget();
-    }
-
-    public <T extends IService> T getService(Class<T> tClass){
-        if (services.containsKey(tClass.getName())) {
-            IService service = services.get(tClass.getName());
-            if (!tClass.isInstance(service))
-                return null;
-            return tClass.cast(service);
-        }
-        try {
-            Constructor<T> cons = tClass.getConstructor();
-            services.put(tClass.getName(), cons.newInstance());
-            return getService(tClass);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
-            throw new DatabaseException("service not found!");
-        }
-
-    }
-
+    @Override
     public <T,K> ObservableService getObservable(Class<? extends ICrudService<T,K>> tClass){
-        if (services.containsKey(tClass.getName())) {
+        if (crudServices.containsKey(tClass.getName())) {
             ObservableService service = crudServices.get(tClass.getName());
-            if (!tClass.isInstance(service))
+            if (!tClass.isInstance(service.getTarget()))
                 return null;
             return service;
         }
@@ -53,7 +34,7 @@ public class ServiceFactory {
             crudServices.put(tClass.getName(), new ServerObservableService<>(cons.newInstance(repositoryFactory)));
             return getObservable(tClass);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
-            throw new DatabaseException("service not found!");
+            throw new ServerException("service not found!");
         }
     }
 }

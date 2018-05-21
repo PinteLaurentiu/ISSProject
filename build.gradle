@@ -1,3 +1,12 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.2.RELEASE")
+    }
+}
+
 allprojects {
     group 'ISSProject'
     version '1.0-SNAPSHOT'
@@ -11,16 +20,32 @@ subprojects {
     apply plugin: 'java'
     dependencies {
         compile 'org.springframework:spring-context:5.0.4.RELEASE'
+        testImplementation(
+                'org.junit.jupiter:junit-jupiter-api:5.1.0'
+        )
+        testRuntimeOnly(
+                'org.junit.jupiter:junit-jupiter-engine:5.1.0'
+        )
     }
 }
 
 project(":client") {
-    apply plugin: 'application'
     sourceCompatibility = 1.8
-    mainClassName='Main'
+    targetCompatibility = 1.8
+
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    bootJar {
+        baseName = 'client'
+    }
+
     dependencies {
-        compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.6'
+        compile("org.springframework.boot:spring-boot-starter-web")
+        compile("org.springframework:spring-web")
+        compile("com.fasterxml.jackson.core:jackson-databind")
         compile project(":common")
+
     }
     sourceSets {
         main {
@@ -31,25 +56,29 @@ project(":client") {
                 srcDirs "../client/main/java"
             }
         }
-    }
-    jar {
-        manifest {
-            attributes('Main-Class': 'com.iss.Main')
-        }
-        from {
-            configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+        test {
+            java {
+                srcDirs "../client/test/java"
+            }
         }
     }
 }
 
 project(":server") {
-    apply plugin: 'application'
+
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
     sourceCompatibility = 1.8
-    mainClassName='Main'
+    targetCompatibility = 1.8
+
     dependencies {
         compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.6'
         compile group: 'org.hibernate', name: 'hibernate-gradle-plugin', version: '5.2.17.Final'
+        compile("org.springframework.boot:spring-boot-starter-web")
         compile project(":common")
+    }
+    bootJar {
+        baseName = 'server'
     }
     sourceSets {
         main {
@@ -60,13 +89,10 @@ project(":server") {
                 srcDirs "../server/main/java"
             }
         }
-    }
-    jar {
-        manifest {
-            attributes('Main-Class': 'com.iss.Main')
-        }
-        from {
-            configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+        test {
+            java {
+                srcDirs "../server/test/java"
+            }
         }
     }
 }
@@ -81,10 +107,10 @@ project(":common") {
                 srcDirs "../common/main/java"
             }
         }
-    }
-    jar {
-        from {
-            configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+        test {
+            java {
+                srcDirs "../common/test/java"
+            }
         }
     }
 }

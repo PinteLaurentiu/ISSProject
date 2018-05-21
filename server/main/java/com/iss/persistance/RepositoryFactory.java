@@ -2,15 +2,19 @@ package com.iss.persistance;
 
 import com.iss.database_connection.DatabaseException;
 import com.iss.database_connection.HibernateDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
+@Component
 public class RepositoryFactory {
     private HashMap<String, IRepository> repositories;
     private HibernateDataSource dataSource;
 
+    @Autowired
     public RepositoryFactory( HibernateDataSource dataSource) {
         this.repositories = new HashMap<>();
         this.dataSource = dataSource;
