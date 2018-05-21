@@ -18,6 +18,18 @@ CREATE TABLE user
   telefon     VARCHAR(20)  NOT NULL
 );
 
+CREATE TABLE activations
+(
+  userId      INT              NOT NULL
+    PRIMARY KEY,
+  isActivated BIT DEFAULT b'0' NOT NULL,
+  generatedId VARCHAR(100)     NOT NULL,
+  CONSTRAINT activations_generatedId_uindex
+  UNIQUE (generatedId),
+  CONSTRAINT activations_user_idUser_fk
+  FOREIGN KEY (userId) REFERENCES user (idUser)
+)
+
 CREATE PROCEDURE login(IN emailVar VARCHAR(100), IN pass VARCHAR(100))
   BEGIN
     SELECT COUNT(*) FROM user
@@ -25,6 +37,6 @@ CREATE PROCEDURE login(IN emailVar VARCHAR(100), IN pass VARCHAR(100))
   END;
 
 CREATE PROCEDURE setPassword(IN id INT, IN pass VARCHAR(100))
-  BEGIN 
+  BEGIN
     UPDATE user SET password = SHA1(pass) WHERE idUser = id;
   END;
