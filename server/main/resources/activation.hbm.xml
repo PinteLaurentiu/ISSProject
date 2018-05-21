@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.iss.domain.Activation"
+           table="activations">
+        <id name="userId" column="userId">
+            <generator class="foreign">
+                <param name="property">user</param>
+            </generator>
+        </id>
+        <one-to-one name="user" class="com.iss.domain.User"
+                    constrained="true"/>
+        <property name="activated" column="isActivated"/>
+        <property name="generatedId" column="generatedId"/>
+    </class>
+</hibernate-mapping>

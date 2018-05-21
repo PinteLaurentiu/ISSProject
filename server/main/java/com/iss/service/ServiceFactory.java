@@ -30,8 +30,8 @@ public class ServiceFactory extends BaseServiceFactory{
             return service;
         }
         try {
-            Constructor<? extends ICrudService<T,K>> cons = tClass.getConstructor(RepositoryFactory.class);
-            crudServices.put(tClass.getName(), new ServerObservableService<>(cons.newInstance(repositoryFactory)));
+            Constructor<? extends ICrudService<T,K>> cons = tClass.getConstructor(RepositoryFactory.class, ServiceFactory.class);
+            crudServices.put(tClass.getName(), new ServerObservableService<>(cons.newInstance(repositoryFactory, this)));
             return getObservable(tClass);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
             throw new ServerException("service not found!");

@@ -47,7 +47,9 @@ public class Login {
         try{
             factory.get(UserProxy.class).login(usernameText.getText(), passwordText.getText());
         } catch (LoginException e) {
-            new AlertBox("Login error","Wrong email or password! ^_^ ");
+            new AlertBox("Eroare la logare","Email sau password gresite");
+        } catch (Exception e) {
+            new AlertBox("Eroare la server","Something went wrong!");
         }
     }
 

@@ -30,6 +30,8 @@
       </ImageView>
       <TextField fx:id="usernameText" layoutX="115.0" layoutY="164.0" prefHeight="30.0" prefWidth="180.0"
                  promptText="Username"/>
+      <PasswordField fx:id="passwordHiddenText" layoutX="114.0" layoutY="213.0" minHeight="28.0" prefHeight="30.0"
+                      prefWidth="180.0" promptText="Password"/>
       <TextField fx:id="passwordText" layoutX="114.0" layoutY="213.0" prefHeight="30.0" prefWidth="180.0"
                  promptText="Password"/>
       <Button layoutX="91.0" layoutY="308.0" mnemonicParsing="false" onAction="#login" prefHeight="31.0"
@@ -46,8 +48,6 @@
             <Font name="System Bold" size="12.0"/>
          </font>
       </CheckBox>
-      <PasswordField fx:id="passwordHiddenText" layoutX="114.0" layoutY="213.0" minHeight="28.0" prefHeight="30.0"
-                     prefWidth="180.0" promptText="Password"/>
       <CheckBox fx:id="rememberMeCheckBox" layoutX="77.0" layoutY="265.0" mnemonicParsing="false" text="Remember me">
          <font>
             <Font name="System Bold" size="12.0"/>

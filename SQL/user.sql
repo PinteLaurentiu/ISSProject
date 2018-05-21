@@ -23,3 +23,8 @@ CREATE PROCEDURE login(IN emailVar VARCHAR(100), IN pass VARCHAR(100))
     SELECT COUNT(*) FROM user
       WHERE email = emailVar AND password = SHA1(pass);
   END;
+
+CREATE PROCEDURE setPassword(IN id INT, IN pass VARCHAR(100))
+  BEGIN 
+    UPDATE user SET password = SHA1(pass) WHERE idUser = id;
+  END;

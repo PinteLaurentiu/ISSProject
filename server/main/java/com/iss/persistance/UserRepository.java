@@ -29,4 +29,20 @@ public class UserRepository extends HibernateRepository<User, Integer> {
             return false;
         }
     }
+
+    @Override
+    public void put(User elem) {
+        super.put(elem);
+        try(Session session = dataSource.getSession()){
+            Transaction transaction = session.beginTransaction();
+            ProcedureCall procedureCall = session.createStoredProcedureCall("setPassword");
+            procedureCall.registerParameter(0,Integer.class, ParameterMode.IN).bindValue(elem.getId());
+            procedureCall.registerParameter(1, String.class, ParameterMode.IN).bindValue(elem.getPassword());
+            procedureCall.execute();
+            transaction.commit();
+        }
+        catch (Exception ignored){
+
+        }
+    }
 }

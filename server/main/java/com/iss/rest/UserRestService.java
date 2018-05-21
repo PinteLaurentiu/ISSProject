@@ -43,4 +43,12 @@ public class UserRestService {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity register(@RequestBody String[] strings){
+        if (strings.length != 12){
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+        factory.get(UserService.class).add((Object[]) strings);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

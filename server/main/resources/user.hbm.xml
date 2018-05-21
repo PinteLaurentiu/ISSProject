@@ -20,5 +20,7 @@
         <property name="domiciliu" column="domiciliu"/>
         <property name="email" column="email"/>
         <property name="telefon" column="telefon"/>
+        <one-to-one name="activation" class="com.iss.domain.Activation"
+                    cascade="save-update"/>
     </class>
 </hibernate-mapping>
