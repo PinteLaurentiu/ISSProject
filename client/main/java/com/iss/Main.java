@@ -7,7 +7,6 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-
     @Override
     public void start(Stage primaryStage) throws Exception{
         primaryStage.setTitle("Blood Donation");

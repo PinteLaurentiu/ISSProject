@@ -40,3 +40,8 @@ CREATE PROCEDURE setPassword(IN id INT, IN pass VARCHAR(100))
   BEGIN
     UPDATE user SET password = SHA1(pass) WHERE idUser = id;
   END;
+
+CREATE PROCEDURE activate(IN id INT, IN uid VARCHAR(100), IN active BIT)
+  BEGIN
+    UPDATE activations SET isActivated = active WHERE userId = id and generatedId=uid;
+  END;

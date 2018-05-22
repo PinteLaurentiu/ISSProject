@@ -1,14 +1,11 @@
 package com.iss.service;
 
-import com.iss.database_connection.DatabaseException;
 import com.iss.persistance.RepositoryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 
 @Component
 public class ServiceFactory extends BaseServiceFactory{

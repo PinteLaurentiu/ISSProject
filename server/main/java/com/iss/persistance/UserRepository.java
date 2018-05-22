@@ -41,8 +41,19 @@ public class UserRepository extends HibernateRepository<User, Integer> {
             procedureCall.execute();
             transaction.commit();
         }
-        catch (Exception ignored){
+        catch (Exception ignored){}
+    }
 
+    public void activation(int id, String uid) {
+        try(Session session = dataSource.getSession()){
+            Transaction transaction = session.beginTransaction();
+            ProcedureCall procedureCall = session.createStoredProcedureCall("activate");
+            procedureCall.registerParameter(0,Integer.class, ParameterMode.IN).bindValue(id);
+            procedureCall.registerParameter(1, String.class, ParameterMode.IN).bindValue(uid);
+            procedureCall.registerParameter(2, Boolean.class, ParameterMode.IN).bindValue(true);
+            procedureCall.execute();
+            transaction.commit();
         }
+        catch (Exception ignored){}
     }
 }

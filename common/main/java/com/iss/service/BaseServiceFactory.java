@@ -9,7 +9,6 @@ import java.util.HashMap;
 
 @Component
 public abstract class BaseServiceFactory {
-
     HashMap<String, IService> services;
     HashMap<String, ObservableService> crudServices;
 

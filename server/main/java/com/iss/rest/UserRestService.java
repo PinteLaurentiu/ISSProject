@@ -6,10 +6,7 @@ import com.iss.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
@@ -43,12 +40,19 @@ public class UserRestService {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
+
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity register(@RequestBody String[] strings){
         if (strings.length != 12){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         factory.get(UserService.class).add((Object[]) strings);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/activate", method = RequestMethod.GET)
+    public @ResponseBody ResponseEntity activation(@RequestParam("id") int id, @RequestParam("uid") String uid){
+        factory.get(UserService.class).activation(id, uid);
         return new ResponseEntity(HttpStatus.OK);
     }
 }
