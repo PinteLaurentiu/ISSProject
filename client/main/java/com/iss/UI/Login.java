@@ -24,6 +24,7 @@ public class Login {
     private Stage stage;
     private ProxyFactory factory;
 
+
     public static void show(Stage stage, ProxyFactory factory ) throws IOException {
         FXMLLoader loaderLogin = new FXMLLoader(Login.class.getResource("/login.fxml"));
         Pane rootLogin = loaderLogin.load();

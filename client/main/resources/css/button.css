@@ -1,0 +1,12 @@
+.button{
+    -fx-font-family: "Century Gothic";
+    -fx-text-fill: #6F6F6F;
+    -fx-font-size: 15px;
+    -fx-background-color: transparent;
+    -fx-effect: none;
+}
+.button:hover{
+    -fx-effect: none;
+    -fx-background-color: transparent;
+    -fx-border-color: none;
+}

@@ -19,3 +19,38 @@
     -fx-background-color: rgba(0, 89, 179, 0.4);
     -fx-text-fill: white;
 }
+
+/*Main Window - Tab Pane*/
+.tab {
+    -fx-pref-width: 120;
+    -fx-pref-height: 50;
+    -fx-background-color: #F3F3F3;
+}
+
+
+
+.control-buttons-tab{
+    -fx-background-color: #F3F3F3;
+}
+.control-buttons-tab .tab-down-button{
+    -fx-background-color: #D0294F;
+}
+.control-buttons-tab .jfx-rippler{
+    -jfx-rippler-fill: #D0294F;
+}
+.jfx-tab-pane .tab-header-background {
+    -fx-background-color: #F3F3F3;
+}
+.jfx-tab-pane .tab .tab-label {
+    -fx-font-family: "Century Gothic";
+    -fx-font-weight: normal;
+    -fx-text-fill: #6F6F6F;
+    -fx-font-size: 12;
+}
+
+.jfx-tab-pane .tab:selected .tab-label {
+    -fx-text-fill: #D0294F;
+}
+.jfx-tab-pane .tab-selected-line {
+    -fx-background-color: #D0294F;
+}

@@ -28,7 +28,7 @@ CREATE TABLE activations
   UNIQUE (generatedId),
   CONSTRAINT activations_user_idUser_fk
   FOREIGN KEY (userId) REFERENCES user (idUser)
-)
+);
 
 CREATE PROCEDURE login(IN emailVar VARCHAR(100), IN pass VARCHAR(100))
   BEGIN
