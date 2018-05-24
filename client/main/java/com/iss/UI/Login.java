@@ -47,6 +47,7 @@ public class Login {
     public void login(@SuppressWarnings("unused") ActionEvent actionEvent) {
         try{
             factory.get(UserProxy.class).login(usernameText.getText(), passwordText.getText());
+            MainController.show(stage, factory);
         } catch (LoginException e) {
             new AlertBox("Eroare la logare","Email sau password gresite");
         } catch (Exception e) {

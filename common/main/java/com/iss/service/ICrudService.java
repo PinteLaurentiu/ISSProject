@@ -5,4 +5,6 @@ public interface ICrudService<T,K> extends IService {
     void remove(K key);
     void edit(T self);
     Iterable<T> getAll();
+    Iterable<T> getAll(int count, int offset);
+    int count();
 }

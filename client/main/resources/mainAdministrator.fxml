@@ -11,23 +11,23 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="468.0" prefWidth="781.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="468.0" prefWidth="781.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iss.UI.MainController">
    <bottom>
        <HBox alignment="CENTER" prefHeight="76.0" prefWidth="742.0" BorderPane.alignment="CENTER">
            <padding>
                <Insets bottom="25.0" />
            </padding>
-           <Button mnemonicParsing="false" prefHeight="41.0" prefWidth="105.0" text="Add">
+           <Button fx:id="addUser" mnemonicParsing="false" prefHeight="41.0" prefWidth="105.0" text="Add">
               <HBox.margin>
                   <Insets left="50.0" right="50.0" />
               </HBox.margin>
            </Button>
-           <Button mnemonicParsing="false" prefHeight="41.0" prefWidth="105.0" text="Delete">
+           <Button fx:id="deleteUser" mnemonicParsing="false" onAction="#deletePressed" prefHeight="41.0" prefWidth="105.0" text="Delete">
               <HBox.margin>
                   <Insets left="50.0" right="50.0" />
               </HBox.margin>
            </Button>
-           <Button mnemonicParsing="false" prefHeight="41.0" prefWidth="105.0" text="Modify">
+           <Button fx:id="modifyUser" mnemonicParsing="false" onAction="#modifyPressed" prefHeight="41.0" prefWidth="105.0" text="Modify">
               <HBox.margin>
                   <Insets left="50.0" right="50.0" />
               </HBox.margin>
@@ -35,9 +35,9 @@
        </HBox>
    </bottom>
    <center>
-      <TabPane prefHeight="380.0" prefWidth="732.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane fx:id="tabPane" prefHeight="0.0" prefWidth="0.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-          <Tab text="Donor">
+          <Tab fx:id="donorTab" closable="false" text="Donor">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <TableView layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
@@ -54,7 +54,7 @@
                 </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Donor Donation Center">
+          <Tab fx:id="doctorCenterTab" closable="false" text="Doctor Donation Center">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -73,7 +73,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab text="Doctor Laboratory">
+            <Tab fx:id="doctorLabTab" closable="false" text="Doctor Laboratory">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -92,7 +92,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Hospital Doctor">
+            <Tab fx:id="hospitalDoctorTab" closable="false" text="Hospital Doctor">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -109,6 +109,29 @@
                         <Pagination prefHeight="353.0" prefWidth="772.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="usersTab" closable="false" text="Administrator">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <TableView fx:id="usersTable" BorderPane.alignment="CENTER">
+                           <columns>
+                              <TableColumn prefWidth="89.0" text="First Name" />
+                              <TableColumn prefWidth="99.0" text="Last Name" />
+                              <TableColumn prefWidth="132.0" text="Phone" />
+                              <TableColumn prefWidth="167.0" text="Email" />
+                              <TableColumn prefWidth="97.0" text="Roles" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                     </center>
+                     <bottom>
+                        <Pagination fx:id="paginationUsers" pageCount="1" prefHeight="50.0" BorderPane.alignment="CENTER" />
+                     </bottom>
+                  </BorderPane>
                </content>
             </Tab>
         </tabs>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.iss.domain.UserRole"
+           table="userroles">
+        <id name="idRole" column="idRole">
+            <generator class="increment"/>
+        </id>
+        <property name="role" column="role">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.iss.domain.Role</param>
+            </type>
+        </property>
+        <many-to-one name="user" class="com.iss.domain.User"
+                     column="idUser" not-null="true"/>
+    </class>
+</hibernate-mapping>

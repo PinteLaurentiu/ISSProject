@@ -21,6 +21,10 @@
         <property name="email" column="email"/>
         <property name="telefon" column="telefon"/>
         <one-to-one name="activation" class="com.iss.domain.Activation"
-                    cascade="save-update"/>
+                    cascade="all"/>
+        <set lazy="false" name="roles" inverse="true" cascade="all-delete-orphan" >
+            <key column="idUser" not-null="true" />
+            <one-to-many class="com.iss.domain.UserRole"/>
+        </set>
     </class>
 </hibernate-mapping>

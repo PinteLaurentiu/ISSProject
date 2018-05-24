@@ -7,6 +7,9 @@ import org.hibernate.Transaction;
 import org.hibernate.procedure.ProcedureCall;
 
 import javax.persistence.ParameterMode;
+import javax.persistence.Query;
+import javax.persistence.TemporalType;
+import java.util.List;
 
 public class UserRepository extends HibernateRepository<User, Integer> {
     public UserRepository(HibernateDataSource dataSource) {
@@ -32,6 +35,11 @@ public class UserRepository extends HibernateRepository<User, Integer> {
 
     @Override
     public void put(User elem) {
+        User existent = getByEmail(elem.getEmail());
+        if (existent != null) {
+            update(elem);
+            return;
+        }
         super.put(elem);
         try(Session session = dataSource.getSession()){
             Transaction transaction = session.beginTransaction();
@@ -42,6 +50,17 @@ public class UserRepository extends HibernateRepository<User, Integer> {
             transaction.commit();
         }
         catch (Exception ignored){}
+    }
+
+    private void update(User elem) {
+        try(Session session = dataSource.getSession()){
+            Transaction transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM User where email = '" + elem.getEmail() +"'");
+            User curentUser = (User) query.getSingleResult();
+            curentUser.getRoles().clear();
+            curentUser.getRoles().addAll(elem.getRoles());
+            transaction.commit();
+        }
     }
 
     public void activation(int id, String uid) {
@@ -55,5 +74,17 @@ public class UserRepository extends HibernateRepository<User, Integer> {
             transaction.commit();
         }
         catch (Exception ignored){}
+    }
+
+    public User getByEmail(String email) {
+        Iterable<User> users = getAll();
+        User foundUser = null;
+        for (User user: users) {
+            if (user.getEmail().equals(email)) {
+                foundUser = user;
+            }
+        }
+
+        return foundUser;
     }
 }

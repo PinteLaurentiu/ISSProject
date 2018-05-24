@@ -39,4 +39,13 @@ public abstract class ObservableService<T,K> implements ICrudService<T,K> {
         return target;
     }
 
+    @Override
+    public Iterable<T> getAll(int count, int offset) {
+        return target.getAll(count, offset);
+    }
+
+    @Override
+    public int count() {
+        return target.count();
+    }
 }

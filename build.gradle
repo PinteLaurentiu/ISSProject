@@ -20,6 +20,7 @@ subprojects {
     apply plugin: 'java'
     dependencies {
         compile 'org.springframework:spring-context:5.0.4.RELEASE'
+        compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.5'
         testImplementation(
                 'org.junit.jupiter:junit-jupiter-api:5.1.0'
         )

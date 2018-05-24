@@ -1,6 +1,9 @@
 package com.iss.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
+import java.util.Set;
 
 public class User {
 
@@ -17,9 +20,19 @@ public class User {
     private String domiciliu;
     private String email;
     private String telefon;
+    @JsonIgnore
     private Activation activation;
+    private Set<UserRole> roles;
 
     public User() {
+    }
+
+    public Set<UserRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<UserRole> roles) {
+        this.roles = roles;
     }
 
     public int getId() {

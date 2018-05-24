@@ -41,6 +41,22 @@ CREATE PROCEDURE setPassword(IN id INT, IN pass VARCHAR(100))
     UPDATE user SET password = SHA1(pass) WHERE idUser = id;
   END;
 
+create table userroles
+(
+  idUser int not null,
+  idRole int auto_increment
+    primary key,
+  role int not null,
+  constraint userRoles_user_idUser_fk
+  foreign key (idUser) references user (idUser)
+)
+  engine=InnoDB
+;
+
+create index userRoles_user_idUser_fk
+  on userroles (idUser)
+;
+
 CREATE PROCEDURE activate(IN id INT, IN uid VARCHAR(100), IN active BIT)
   BEGIN
     UPDATE activations SET isActivated = active WHERE userId = id and generatedId=uid;

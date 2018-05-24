@@ -1,15 +1,16 @@
 package com.iss.service;
 
 import com.iss.domain.Activation;
+import com.iss.domain.Role;
 import com.iss.domain.User;
+import com.iss.domain.UserRole;
 import com.iss.persistance.RepositoryFactory;
 import com.iss.persistance.UserRepository;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 public class UserService implements ICrudService<User,Integer> {
 
@@ -53,6 +54,8 @@ public class UserService implements ICrudService<User,Integer> {
 
         user.setPassword((String)objects[11]);
 
+        user.setRoles(new HashSet<>());
+
         Activation activation = new Activation();
         activation.setGeneratedId(UUID.randomUUID().toString());
         activation.setActivated(false);
@@ -66,17 +69,31 @@ public class UserService implements ICrudService<User,Integer> {
 
     @Override
     public void remove(Integer key) {
-
+        factory.get(UserRepository.class).remove(key);
     }
 
     @Override
     public void edit(User self) {
-
+        for (UserRole role : self.getRoles()){
+            role.setUser(self);
+        }
+        self.setActivation(factory.get(UserRepository.class).getByEmail(self.getEmail()).getActivation());
+        factory.get(UserRepository.class).put(self);
     }
 
     @Override
     public Iterable<User> getAll() {
-        return null;
+        return factory.get(UserRepository.class).getAll();
+    }
+
+    @Override
+    public Iterable<User> getAll(int count, int offset) {
+        return factory.get(UserRepository.class).getAll(count, offset);
+    }
+
+    @Override
+    public int count() {
+        return factory.get(UserRepository.class).count();
     }
 
     public boolean login(String user, String pass){
@@ -86,4 +103,19 @@ public class UserService implements ICrudService<User,Integer> {
     public void activation(int id, String uid) {
         factory.get(UserRepository.class).activation(id, uid);
     }
+
+    public Iterable<Role> getRoles(String email) {
+        User user = factory.get(UserRepository.class).getByEmail(email);
+        List<Role> roles = new ArrayList<>();
+        for (UserRole userRole : user.getRoles()) {
+            roles.add(userRole.getRole());
+        }
+        return roles;
+    }
+
+    public User getByEmail(String email){
+        return factory.get(UserRepository.class).getByEmail(email);
+    }
+
+
 }
