@@ -1,18 +1,17 @@
 package com.iss.UI;
 
+import com.iss.exceptions.BadAuthenticationException;
+import com.iss.exceptions.NotActivatedUserException;
 import com.iss.service.ProxyFactory;
 import com.iss.service.UserProxy;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
-import javax.security.auth.login.LoginException;
 import java.io.IOException;
+import java.util.Optional;
 
 public class Login {
     public TextField usernameText;
@@ -35,28 +34,37 @@ public class Login {
         stage.show();
     }
 
-    public void init(Stage stage, ProxyFactory factory){
+    private void init(Stage stage, ProxyFactory factory){
         this.stage = stage;
         this.factory = factory;
         usernameText.setText("");
         passwordText.setText("");
         passwordHiddenText.setText("");
-
+        showPassword(null);
     }
 
     public void login(@SuppressWarnings("unused") ActionEvent actionEvent) {
-        try{
-            factory.get(UserProxy.class).login(usernameText.getText(), passwordText.getText());
+        try {
+            String password = showPasswordCheckBox.isSelected() ? passwordText.getText() : passwordHiddenText.getText();
+            factory.get(UserProxy.class).login(usernameText.getText(), password);
             MainController.show(stage, factory);
-        } catch (LoginException e) {
-            new AlertBox("Eroare la logare","Email sau password gresite");
+        } catch (NotActivatedUserException ex) {
+            Optional<ButtonType> answer = new Alert(Alert.AlertType.NONE, "Userul nu este activ! Doriti sa " +
+                    "retrimitem \nlinkul de activare pe emailul specificat?", ButtonType.YES, ButtonType.NO).
+                    showAndWait();
+            if (answer.isPresent() && answer.get() == ButtonType.YES) {
+                factory.get(UserProxy.class).resendEmail(usernameText.getText());
+                new Alert(Alert.AlertType.INFORMATION, "Un email cu un link de activare a contului \na fost trimis pe adresa de email specificata!", ButtonType.OK).showAndWait();
+            }
+        } catch (BadAuthenticationException e) {
+            new AlertBox("Eroare la logare","Email sau password incorecte!");
         } catch (Exception e) {
             new AlertBox("Eroare la server","Something went wrong!");
         }
     }
 
     public void register(@SuppressWarnings("unused") ActionEvent actionEvent) throws IOException {
-        Register.show(stage, factory);
+        Register.show(stage, factory, false);
     }
 
     public void showPassword(@SuppressWarnings("unused") ActionEvent actionEvent) {

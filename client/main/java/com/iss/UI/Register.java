@@ -7,7 +7,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -19,10 +18,8 @@ public class Register {
 
     public TextField numeText;
     public TextField emailText;
-    public TextField usernameText;
-    public Spinner varstaValue;
     public PasswordField passwordText1;
-    public PasswordField passworText2;
+    public PasswordField passwordText2;
     public TextField domiciliuText;
     public TextField prenumeText;
     public DatePicker birthdayText;
@@ -35,14 +32,16 @@ public class Register {
 
     private Stage stage;
     private ProxyFactory factory;
+    private boolean administratorMode;
 
-    public void init(Stage stage, ProxyFactory factory){
+    private void init(Stage stage, ProxyFactory factory, boolean administratorMode){
         this.stage = stage;
         this.factory = factory;
+        this.administratorMode = administratorMode;
 
     }
 
-    public void register(ActionEvent actionEvent) throws IOException {
+    public void register(ActionEvent actionEvent) {
 
         if (!numeText.getText().trim().matches(".*[a-zA-Z][a-zA-Z][a-zA-Z].*")){
             new AlertBox("Inregistrare esuata", "Numele nu este valid");
@@ -81,14 +80,15 @@ public class Register {
             return;
         }
 
-        if (resedintaText.getText().trim().isEmpty()
-                && localitate2Text.getText().trim().isEmpty()
-                && judet2Text.getText().trim().isEmpty()) {}
-        else if ((!resedintaText.getText().trim().matches(".*[a-zA-Z][a-zA-Z][a-zA-Z].*")) ||
-                (!localitate2Text.getText().trim().matches(".*[a-zA-Z][a-zA-Z][a-zA-Z].*")) ||
-                (!judet2Text.getText().trim().matches(".*[a-zA-Z][a-zA-Z][a-zA-Z].*"))) {
-            new AlertBox("Inregistrare esuata", "Adresa de resedinta nu este valida");
-            return;
+        if (!resedintaText.getText().trim().isEmpty()
+                || !localitate2Text.getText().trim().isEmpty()
+                || !judet2Text.getText().trim().isEmpty()) {
+            if ((!resedintaText.getText().trim().matches(".*[a-zA-Z][a-zA-Z][a-zA-Z].*")) ||
+                    (!localitate2Text.getText().trim().matches(".*[a-zA-Z][a-zA-Z][a-zA-Z].*")) ||
+                    (!judet2Text.getText().trim().matches(".*[a-zA-Z][a-zA-Z][a-zA-Z].*"))) {
+                new AlertBox("Inregistrare esuata", "Adresa de resedinta nu este valida");
+                return;
+            }
         }
 
         if (!emailText.getText().trim().matches(".+@.+")) {
@@ -102,11 +102,11 @@ public class Register {
         }
 
         if (!passwordText1.getText().matches("[a-zA-Z0-9_]+") || passwordText1.getText().length() < 6){
-            new AlertBox("Inregistrare esuata", "Parola trebuie sa aiba cel putin 6 caractere alfa-numerice!");
+            new AlertBox("Inregistrare esuata", "Parola trebuie sa contina cel putin 6 caractere alfa-numerice!");
             return;
         }
 
-        if(!passwordText1.getText().equals(passworText2.getText())){
+        if(!passwordText1.getText().equals(passwordText2.getText())){
             new AlertBox("Inregistrare esuata", "Parola trebuie sa fie la fel!");
             return;
         }
@@ -115,24 +115,31 @@ public class Register {
             factory.get(UserProxy.class).add(numeText.getText(), prenumeText.getText(), birthdayText.getValue(),
                     domiciliuText.getText(), judet1Text.getText(), localitate1Text.getText(), resedintaText.getText(),
                     judet2Text.getText(), localitate2Text.getText(), emailText.getText(), telefonText.getText(),
-                    passwordText1.getText());
-            new AlertBox("Success", "Un email cu un link de activare a contului a fost \ntrimis pe adresa de email specificata!");
+                    passwordText1.getText(), administratorMode);
+            if (!administratorMode)
+                new AlertBox("Success", "Un email cu un link de activare a contului a fost \ntrimis pe adresa de email specificata!");
+            cancelRegister(actionEvent);
         } catch (Exception ex) {
             new AlertBox("Eroare la server","Something went wrong!");
         }
     }
 
+    @SuppressWarnings("unused")
     public void cancelRegister(ActionEvent actionEvent) throws IOException {
+        if (administratorMode){
+            MainController.show(stage, factory,4);
+            return;
+        }
         Login.show(stage, factory);
     }
 
-    public static void show(Stage stage, ProxyFactory factory ) throws IOException {
+    @SuppressWarnings("WeakerAccess")
+    public static void show(Stage stage, ProxyFactory factory, boolean administratorMode) throws IOException {
         FXMLLoader loaderRegister = new FXMLLoader(Register.class.getResource("/register.fxml"));
         Pane rootRegister = loaderRegister.load();
         Scene sceneRegister = new Scene(rootRegister, rootRegister.getPrefWidth(), rootRegister.getPrefHeight());
         Register register = loaderRegister.getController();
-        register.init(stage, factory);
-//        stage.setScene(sceneRegister);
+        register.init(stage, factory, administratorMode);
         Animations.animate(sceneRegister, stage);
         stage.show();
     }

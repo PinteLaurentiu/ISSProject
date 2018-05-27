@@ -58,13 +58,14 @@ public class UserService implements ICrudService<User,Integer> {
 
         Activation activation = new Activation();
         activation.setGeneratedId(UUID.randomUUID().toString());
-        activation.setActivated(false);
+        activation.setActivated(objects.length == 13);
         user.setActivation(activation);
         activation.setUser(user);
 
         factory.get(UserRepository.class).put(user);
+        if (objects.length == 12)
+            parent.getService(MailService.class).sendActivationMail(user.getEmail(), user.getId(), activation.getGeneratedId());
 
-        parent.getService(MailService.class).sendActivationMail(user.getEmail(), user.getId(), activation.getGeneratedId());
     }
 
     @Override
@@ -117,5 +118,8 @@ public class UserService implements ICrudService<User,Integer> {
         return factory.get(UserRepository.class).getByEmail(email);
     }
 
-
+    public boolean isActivated(String email) {
+        User user = getByEmail(email);
+        return user.getActivation().isActivated();
+    }
 }

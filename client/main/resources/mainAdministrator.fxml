@@ -17,7 +17,7 @@
            <padding>
                <Insets bottom="25.0" />
            </padding>
-           <Button fx:id="addUser" mnemonicParsing="false" prefHeight="41.0" prefWidth="105.0" text="Add">
+           <Button fx:id="addUser" mnemonicParsing="false" onAction="#addPressed" prefHeight="41.0" prefWidth="105.0" text="Add">
               <HBox.margin>
                   <Insets left="50.0" right="50.0" />
               </HBox.margin>
