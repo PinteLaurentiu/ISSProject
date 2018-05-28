@@ -1,8 +1,10 @@
 package com.iss.UI;
 
+import com.iss.domain.Cerere;
 import com.iss.domain.Role;
 import com.iss.domain.User;
 import com.iss.domain.UserRole;
+import com.iss.service.CerereProxy;
 import com.iss.service.ProxyFactory;
 import com.iss.service.UserProxy;
 import com.jfoenix.controls.*;
@@ -25,18 +27,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
 
-
 import java.io.IOException;
 import java.util.List;
 
 public class MainView {
-
     public JFXTabPane mainMenu;
     public Tab donorView;
     public Tab doctorView;
@@ -46,8 +45,8 @@ public class MainView {
     public ImageView doctorImage;
     public ImageView labImage;
     public ImageView adminImage;
-    //From DonourView
 
+    //From DonourView
     public AnchorPane donorPane;
     public JFXTabPane donorMenu;
     public Tab analysisView;
@@ -65,15 +64,12 @@ public class MainView {
     public AnchorPane detailsPane;
     public JFXButton continueButton;
 
-
     //FROM ADMINISTRATOR VIEW
     public TableView<User> usersTable;
     public Pagination paginationUsers;
     public JFXButton modifyUsers;
     public JFXButton deleteUsers;
     public JFXButton addUsers;
-
-
 
     //FROM DOCTOR CENTRE VIEW
     public JFXTabPane doctorCentrePane;
@@ -97,12 +93,17 @@ public class MainView {
     public JFXComboBox<String> grupeCombo;
     public JFXButton completeButton;
 
+    //FROM SPITAL VIEW
+    public Tab cerereView;
+    public TableView<Cerere> cerereTable;
+    public Pagination paginationCerere;
+    public JFXButton deleteCerere;
+    public JFXButton addCerere;
 
     private Stage stage;
     private ProxyFactory factory;
 
     private static final int RECORDS_ON_PAGE = 8;
-
 
     @FXML
     public void initialize(){
@@ -114,9 +115,7 @@ public class MainView {
         initDonor();
         menuListener();
         initTable();
-
     }
-
 
     public void initTable(){
         JFXTreeTableColumn<Analyses,String> date = new JFXTreeTableColumn<>("Data");
@@ -144,7 +143,6 @@ public class MainView {
             }
         });
 
-
         //Populate
         ObservableList<Analyses> analyses = FXCollections.observableArrayList();
         analyses.add(new Analyses("23-04-2018","Suceava","nufsh"));
@@ -162,10 +160,7 @@ public class MainView {
                 showDetail();
             }
         });
-
-
     }
-
 
     class Analyses extends RecursiveTreeObject<Analyses>{ //MUST EXTEND
         SimpleStringProperty date;
@@ -186,8 +181,6 @@ public class MainView {
         trans.setToValue(1.0);
         trans.setCycleCount(1);
         trans.setAutoReverse(false);
-
-
     }
     private void showDetail(){
 
@@ -274,10 +267,12 @@ public class MainView {
                 }
         );
     }
+
     public boolean checkDonating(){
         //TODO: check if donor can donate ( returns true if last time he donate was at least 8 weaks ago ,false otherwise)
         return true;
     }
+
     public Integer daysUntilUserCanDonate(){
         //TODO:number of days remains until user can donate again
         return 20;
@@ -302,8 +297,6 @@ public class MainView {
             }
         }
 
-
-
         //ADMIN PART
         @SuppressWarnings("WeakerAccess")
         public static void show(Stage stage, ProxyFactory factory) throws IOException {
@@ -321,13 +314,11 @@ public class MainView {
         stage.show();
     }
 
-
-
     public void init(Stage stage, ProxyFactory factory,int tabIndex){
         this.stage = stage;
         this.factory = factory;
         List<Role> roles = (List<Role>) factory.get(UserProxy.class).getRoles();
-        if(tabIndex==4) {
+        if(tabIndex==5) {
             mainMenu.getSelectionModel().select(adminView);
         }
         else if(tabIndex==1){
@@ -338,6 +329,9 @@ public class MainView {
         }
         else if(tabIndex==3){
             mainMenu.getSelectionModel().select(labView);
+        }
+        else if(tabIndex==4){
+            mainMenu.getSelectionModel().select(cerereView);
         }
         if (!roles.contains(Role.DoctorDonare))
             mainMenu.getTabs().remove(labView); // TREBUIE SA FAC DOCTORDONARE
@@ -366,9 +360,7 @@ public class MainView {
             usersTable.getSelectionModel().selectedItemProperty().addListener((x,y,z)->userSelectionChanged());
             userSelectionChanged();
         }
-
         mainMenu.getSelectionModel().selectedItemProperty().addListener(this::changedTab);
-
     }
 
     private void updateUsers() {
@@ -377,6 +369,14 @@ public class MainView {
             usersTable.getItems().add(user);
         paginationUsers.setPageCount((int)Math.ceil(factory.get(UserProxy.class).count() / (float)RECORDS_ON_PAGE));
     }
+
+    private void updateCerere() {
+        cerereTable.getItems().clear();
+        for (Cerere cerere : factory.get(CerereProxy.class).getAll(RECORDS_ON_PAGE,paginationUsers.getCurrentPageIndex()))
+            cerereTable.getItems().add(cerere);
+        paginationUsers.setPageCount((int)Math.ceil(factory.get(CerereProxy.class).count() / (float)RECORDS_ON_PAGE));
+    }
+
     private static String rolesAsString(User value) {
         StringBuilder builder = new StringBuilder();
         int index = 0;
@@ -399,7 +399,6 @@ public class MainView {
     private void changedTab(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
         //if (newValue.equals(usersTab)){
         //}
-
     }
 
     @SuppressWarnings("unused")
@@ -423,7 +422,13 @@ public class MainView {
         Register.show(stage, factory, true);
     }
 
+    public void deleteCererePressed(ActionEvent actionEvent) {
 
+    }
+
+    public void addCererePressed(ActionEvent actionEvent) throws IOException {
+        CerereView.show(stage, factory);
+    }
 
     //DOCTOR CENTRE PART
     public void checkApt() {
@@ -475,9 +480,7 @@ public class MainView {
         }
     }
 
-
     //LAB PART
-
     public void initGrupeCombo(){
         //TODO COMBO BOX PENTRU LOCATII
         grupeCombo.setItems(FXCollections.observableArrayList("0I","0I-","AII","AII-","BIII","BIII-","ABIV","ABIV-"));
@@ -501,5 +504,4 @@ public class MainView {
         ScrollPane root = loader.load();
         donorNowView.setContent(root);
     }
-
 }

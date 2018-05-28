@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+    <class name="com.iss.domain.Cerere"
+           table="cerere">
+        <id name="idCerere" column="idCerere">
+            <generator class="increment"/>
+        </id>
+        <property name="numePacient" column="numePacient"/>
+        <property name="prenumePacient" column="prenumePacient"/>
+        <property name="varsta" column="varsta"/>
+        <property name="componenteSange" column="componentaSange">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.iss.domain.ComponenteSange</param>
+            </type>
+        </property>
+        <property name="cantitatea" column="cantitatea"/>
+    </class>
+</hibernate-mapping>

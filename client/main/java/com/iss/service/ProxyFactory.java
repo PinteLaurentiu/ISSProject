@@ -5,7 +5,6 @@ import java.lang.reflect.InvocationTargetException;
 
 @SuppressWarnings("ALL")
 public class ProxyFactory extends BaseServiceFactory{
-
     private String host;
     private Long sessionId;
 

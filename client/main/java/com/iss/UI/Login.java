@@ -2,8 +2,6 @@ package com.iss.UI;
 
 import com.iss.exceptions.BadAuthenticationException;
 import com.iss.exceptions.NotActivatedUserException;
-import com.iss.service.ConsultProxy;
-import com.iss.service.DonareProxy;
 import com.iss.service.ProxyFactory;
 import com.iss.service.UserProxy;
 import javafx.event.ActionEvent;
@@ -12,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.util.Optional;
 
@@ -39,8 +38,8 @@ public class Login {
     private void init(Stage stage, ProxyFactory factory){
         this.stage = stage;
         this.factory = factory;
-        usernameText.setText("");
-        passwordText.setText("");
+        usernameText.setText("test@test.com");
+        passwordText.setText("parola");
         passwordHiddenText.setText("");
         showPassword(null);
     }

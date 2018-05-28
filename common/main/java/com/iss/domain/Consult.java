@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Consult {
     private int idConsult;
-
     private float greutate;
     private float tensiune;
     private int puls;

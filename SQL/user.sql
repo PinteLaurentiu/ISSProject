@@ -116,3 +116,14 @@ CREATE TABLE transfer
     `to` varchar(20) NOT NULL
 );
 CREATE UNIQUE INDEX transfer_idTransfer_uindex ON transfer (idTransfer)
+
+CREATE TABLE cerere
+(
+    idCerere int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    numePacient varchar(50),
+    prenumePacient varchar(50),
+    varsta int(11),
+    componentaSange int(11),
+    cantitatea int(11)
+);
+CREATE UNIQUE INDEX Cerere_idCerere_uindex ON cerere (idCerere);

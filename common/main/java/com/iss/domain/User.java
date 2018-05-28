@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.Set;
 
 public class User {
-
     private int id;
     private String nume;
     private transient String password;

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Set;
 
 public class Spital {
-
     private int id;
     private String nume;
     @JsonIgnore
@@ -18,7 +17,6 @@ public class Spital {
     public void setDonari(Set<Donare> donari) {
         this.donari = donari;
     }
-
 
     public int getId() {
         return id;

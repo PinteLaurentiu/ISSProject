@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 public class Register {
-
     public TextField numeText;
     public TextField emailText;
     public PasswordField passwordText1;
@@ -38,11 +37,9 @@ public class Register {
         this.stage = stage;
         this.factory = factory;
         this.administratorMode = administratorMode;
-
     }
 
     public void register(ActionEvent actionEvent) {
-
         if (!numeText.getText().trim().matches(".*[a-zA-Z][a-zA-Z][a-zA-Z].*")){
             new AlertBox("Inregistrare esuata", "Numele nu este valid");
             return;
@@ -127,7 +124,7 @@ public class Register {
     @SuppressWarnings("unused")
     public void cancelRegister(ActionEvent actionEvent) throws IOException {
         if (administratorMode){
-            MainView.show(stage, factory,4);
+            MainView.show(stage, factory,5);
             return;
         }
         Login.show(stage, factory);

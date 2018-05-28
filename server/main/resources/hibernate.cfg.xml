@@ -16,12 +16,12 @@
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
 
-
         <mapping resource="user.hbm.xml"/>
         <mapping resource="activation.hbm.xml"/>
         <mapping resource="userRole.hbm.xml"/>
         <mapping resource="spitale.hbm.xml"/>
         <mapping resource="donare.hbm.xml"/>
         <mapping resource="consult.hbm.xml"/>
+        <mapping resource="cerere.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

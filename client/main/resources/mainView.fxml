@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iss.UI.MainView">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iss.UI.MainView">
    <children>
       <JFXTabPane fx:id="mainMenu" layoutX="48.0" layoutY="18.0" prefHeight="582.0" prefWidth="747.0" stylesheets="@style.css">
          <tabs>
@@ -655,6 +655,42 @@
                      </children></AnchorPane>
                </content>
             </Tab>
+             <Tab fx:id="cerereView" text="Spital">
+                 <content>
+                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="507.0" prefWidth="747.0">
+                         <children>
+                             <TableView fx:id="cerereTable" layoutX="28.0" layoutY="16.0" prefHeight="305.0" prefWidth="698.0">
+                                 <columns>
+                                     <TableColumn prefWidth="99.0" text="Nume" />
+                                     <TableColumn prefWidth="125.0" text="Prenume" />
+                                     <TableColumn prefWidth="124.0" text="Varsta" />
+                                     <TableColumn prefWidth="201.0" text="Componenta" />
+                                     <TableColumn prefWidth="148.0" text="Cantitatea" />
+                                 </columns>
+                                 <stylesheets>
+                                     <URL value="@css/donorTab.css" />
+                                     <URL value="@css/button.css" />
+                                 </stylesheets>
+                             </TableView>
+                             <Pagination fx:id="paginationCerere" layoutX="26.0" layoutY="325.0" prefHeight="51.0" prefWidth="700.0">
+                                 <stylesheets>
+                                     <URL value="@css/donorTab.css" />
+                                     <URL value="@css/button.css" />
+                                 </stylesheets>
+                             </Pagination>
+                             <JFXButton fx:id="deleteCerere" layoutX="395.0" layoutY="430.0" onAction="#deleteCererePressed" prefHeight="44.0" prefWidth="200.0" style="-fx-border-color: #D0294F; -fx-border-radius: 5;" stylesheets="@css/button.css" text="Sterge" />
+                             <JFXButton fx:id="addCerere" layoutX="155.0" layoutY="431.0" onAction="#addCererePressed" prefHeight="44.0" prefWidth="200.0" style="-fx-border-color: #D0294F; -fx-border-radius: 5;" stylesheets="@css/button.css" text="Adauga" />
+                         </children>
+                     </AnchorPane>
+                 </content>
+                 <graphic>
+                     <ImageView fx:id="adminImage" fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                         <image>
+                             <Image url="@icons/administrator2-grey.png" />
+                         </image>
+                     </ImageView>
+                 </graphic>
+             </Tab>
             <Tab fx:id="adminView" text="Admin">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="507.0" prefWidth="747.0">

@@ -8,8 +8,6 @@ import org.hibernate.procedure.ProcedureCall;
 
 import javax.persistence.ParameterMode;
 import javax.persistence.Query;
-import javax.persistence.TemporalType;
-import java.util.List;
 
 public class UserRepository extends HibernateRepository<User, Integer> {
     public UserRepository(HibernateDataSource dataSource) {
