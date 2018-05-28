@@ -1,13 +1,14 @@
 package com.iss.UI;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 
 public class DonorData {
 
     public JFXTextField firstName;
     public JFXTextField lastName;
-    public JFXTextField dateOfBirth;
+    public JFXDatePicker dateOfBirth;
     public JFXTextField address;
     public JFXTextField city;
     public JFXTextField county;

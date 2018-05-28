@@ -12,15 +12,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iss.UI.MainView">
+<AnchorPane prefHeight="600.0" prefWidth="976.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iss.UI.MainView">
    <children>
-      <JFXTabPane fx:id="mainMenu" layoutX="48.0" prefHeight="600.0" prefWidth="655.0" stylesheets="@style.css">
+      <JFXTabPane fx:id="mainMenu" layoutX="48.0" layoutY="18.0" prefHeight="582.0" prefWidth="747.0" stylesheets="@style.css">
          <tabs>
             <Tab fx:id="donorView" text="Donator">
               <content>
                 <AnchorPane fx:id="donorPane" minHeight="0.0" minWidth="0.0" prefHeight="542.0" prefWidth="655.0" style="-fx-background-color: #E9E5E7;">
                      <children>
-                        <AnchorPane layoutX="17.0" layoutY="39.0" prefHeight="70.0" prefWidth="622.0" style="-fx-background-color: radial-gradient(radius 180%, #E1365D, derive(#E1365D, -30%), derive(#E1365D, 30%));; -fx-background-radius: 10;">
+                        <AnchorPane layoutX="17.0" layoutY="39.0" prefHeight="70.0" prefWidth="713.0" style="-fx-background-color: radial-gradient(radius 180%, #E1365D, derive(#E1365D, -30%), derive(#E1365D, 30%));; -fx-background-radius: 10;">
                            <children>
                               <Label fx:id="textRemain" layoutX="133.0" layoutY="17.0" prefHeight="45.0" prefWidth="167.0" text="Au mai rămas" textFill="#f5eeee" visible="false">
                                  <font>
@@ -37,24 +37,14 @@
                                     <Font name="Century Gothic" size="22.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="textDonating" layoutX="217.0" layoutY="12.0" prefHeight="45.0" prefWidth="232.0" text="Poţi dona acum!" textFill="#f2f2f2">
+                              <Label fx:id="textDonating" layoutX="244.0" layoutY="12.0" prefHeight="45.0" prefWidth="232.0" text="Poţi dona acum!" textFill="#f2f2f2">
                                  <font>
                                     <Font name="Century Gothic" size="25.0" />
                                  </font>
                               </Label>
                            </children>
                         </AnchorPane>
-                        <Label layoutX="470.0" layoutY="10.0" prefHeight="25.0" prefWidth="115.0" text="Miruna Radu" textFill="#d0294f">
-                           <font>
-                              <Font name="Century Gothic" size="18.0" />
-                           </font>
-                        </Label>
-                        <ImageView fitHeight="30.0" fitWidth="26.0" layoutX="444.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@icons/user.png" />
-                           </image>
-                        </ImageView>
-                        <JFXTabPane fx:id="donorMenu" layoutX="17.0" layoutY="109.0" prefHeight="430.0" prefWidth="624.0" stylesheets="@css/donorTab.css">
+                        <JFXTabPane fx:id="donorMenu" layoutX="17.0" layoutY="109.0" prefHeight="430.0" prefWidth="707.0" stylesheets="@css/donorTab.css">
                            <tabs>
                               <Tab fx:id="analysisView" text="Vezi analize">
                                 <content>
@@ -92,9 +82,9 @@
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <ScrollPane prefHeight="450.0" prefWidth="609.0" stylesheets="@css/donorTab.css">
+                                          <ScrollPane prefHeight="450.0" prefWidth="696.0" stylesheets="@css/donorTab.css">
                                              <content>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1182.0" prefWidth="597.0" style="-fx-background-color: #E9E5E7;">
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1241.0" prefWidth="678.0" style="-fx-background-color: #E9E5E7;">
                                                    <children>
                                                       <Label layoutX="14.0" layoutY="14.0" text="Conditii de admisibilitate la donarea de sange" textFill="#6f6f6f">
                                                          <font>
@@ -406,7 +396,7 @@
                                                             <Image url="@icons/time.png" />
                                                          </image>
                                                       </ImageView>
-                                                      <JFXButton fx:id="continueButton" layoutX="448.0" layoutY="1071.0" onAction="#handleContinue" prefHeight="32.0" prefWidth="121.0" style="-fx-border-color: #6F6F6F; -fx-border-radius: 5;" stylesheets="@css/button.css" text="Continuă" textFill="#4d4545">
+                                                      <JFXButton fx:id="continueButton" layoutX="488.0" layoutY="1087.0" onAction="#handleContinue" prefHeight="32.0" prefWidth="148.0" style="-fx-border-color: #6F6F6F; -fx-border-radius: 5;" stylesheets="@css/button.css" text="Continuă" textFill="#c31717">
                                                          <font>
                                                             <Font name="Century Gothic" size="14.0" />
                                                          </font>
@@ -418,7 +408,7 @@
                                                             </ImageView>
                                                          </graphic>
                                                       </JFXButton>
-                                                      <Label layoutX="80.0" layoutY="1111.0" prefHeight="71.0" prefWidth="419.0" text="                                                                                                                                                                                         " wrapText="true" />
+                                                      <Label layoutX="139.0" layoutY="1141.0" prefHeight="80.0" prefWidth="369.0" text="                                                                                                                                                                                                                                                                                   " wrapText="true" />
                                                    </children>
                                                 </AnchorPane>
                                              </content>
@@ -428,15 +418,7 @@
                               </Tab>
                            </tabs>
                         </JFXTabPane>
-                        <Button fx:id="logOutButton" layoutX="585.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleLogOut" prefHeight="16.0" prefWidth="32.0" stylesheets="@css/button.css">
-                           <graphic>
-                              <ImageView cache="true" cacheHint="SCALE" fitHeight="28.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@icons/logout.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
+                        <Button fx:id="logOutButton" layoutX="585.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleLogOut" prefHeight="16.0" prefWidth="32.0" stylesheets="@css/button.css" />
                      </children></AnchorPane>
               </content>
                <graphic>
@@ -482,5 +464,20 @@
             </Tab>
          </tabs>
       </JFXTabPane>
+      <Label layoutX="819.0" layoutY="23.0" prefHeight="25.0" prefWidth="115.0" text="Miruna Radu" textFill="#d0294f">
+         <font>
+            <Font name="Century Gothic" size="18.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="30.0" fitWidth="26.0" layoutX="793.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icons/user.png" />
+         </image>
+      </ImageView>
+      <ImageView cache="true" cacheHint="SCALE" fitHeight="28.0" fitWidth="36.0" layoutX="933.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icons/logout.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

@@ -1,7 +1,7 @@
 /*TAB PANE*/
 
 .tab {
-    -fx-pref-width: 300;
+    -fx-pref-width: 350;
     -fx-pref-height: 50;
     -fx-background-color: #F3F3F3;
 }
@@ -140,4 +140,13 @@
 }
 .scroll-pane > .corner {
     -fx-background-color: #E9E5E7;
+}
+
+/* COMBO BOX */
+
+.jfx-combo-box {
+    -fx-prompt-text-fill: #4a4848;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 15px;
+    -fx-text-alignment: center;
 }

@@ -279,7 +279,7 @@ public class MainView {
     }
 
     public void handleContinue() throws IOException{
-        FXMLLoader loader = new FXMLLoader(MainView.class.getResource("/dataDonorView.fxml"));
+        FXMLLoader loader = new FXMLLoader(MainView.class.getResource("/donorQuestionnaire.fxml"));
         ScrollPane root = loader.load();
         donorNowView.setContent(root);
     }
