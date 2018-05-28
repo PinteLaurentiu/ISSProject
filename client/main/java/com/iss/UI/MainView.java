@@ -89,6 +89,15 @@ public class MainView {
     public JFXCheckBox noCheck;
     public JFXButton finalButton;
 
+    //FROM LAB VIEW
+    public JFXComboBox<String> locatiiCombo;
+    public JFXButton transferButton;
+    public TextArea imunoText;
+    public TextArea boliText;
+    public JFXComboBox<String> grupeCombo;
+    public JFXButton completeButton;
+
+
     private Stage stage;
     private ProxyFactory factory;
 
@@ -97,6 +106,7 @@ public class MainView {
 
     @FXML
     public void initialize(){
+        initGrupeCombo();
         checkApt();
         usersTable.setDisable(false);
         hideDetail();
@@ -320,6 +330,15 @@ public class MainView {
         if(tabIndex==4) {
             mainMenu.getSelectionModel().select(adminView);
         }
+        else if(tabIndex==1){
+            mainMenu.getSelectionModel().select(donorView);
+        }
+        else if(tabIndex==2){
+            mainMenu.getSelectionModel().select(doctorView);
+        }
+        else if(tabIndex==3){
+            mainMenu.getSelectionModel().select(labView);
+        }
         if (!roles.contains(Role.DoctorDonare))
             mainMenu.getTabs().remove(labView); // TREBUIE SA FAC DOCTORDONARE
 
@@ -454,6 +473,23 @@ public class MainView {
                 //NU POATE SA DONE*E SI TREBUIE STERS SAU NUSH
             }
         }
+    }
+
+
+    //LAB PART
+
+    public void initGrupeCombo(){
+        //TODO COMBO BOX PENTRU LOCATII
+        grupeCombo.setItems(FXCollections.observableArrayList("0I","0I-","AII","AII-","BIII","BIII-","ABIV","ABIV-"));
+
+    }
+
+    public void handleTransfer(){
+        //TODO CE SE INTAMPLA DUPA CE TRANSFERA
+    }
+
+    public void handleComplete(){
+        //TODO CE SE INTAMPLA DUPA CE COMPLETEA*A
     }
     public void handleLogOut(){
         //TODO : logout

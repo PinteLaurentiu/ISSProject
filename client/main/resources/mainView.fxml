@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
@@ -19,7 +20,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="976.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iss.UI.MainView">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iss.UI.MainView">
    <children>
       <JFXTabPane fx:id="mainMenu" layoutX="48.0" layoutY="18.0" prefHeight="582.0" prefWidth="747.0" stylesheets="@style.css">
          <tabs>
@@ -488,7 +489,7 @@
                                                       <Font name="Century Gothic Bold" size="19.0" />
                                                    </font>
                                                 </Label>
-                                                <JFXTextField fx:id="greutTextField" focusColor="#d0294f" layoutX="120.0" layoutY="63.0">
+                                                <JFXTextField fx:id="greutTextField" focusColor="#d0294f" layoutX="120.0" layoutY="63.0" stylesheets="@css/textField.css">
                                                    <font>
                                                       <Font name="Century Gothic Bold" size="16.0" />
                                                    </font>
@@ -503,7 +504,7 @@
                                                       <Font name="Century Gothic Bold" size="16.0" />
                                                    </font>
                                                 </JFXTextField>
-                                                <JFXTextField fx:id="pulsTextField" focusColor="#d0294f" layoutX="119.0" layoutY="161.0">
+                                                <JFXTextField fx:id="pulsTextField" focusColor="#d0294f" layoutX="119.0" layoutY="161.0" stylesheets="@css/textField.css">
                                                    <font>
                                                       <Font name="Century Gothic Bold" size="16.0" />
                                                    </font>
@@ -580,7 +581,78 @@
                   </ImageView>
                </graphic>
                <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <TableView layoutX="14.0" layoutY="14.0" prefHeight="238.0" prefWidth="716.0" style="-fx-border-color: #6F6F6F; -fx-border-radius: 5;" stylesheets="@css/donorTab.css">
+                          <columns>
+                            <TableColumn prefWidth="173.0" text="Nume" />
+                            <TableColumn prefWidth="198.0" text="Prenume" />
+                              <TableColumn prefWidth="200.0" text="Locatie" />
+                              <TableColumn prefWidth="144.0" text="Tip" />
+                          </columns>
+                        </TableView>
+                        <AnchorPane layoutX="15.0" layoutY="285.0" prefHeight="241.0" prefWidth="331.0" style="-fx-border-color: #6F6F6F; -fx-border-radius: 5;">
+                           <children>
+                              <JFXComboBox fx:id="locatiiCombo" focusColor="#6f6f6f" layoutX="30.0" layoutY="109.0" prefHeight="25.0" prefWidth="272.0" style="-fx-border-color: #6F6F6F; -fx-border-radius: 5;" stylesheets="@css/donorTab.css" unFocusColor="#6f6f6f" />
+                              <Label layoutX="122.0" layoutY="69.0" prefHeight="25.0" prefWidth="76.0" text="locaţia" textFill="#6f6f6f">
+                                 <font>
+                                    <Font name="Century Gothic Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="149.0" layoutY="39.0" text="în" textFill="#6f6f6f">
+                                 <font>
+                                    <Font name="Century Gothic Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <JFXButton fx:id="transferButton" layoutX="30.0" layoutY="170.0" onAction="#handleTransfer" prefHeight="35.0" prefWidth="274.0" style="-fx-border-color: #6F6F6F; -fx-border-radius: 5;" stylesheets="@css/button.css" text="Apasă pentru transfer" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="388.0" layoutY="285.0" prefHeight="240.0" prefWidth="336.0" style="-fx-border-color: #6F6F6F; -fx-border-radius: 5;">
+                           <children>
+                              <TextArea fx:id="imunoText" layoutX="26.0" layoutY="53.0" prefHeight="50.0" prefWidth="285.0" style="-fx-background-radius: 10;" stylesheets="@css/donorTab.css" />
+                              <Label layoutX="26.0" layoutY="30.0" text="Imuno-Hematologie:">
+                                 <font>
+                                    <Font name="Century Gothic" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="25.0" layoutY="108.0" text="Grupa de sange:">
+                                 <font>
+                                    <Font name="Century Gothic" size="18.0" />
+                                 </font>
+                              </Label>
+                              <JFXComboBox fx:id="grupeCombo" focusColor="#6f6f6f" layoutX="179.0" layoutY="108.0" prefHeight="25.0" prefWidth="132.0" style="-fx-border-color: #6f6f6f; -fx-border-radius: 5;" />
+                              <Label layoutX="26.0" layoutY="135.0" text="Boli transmisibile:">
+                                 <font>
+                                    <Font name="Century Gothic" size="18.0" />
+                                 </font>
+                              </Label>
+                              <TextArea fx:id="boliText" layoutX="27.0" layoutY="155.0" prefHeight="52.0" prefWidth="283.0" style="-fx-background-radius: 10;" stylesheets="@css/donorTab.css" />
+                              <JFXButton fx:id="completeButton" layoutX="28.0" layoutY="208.0" onAction="#handleComplete" prefHeight="25.0" prefWidth="281.0" style="-fx-border-color: #6F6F6F; -fx-border-radius: 5;" stylesheets="@css/button2.css" text="Apasă pentru completare">
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                              </JFXButton>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="37.0" layoutY="260.0" prefHeight="49.0" prefWidth="286.0" style="-fx-background-color: #6F6F6F; -fx-background-radius: 5;">
+                           <children>
+                              <Label layoutX="92.0" layoutY="12.0" text="Transferă" textFill="#eee7e7">
+                                 <font>
+                                    <Font name="Century Gothic Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="413.0" layoutY="260.0" prefHeight="49.0" prefWidth="286.0" style="-fx-background-color: #6F6F6F; -fx-background-radius: 5;">
+                           <children>
+                              <Label layoutX="78.0" layoutY="12.0" text="Completează" textFill="#eee7e7">
+                                 <font>
+                                    <Font name="Century Gothic Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </children></AnchorPane>
                </content>
             </Tab>
             <Tab fx:id="adminView" text="Admin">
