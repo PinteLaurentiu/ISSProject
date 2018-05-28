@@ -38,6 +38,6 @@
       <TextField fx:id="emailText" layoutX="52.0" layoutY="316.0" prefHeight="30.0" prefWidth="162.0" promptText="E-mail" />
       <TextField fx:id="telefonText" layoutX="52.0" layoutY="358.0" prefHeight="30.0" prefWidth="162.0" promptText="Telefon" />
       <PasswordField fx:id="passwordText1" layoutX="229.0" layoutY="316.0" prefHeight="30.0" prefWidth="162.0" promptText="Password" />
-      <PasswordField fx:id="passworText2" layoutX="229.0" layoutY="358.0" prefHeight="30.0" prefWidth="162.0" promptText="Repeat password" />
+      <PasswordField fx:id="passwordText2" layoutX="229.0" layoutY="358.0" prefHeight="30.0" prefWidth="162.0" promptText="Repeat password" />
    </Pane>
 </Pane>

@@ -6,11 +6,7 @@ import com.iss.domain.UserRole;
 import com.iss.service.ProxyFactory;
 import com.iss.service.UserProxy;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -20,8 +16,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class MainController {
@@ -43,20 +37,27 @@ public class MainController {
 
     private static final int RECORDS_ON_PAGE = 8;
 
-    public static void show(Stage stage, ProxyFactory factory ) throws IOException {
+    @SuppressWarnings("WeakerAccess")
+    public static void show(Stage stage, ProxyFactory factory) throws IOException {
+        show(stage, factory, 0);
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public static void show(Stage stage, ProxyFactory factory, int tabIndex) throws IOException {
         FXMLLoader loader = new FXMLLoader(MainController.class.getResource("/mainAdministrator.fxml"));
         Pane load = loader.load();
         Scene scene = new Scene(load, load.getPrefWidth() , load.getPrefHeight());
         MainController main = loader.getController();
-        main.init(stage, factory);
+        main.init(stage, factory, tabIndex);
         Animations.animate(scene, stage);
         stage.show();
     }
 
-    private void init(Stage stage, ProxyFactory factory) {
+    private void init(Stage stage, ProxyFactory factory, int tabIndex) {
         this.stage = stage;
         this.factory = factory;
         List<Role> roles = (List<Role>) factory.get(UserProxy.class).getRoles();
+        tabPane.getSelectionModel().select(tabIndex);
         if (!roles.contains(Role.DoctorDonare))
             tabPane.getTabs().remove(doctorCenterTab);
 
@@ -81,11 +82,16 @@ public class MainController {
             usersTable.getColumns().get(3).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getEmail()));
             //noinspection unchecked
             usersTable.getColumns().get(4).setCellValueFactory(x->new ReadOnlyObjectWrapper(rolesAsString(x.getValue())));
-
-
+            usersTable.getSelectionModel().selectedItemProperty().addListener((x,y,z)->userSelectionChanged());
+            userSelectionChanged();
         }
 
         tabPane.getSelectionModel().selectedItemProperty().addListener(this::changedTab);
+    }
+
+    private void userSelectionChanged() {
+        modifyUser.setDisable(usersTable.getSelectionModel().getSelectedItems().size() == 0);
+        deleteUser.setDisable(usersTable.getSelectionModel().getSelectedItems().size() == 0);
     }
 
     private void updateUsers() {
@@ -107,12 +113,14 @@ public class MainController {
         return builder.toString();
     }
 
-    public void changedTab(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
-        if (newValue.equals(usersTab)){
-        }
+    @SuppressWarnings("unused")
+    private void changedTab(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
+        //if (newValue.equals(usersTab)){
+        //}
 
     }
 
+    @SuppressWarnings("unused")
     public void modifyPressed(ActionEvent event) throws IOException {
         Stage stage = new Stage();
         stage.initOwner(this.stage);
@@ -121,9 +129,15 @@ public class MainController {
         updateUsers();
     }
 
+    @SuppressWarnings("unused")
     public void deletePressed(ActionEvent event) {
         User user = usersTable.getSelectionModel().getSelectedItem();
         factory.get(UserProxy.class).remove(user.getId());
         updateUsers();
+    }
+
+    @SuppressWarnings("unused")
+    public void addPressed(ActionEvent actionEvent) throws IOException {
+        Register.show(stage, factory, true);
     }
 }

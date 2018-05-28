@@ -11,6 +11,7 @@ public class ApplicationConfiguration {
     private static final String SMTP_AUTH = "mail.smtp.auth";
     private static final String SMTP_STARTLE = "mail.smtp.starttls.enable";
     private static final String HOST = "host";
+    private static final String SSL_SOCKET_FACTORY_CLASS = "mail.smtp.socketFactory.class";
 
     private Properties properties;
     private static ApplicationConfiguration instance;
@@ -46,4 +47,10 @@ public class ApplicationConfiguration {
     public String getHost() {
         return properties.getProperty(HOST);
     }
+
+    public String getSSLSocketFactoryClass() {
+        return properties.getProperty(SSL_SOCKET_FACTORY_CLASS);
+    }
+
+
 }

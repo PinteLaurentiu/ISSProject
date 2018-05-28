@@ -9,11 +9,10 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class MailService implements IService {
-
-    public void sendActivationMail(String to, Integer id,String uuid) {
-        final String username = "truewolf10@gmail.com";
-        final String password = "741852963marcusg";
-        final String from = "truewolf10@gmail.com";
+    private void sendActivationMailRun(String to, Integer id, String uuid) {
+        final String username = "noreply.donare.sange@gmail.com";
+        final String password = "sangedonare";
+        final String from = "noreply.donare.sange@gmail.com";
         ApplicationConfiguration config = null;
         try {
             config = ApplicationConfiguration.getInstance();
@@ -26,8 +25,7 @@ public class MailService implements IService {
         props.put("mail.smtp.starttls.enable", config.getSmtpStartle());
         props.put("mail.smtp.host", config.getSmtpHost());
         props.put("mail.smtp.port", config.getSmtpPort());
-        props.put("mail.smtp.socketFactory.class",
-                "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.socketFactory.class", config.getSSLSocketFactoryClass());
 
         String sb = "<h2>Confirm Registration</h2>\n" +
                 "<p><a href=\""+ config.getHost() +"/activate?id=" + id + "&uid=" + uuid;
@@ -53,5 +51,22 @@ public class MailService implements IService {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
+    }
+    private void createThreadAndWait(String to, Integer id, String uuid) {
+        try {
+            Thread thread = new Thread(() -> sendActivationMailRun(to, id, uuid));
+            thread.start();
+            for (int i = 0; i < 30/*TODO*/; i++) {
+                if (!thread.isAlive())
+                    break;
+                    Thread.sleep(1000);
+            }
+            if (!thread.isAlive())
+                //noinspection deprecation
+                thread.stop();
+        } catch (Exception ignored) {}
+    }
+    public void sendActivationMail(String to, Integer id, String uuid) {
+        new Thread(()->createThreadAndWait(to, id, uuid)).start();
     }
 }

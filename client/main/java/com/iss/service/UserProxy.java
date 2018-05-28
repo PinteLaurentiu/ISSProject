@@ -2,13 +2,14 @@ package com.iss.service;
 
 import com.iss.domain.Role;
 import com.iss.domain.User;
-import com.iss.service.ProxyFactory;
+import com.iss.exceptions.BadAuthenticationException;
+import com.iss.exceptions.LoginException;
+import com.iss.exceptions.NotActivatedUserException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import javax.security.auth.login.LoginException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -29,11 +30,19 @@ public class UserProxy implements ICrudService<User, Integer> {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
         String formattedString = date.format(formatter) + " 00:00:00";
         try {
-            ResponseEntity responseEntity = restTemplate.postForEntity(host, new String[]{(String) objects[0],
+            ResponseEntity responseEntity;
+            if (!(boolean)objects[12])
+                responseEntity = restTemplate.postForEntity(host, new String[]{(String) objects[0],
                     (String) objects[1], formattedString, (String) objects[3],
                     (String) objects[4], (String) objects[5], (String) objects[6],
                     (String) objects[7], (String) objects[8], (String) objects[9],
                     (String) objects[10], (String) objects[11]}, Object.class);
+            else
+                responseEntity = restTemplate.postForEntity(host, new String[]{(String) objects[0],
+                        (String) objects[1], formattedString, (String) objects[3],
+                        (String) objects[4], (String) objects[5], (String) objects[6],
+                        (String) objects[7], (String) objects[8], (String) objects[9],
+                        (String) objects[10], (String) objects[11], parent.getSessionId().toString()}, Object.class);
             if (responseEntity.getStatusCode() != HttpStatus.OK)
                 throw new Exception();
         } catch (Exception ex){
@@ -82,15 +91,20 @@ public class UserProxy implements ICrudService<User, Integer> {
         return responseEntity.getBody();
     }
 
-    public void login(String user, String password) throws LoginException {
+    public void login(String user, String password) {
 
         try {
             ResponseEntity<Long> response = restTemplate.postForEntity(host + "/login", new String[]{user, password}, Long.class);
+            if (response.getBody().equals(Long.MAX_VALUE))
+                throw new NotActivatedUserException();
             parent.setSessionId(response.getBody());
+        }
+        catch (LoginException ex) {
+            throw ex;
         }
         catch (HttpClientErrorException ex){
             if (ex.getRawStatusCode() == 403)
-                throw new LoginException();
+                throw new BadAuthenticationException();
             else
                 throw new ServerException("Login error");
         }
@@ -107,5 +121,12 @@ public class UserProxy implements ICrudService<User, Integer> {
 
         Role[] roles = responseEntity.getBody();
         return Arrays.asList(roles);
+    }
+
+    public void resendEmail(String email) {
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(host+"/resendEmail", email, String.class);
+        if (responseEntity.getStatusCode() != HttpStatus.OK){
+            throw new ServerException("Couldn't resend the email!");
+        }
     }
 }

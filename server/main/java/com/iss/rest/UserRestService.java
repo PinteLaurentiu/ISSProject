@@ -3,6 +3,7 @@ package com.iss.rest;
 import com.iss.domain.Role;
 import com.iss.domain.User;
 import com.iss.service.BaseServiceFactory;
+import com.iss.service.MailService;
 import com.iss.service.ServiceFactory;
 import com.iss.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @RestController
 @RequestMapping(value = "/users")
 public class UserRestService {
+
     private class Session {
         private Date expire;
         private String email;
@@ -28,6 +30,7 @@ public class UserRestService {
             this.email = email;
         }
     }
+
     private final BaseServiceFactory factory;
     private final AtomicLong guid = new AtomicLong(Long.MIN_VALUE);
     private final ConcurrentHashMap<Long, Session> sessions = new ConcurrentHashMap<>();
@@ -35,6 +38,7 @@ public class UserRestService {
     @Autowired
     public UserRestService(ServiceFactory factory) {
         this.factory = factory;
+        //TODO remove sesions job
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -45,6 +49,9 @@ public class UserRestService {
         String email = strings[0];
         String pass = strings[1];
         if (factory.get(UserService.class).login(email, pass)) {
+            if (!factory.get(UserService.class).isActivated(email))
+                return new ResponseEntity<>(Long.MAX_VALUE, HttpStatus.OK);
+
             long guidValue = guid.incrementAndGet();
 
             Calendar cal = Calendar.getInstance();
@@ -61,8 +68,15 @@ public class UserRestService {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity register(@RequestBody String[] strings){
-        if (strings.length != 12){
+        if (strings.length != 12 && strings.length != 13){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+        if (strings.length == 13) {
+            Session session = sessions.get(Long.valueOf(strings[12]));
+            List<Role> roles = (List<Role>)factory.get(UserService.class).getRoles(session.email);
+            if (!roles.contains(Role.UsersEditor)) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
         }
         factory.get(UserService.class).add((Object[]) strings);
         return new ResponseEntity(HttpStatus.OK);
@@ -124,5 +138,14 @@ public class UserRestService {
         }
         factory.get(UserService.class).remove(key);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/resendEmail", method = RequestMethod.POST)
+    public ResponseEntity<String> resendEmail(@RequestBody String email) {
+        User user = factory.get(UserService.class).getByEmail(email);
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        factory.getService(MailService.class).sendActivationMail(email, user.getId(), user.getActivation().getGeneratedId());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
