@@ -45,6 +45,7 @@ CREATE PROCEDURE setPassword(IN id INT, IN pass VARCHAR(100))
     UPDATE user SET password = SHA1(pass) WHERE idUser = id;
   END;//
 DELIMITER ;
+
 create table userroles
 (
   idUser int not null,
@@ -66,8 +67,7 @@ DELIMITER //
 CREATE PROCEDURE activate(IN id INT, IN uid VARCHAR(100), IN active BIT)
   BEGIN
     UPDATE activations SET isActivated = active WHERE userId = id and generatedId=uid;
-  END;//
-DELIMITER ;
+  END;
 
 
 
@@ -107,3 +107,11 @@ CREATE TABLE consult
   apt BIT NOT NULL,
   CONSTRAINT consult_donare_idDonare_fk FOREIGN KEY (idConsult) REFERENCES donare (idDonare) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+CREATE TABLE transfer
+(
+    idTransfer int PRIMARY KEY NOT NULL,
+    `from` varchar(20) NOT NULL,
+    `to` varchar(20) NOT NULL
+);
+CREATE UNIQUE INDEX transfer_idTransfer_uindex ON transfer (idTransfer)

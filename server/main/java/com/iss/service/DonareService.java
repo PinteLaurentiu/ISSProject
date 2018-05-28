@@ -11,7 +11,6 @@ import com.iss.persistance.UserRepository;
 import java.util.Date;
 
 public class DonareService implements ICrudService<Donare,Integer> {
-
     private final RepositoryFactory factory;
     private final ServiceFactory parent;
 

@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
 public class DetailDonation {
-
     public AnchorPane pane;
     public Label titleLabel;
     public AnchorPane detailPane;
