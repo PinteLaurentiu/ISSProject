@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.iss.domain.Transfer"
+           table="transfer">
+        <id name="idTransfer" column="idTransfer">
+
+        </id>
+        <property name="tip" column="tip"/>
+        <property name="from" column="from"/>
+        <property name="to" column="to"/>
+    </class>
+</hibernate-mapping>
