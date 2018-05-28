@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
@@ -11,6 +13,7 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -441,11 +444,134 @@
                      </image>
                   </ImageView>
                </graphic>
+               <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <JFXTabPane fx:id="doctorCentrePane" prefHeight="489.0" prefWidth="747.0" stylesheets="@css/doctorCentre.css">
+                           <tabs>
+                              <Tab fx:id="consulationTab" text="Consultă ">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="413.0" prefWidth="747.0">
+                                       <children>
+                                          <TableView layoutX="4.0" layoutY="2.0" prefHeight="426.0" prefWidth="367.0" stylesheets="@css/donorTab.css">
+                                            <columns>
+                                              <TableColumn prefWidth="98.0" text="Nume" />
+                                              <TableColumn minWidth="6.0" prefWidth="117.0" text="Prenume" />
+                                                <TableColumn minWidth="0.0" prefWidth="58.0" text="Ora" />
+                                                <TableColumn minWidth="0.0" prefWidth="90.0" text="Data" />
+                                            </columns>
+                                          </TableView>
+                                          <AnchorPane layoutX="379.0" layoutY="6.0" prefHeight="422.0" prefWidth="354.0" style="-fx-border-color: #D0294F; -fx-border-radius: 5;">
+                                             <children>
+                                                <Label layoutX="25.0" layoutY="76.0" prefHeight="17.0" prefWidth="97.0" text="Greutate:" textFill="#6f6f6f">
+                                                   <font>
+                                                      <Font name="Century Gothic Bold" size="19.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="25.0" layoutY="141.0" prefHeight="17.0" prefWidth="97.0" text="Tensiune:" textFill="#6f6f6f">
+                                                   <font>
+                                                      <Font name="Century Gothic Bold" size="19.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="41.0" layoutY="175.0" prefHeight="24.0" prefWidth="49.0" text="Puls:" textFill="#6f6f6f">
+                                                   <font>
+                                                      <Font name="Century Gothic Bold" size="19.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="25.0" layoutY="109.0" prefHeight="24.0" prefWidth="95.0" text="Inaltime:" textFill="#6f6f6f">
+                                                   <font>
+                                                      <Font name="Century Gothic Bold" size="19.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label layoutX="41.0" layoutY="208.0" prefHeight="24.0" prefWidth="49.0" text="Boli:" textFill="#6f6f6f">
+                                                   <font>
+                                                      <Font name="Century Gothic Bold" size="19.0" />
+                                                   </font>
+                                                </Label>
+                                                <JFXTextField fx:id="greutTextField" focusColor="#d0294f" layoutX="120.0" layoutY="63.0">
+                                                   <font>
+                                                      <Font name="Century Gothic Bold" size="16.0" />
+                                                   </font>
+                                                </JFXTextField>
+                                                <JFXTextField fx:id="inaltTextField" focusColor="#d0294f" layoutX="119.0" layoutY="93.0">
+                                                   <font>
+                                                      <Font name="Century Gothic Bold" size="16.0" />
+                                                   </font>
+                                                </JFXTextField>
+                                                <JFXTextField fx:id="tenTextField" focusColor="#d0294f" layoutX="119.0" layoutY="126.0">
+                                                   <font>
+                                                      <Font name="Century Gothic Bold" size="16.0" />
+                                                   </font>
+                                                </JFXTextField>
+                                                <JFXTextField fx:id="pulsTextField" focusColor="#d0294f" layoutX="119.0" layoutY="161.0">
+                                                   <font>
+                                                      <Font name="Century Gothic Bold" size="16.0" />
+                                                   </font>
+                                                </JFXTextField>
+                                                <TextArea fx:id="boliTextArea" layoutX="116.0" layoutY="208.0" prefHeight="179.0" prefWidth="180.0" style="-fx-background-color: #E9E5E7;">
+                                                   <font>
+                                                      <Font name="Century Gothic Bold" size="13.0" />
+                                                   </font>
+                                                </TextArea>
+                                                <JFXButton fx:id="addConsulationButton" layoutX="268.0" layoutY="14.0" onAction="#handleAddConsult" prefHeight="55.0" prefWidth="54.0" stylesheets="@css/button.css">
+                                                   <font>
+                                                      <Font size="9.0" />
+                                                   </font>
+                                                   <graphic>
+                                                      <ImageView fitHeight="41.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@icons/addConsulation.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </JFXButton>
+                                                <JFXCheckBox fx:id="yesCheck" checkedColor="#d0294f" layoutX="117.0" layoutY="398.0" text="DA" textFill="#4a4848">
+                                                   <font>
+                                                      <Font name="Century Gothic Bold" size="12.0" />
+                                                   </font>
+                                                </JFXCheckBox>
+                                                <JFXCheckBox fx:id="noCheck" checkedColor="#d0294f" layoutX="254.0" layoutY="398.0" text="NU" textFill="#4a4848">
+                                                   <font>
+                                                      <Font name="Century Gothic Bold" size="12.0" />
+                                                   </font>
+                                                </JFXCheckBox>
+                                                <Label layoutX="41.0" layoutY="392.0" prefHeight="24.0" prefWidth="49.0" text="Apt:" textFill="#6f6f6f">
+                                                   <font>
+                                                      <Font name="Century Gothic Bold" size="19.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </AnchorPane>
+                                       </children></AnchorPane>
+                                 </content>
+                              </Tab>
+                              <Tab fx:id="seeConsulationTab" text="Vezi consultații">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TableView layoutX="14.0" layoutY="14.0" prefHeight="293.0" prefWidth="723.0" stylesheets="@css/donorTab.css">
+                                             <columns>
+                                                <TableColumn prefWidth="191.0" text="Nume" />
+                                                <TableColumn minWidth="6.0" prefWidth="174.0" text="Prenume" />
+                                                <TableColumn minWidth="0.0" prefWidth="126.0" text="Ora" />
+                                                <TableColumn minWidth="0.0" prefWidth="239.0" text="Data" />
+                                             </columns>
+                                          </TableView>
+                                          <JFXButton fx:id="finalButton" layoutX="14.0" layoutY="315.0" onAction="#handleFinal" prefHeight="55.0" prefWidth="720.0" style="-fx-border-color: #D0294F; -fx-border-radius: 5;" stylesheets="@css/button.css" text="Finalizare donare">
+                                             <font>
+                                                <Font name="Century Gothic" size="19.0" />
+                                             </font>
+                                          </JFXButton>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                           </tabs>
+                        </JFXTabPane>
+                     </children></AnchorPane>
+               </content>
             </Tab>
             <Tab fx:id="labView" text="Laborator">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
                <graphic>
                   <ImageView fx:id="labImage" fitHeight="49.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -453,19 +579,22 @@
                      </image>
                   </ImageView>
                </graphic>
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+               </content>
             </Tab>
             <Tab fx:id="adminView" text="Admin">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="507.0" prefWidth="747.0">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="507.0" prefWidth="747.0">
                      <children>
                         <TableView fx:id="usersTable" layoutX="28.0" layoutY="16.0" prefHeight="305.0" prefWidth="698.0">
-                          <columns>
-                            <TableColumn prefWidth="99.0" text="Nume" />
-                            <TableColumn prefWidth="125.0" text="Prenume" />
+                           <columns>
+                              <TableColumn prefWidth="99.0" text="Nume" />
+                              <TableColumn prefWidth="125.0" text="Prenume" />
                               <TableColumn prefWidth="124.0" text="Telefon" />
                               <TableColumn prefWidth="158.0" text="Email" />
                               <TableColumn prefWidth="191.0" text="Roluri" />
-                          </columns>
+                           </columns>
                            <stylesheets>
                               <URL value="@css/donorTab.css" />
                               <URL value="@css/button.css" />
@@ -475,12 +604,14 @@
                            <stylesheets>
                               <URL value="@css/donorTab.css" />
                               <URL value="@css/button.css" />
-                           </stylesheets></Pagination>
+                           </stylesheets>
+                        </Pagination>
                         <JFXButton fx:id="deleteUsers" layoutX="278.0" layoutY="430.0" onAction="#deletePressed" prefHeight="44.0" prefWidth="200.0" style="-fx-border-color: #D0294F; -fx-border-radius: 5;" stylesheets="@css/button.css" text="Sterge" />
                         <JFXButton fx:id="modifyUsers" layoutX="512.0" layoutY="430.0" onAction="#modifyPressed" prefHeight="47.0" prefWidth="195.0" style="-fx-border-color: #D0294F; -fx-border-radius: 5;" stylesheets="@css/button.css" text="Modifica" />
                         <JFXButton fx:id="addUsers" layoutX="47.0" layoutY="431.0" onAction="#addPressed" prefHeight="44.0" prefWidth="200.0" style="-fx-border-color: #D0294F; -fx-border-radius: 5;" stylesheets="@css/button.css" text="Adauga" />
-                     </children></AnchorPane>
-              </content>
+                     </children>
+                  </AnchorPane>
+               </content>
                <graphic>
                   <ImageView fx:id="adminImage" fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>

@@ -73,6 +73,22 @@ public class MainView {
     public JFXButton deleteUsers;
     public JFXButton addUsers;
 
+
+
+    //FROM DOCTOR CENTRE VIEW
+    public JFXTabPane doctorCentrePane;
+    public Tab consulationTab;
+    public Tab seeConsulationTab;
+    public JFXTextField greutTextField;
+    public JFXTextField inaltTextField;
+    public JFXTextField tenTextField;
+    public JFXTextField pulsTextField;
+    public TextArea boliTextArea;
+    public JFXButton addConsulationButton;
+    public JFXCheckBox yesCheck;
+    public JFXCheckBox noCheck;
+    public JFXButton finalButton;
+
     private Stage stage;
     private ProxyFactory factory;
 
@@ -81,6 +97,7 @@ public class MainView {
 
     @FXML
     public void initialize(){
+        checkApt();
         usersTable.setDisable(false);
         hideDetail();
         donorMenu.getTabs().remove(donorNowView);
@@ -387,6 +404,57 @@ public class MainView {
         Register.show(stage, factory, true);
     }
 
+
+
+    //DOCTOR CENTRE PART
+    public void checkApt() {
+
+        yesCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (noCheck.isSelected() && oldValue == false) {
+                    yesCheck.setSelected(newValue);
+                    noCheck.setSelected(false);
+
+                }
+
+            }
+        });
+        noCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (yesCheck.isSelected() && oldValue == false) {
+                    noCheck.setSelected(newValue);
+                    yesCheck.setSelected(false);
+                }
+            }
+        });
+    }
+
+    public void handleFinal(){
+        //TODO - CE SE INTAMPLA DUPA CE TERMINA DE DONAT SANGE
+    }
+    public void handleAddConsult(){
+        //TODO - CE SE INTAMPLA DUPA CE L-A CONSULTAT
+        if(greutTextField.getText().isEmpty() || inaltTextField.getText().isEmpty() || tenTextField.getText().isEmpty()
+                || pulsTextField.getText().isEmpty()) {
+            //DACA NU A COMPLETAT CEVA
+
+        }
+        else {
+            if(yesCheck.isSelected()) {
+                Float greutate = Float.parseFloat(greutTextField.getText());
+                Integer inaltime = Integer.parseInt(inaltTextField.getText());
+                Float tensiune = Float.parseFloat(tenTextField.getText());
+                Float puls = Float.parseFloat(pulsTextField.getText());
+                String boli = boliTextArea.getText();
+                //TRIMITE CE E DE TRIMIS SAU NUSH
+            }
+            else {
+                //NU POATE SA DONE*E SI TREBUIE STERS SAU NUSH
+            }
+        }
+    }
     public void handleLogOut(){
         //TODO : logout
         System.out.println("LogOut");
