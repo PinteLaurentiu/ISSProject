@@ -40,6 +40,7 @@
           <Tab fx:id="donorTab" closable="false" text="Donor">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <Pagination layoutX="14.0" layoutY="304.0" prefHeight="49.0" prefWidth="757.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="304.0" />
                     <TableView layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
                         <columns>
                             <TableColumn prefWidth="89.0" text="First Name" />
@@ -50,7 +51,6 @@
                             <TableColumn prefWidth="167.0" text="Email" />
                         </columns>
                     </TableView>
-                     <Pagination prefHeight="321.0" prefWidth="751.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                 </AnchorPane>
             </content>
           </Tab>

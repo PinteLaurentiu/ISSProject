@@ -5,6 +5,7 @@ import com.iss.service.ProxyFactory;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import sun.rmi.runtime.Log;
 
 public class Main extends Application {
     @Override

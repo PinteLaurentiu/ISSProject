@@ -60,7 +60,7 @@ public class HibernateRepository<T,K extends Serializable> implements IRepositor
             return query.getResultList();
         }
         catch (Exception e){
-            throw new DatabaseException("Couldn t get all the objects!");
+            throw new DatabaseException("Couldn't get all the objects!");
         }
     }
 

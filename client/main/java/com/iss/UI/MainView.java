@@ -1,14 +1,20 @@
 package com.iss.UI;
 
+import com.iss.domain.Role;
+import com.iss.domain.User;
+import com.iss.domain.UserRole;
 import com.iss.service.ProxyFactory;
+import com.iss.service.UserProxy;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.animation.FadeTransition;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,12 +25,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
 
 
 import java.io.IOException;
+import java.util.List;
 
 public class MainView {
 
@@ -37,9 +46,6 @@ public class MainView {
     public ImageView doctorImage;
     public ImageView labImage;
     public ImageView adminImage;
-    private Stage stage;
-    private ProxyFactory factory;
-
     //From DonourView
 
     public AnchorPane donorPane;
@@ -60,8 +66,22 @@ public class MainView {
     public JFXButton continueButton;
 
 
+    //FROM ADMINISTRATOR VIEW
+    public TableView<User> usersTable;
+    public Pagination paginationUsers;
+    public JFXButton modifyUsers;
+    public JFXButton deleteUsers;
+    public JFXButton addUsers;
+
+    private Stage stage;
+    private ProxyFactory factory;
+
+    private static final int RECORDS_ON_PAGE = 8;
+
+
     @FXML
     public void initialize(){
+        usersTable.setDisable(false);
         hideDetail();
         donorMenu.getTabs().remove(donorNowView);
         initDonor();
@@ -69,6 +89,8 @@ public class MainView {
         initTable();
 
     }
+
+
     public void initTable(){
         JFXTreeTableColumn<Analyses,String> date = new JFXTreeTableColumn<>("Data");
         date.setPrefWidth(100);
@@ -98,7 +120,7 @@ public class MainView {
 
         //Populate
         ObservableList<Analyses> analyses = FXCollections.observableArrayList();
-        analyses.add(new Analyses("23-04-2018","Suceava","nush"));
+        analyses.add(new Analyses("23-04-2018","Suceava","nufsh"));
         analyses.add(new Analyses("23-04-2017","Bucuresti","nush"));
         analyses.add(new Analyses("23-04-2016","Nuj","nush"));
 
@@ -254,23 +276,115 @@ public class MainView {
         }
 
 
-    public static void show(Stage stage, ProxyFactory factory ) throws IOException {
 
-        FXMLLoader loaderMainView = new FXMLLoader(MainView.class.getResource("/mainView.fxml"));
-        AnchorPane rootMainView = loaderMainView.load();
-        Scene sceneMainView = new Scene(rootMainView, rootMainView.getPrefWidth() , rootMainView.getPrefHeight());
+        //ADMIN PART
+        @SuppressWarnings("WeakerAccess")
+        public static void show(Stage stage, ProxyFactory factory) throws IOException {
+            show(stage, factory, 0);
+        }
 
-        MainView mainView = loaderMainView.getController();
-        mainView.init(stage, factory);
-        Animations.animate(sceneMainView, stage);
+    @SuppressWarnings("WeakerAccess")
+    public static void show(Stage stage, ProxyFactory factory, int tabIndex) throws IOException {
+        FXMLLoader loader = new FXMLLoader(MainView.class.getResource("/mainView.fxml"));
+        AnchorPane load = loader.load();
+        Scene scene = new Scene(load, load.getPrefWidth() , load.getPrefHeight());
+        MainView main = loader.getController();
+        main.init(stage, factory, tabIndex);
+        Animations.animate(scene, stage);
         stage.show();
     }
 
 
-    public void init(Stage stage, ProxyFactory factory){
+
+    public void init(Stage stage, ProxyFactory factory,int tabIndex){
         this.stage = stage;
         this.factory = factory;
+        List<Role> roles = (List<Role>) factory.get(UserProxy.class).getRoles();
+        if(tabIndex==4) {
+            mainMenu.getSelectionModel().select(adminView);
+        }
+        if (!roles.contains(Role.DoctorDonare))
+            mainMenu.getTabs().remove(labView); // TREBUIE SA FAC DOCTORDONARE
 
+        if (!roles.contains(Role.DoctorLab))
+            mainMenu.getTabs().remove(labView);
+
+        if (!roles.contains(Role.DoctorSpital))
+            mainMenu.getTabs().remove(doctorView);
+
+        if (!roles.contains(Role.UsersEditor))
+            mainMenu.getTabs().remove(donorView);
+        else{
+            paginationUsers.currentPageIndexProperty().addListener((x,y,z)->updateUsers());
+            updateUsers();
+            //noinspection unchecked
+            usersTable.getColumns().get(0).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getNume()));
+            //noinspection unchecked
+            usersTable.getColumns().get(1).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getPrenume()));
+            //noinspection unchecked
+            usersTable.getColumns().get(2).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getTelefon()));
+            //noinspection unchecked
+            usersTable.getColumns().get(3).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getEmail()));
+            //noinspection unchecked
+            usersTable.getColumns().get(4).setCellValueFactory(x->new ReadOnlyObjectWrapper(rolesAsString(x.getValue())));
+            usersTable.getSelectionModel().selectedItemProperty().addListener((x,y,z)->userSelectionChanged());
+            userSelectionChanged();
+        }
+
+        mainMenu.getSelectionModel().selectedItemProperty().addListener(this::changedTab);
+
+    }
+
+    private void updateUsers() {
+        usersTable.getItems().clear();
+        for (User user : factory.get(UserProxy.class).getAll(RECORDS_ON_PAGE,paginationUsers.getCurrentPageIndex()))
+            usersTable.getItems().add(user);
+        paginationUsers.setPageCount((int)Math.ceil(factory.get(UserProxy.class).count() / (float)RECORDS_ON_PAGE));
+    }
+    private static String rolesAsString(User value) {
+        StringBuilder builder = new StringBuilder();
+        int index = 0;
+        for (UserRole role : value.getRoles()) {
+            if (index != 0)
+                builder.append(", ");
+            builder.append(role.getRole().toString());
+            index++;
+        }
+        return builder.toString();
+    }
+
+    private void userSelectionChanged() {
+        modifyUsers.setDisable(usersTable.getSelectionModel().getSelectedItems().size() == 0);
+        deleteUsers.setDisable(usersTable.getSelectionModel().getSelectedItems().size() == 0);
+    }
+
+
+    @SuppressWarnings("unused")
+    private void changedTab(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
+        //if (newValue.equals(usersTab)){
+        //}
+
+    }
+
+    @SuppressWarnings("unused")
+    public void modifyPressed(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+        stage.initOwner(this.stage);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        EditRoles.show(stage, factory, usersTable.getSelectionModel().getSelectedItem());
+        updateUsers();
+    }
+
+    @SuppressWarnings("unused")
+    public void deletePressed(ActionEvent event) {
+        User user = usersTable.getSelectionModel().getSelectedItem();
+        factory.get(UserProxy.class).remove(user.getId());
+        updateUsers();
+    }
+
+    @SuppressWarnings("unused")
+    public void addPressed(ActionEvent actionEvent) throws IOException {
+        Register.show(stage, factory, true);
     }
 
     public void handleLogOut(){

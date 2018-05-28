@@ -127,7 +127,7 @@ public class Register {
     @SuppressWarnings("unused")
     public void cancelRegister(ActionEvent actionEvent) throws IOException {
         if (administratorMode){
-            MainController.show(stage, factory,4);
+            MainView.show(stage, factory,4);
             return;
         }
         Login.show(stage, factory);

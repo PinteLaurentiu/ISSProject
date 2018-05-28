@@ -56,6 +56,16 @@
     -fx-rippler-fill: -fx-tree-table-rippler-color;
 }
 
+.table-view{
+    -fx-alignment: CENTER;
+
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 14px;
+    -fx-text-fill: #6F6F6F;
+    -fx-tree-table-color: #D0294F;
+    -fx-tree-table-rippler-color : rgba(255, 0, 0, 0.9);
+}
+
 .tree-table-view .column-header ,
 .tree-table-view .column-header-background,
 .tree-table-view .column-header-background .filler{
@@ -67,22 +77,20 @@
     -fx-border-color: #F3F3F3;
 }
 
-.tree-table-view .column-header .label {
-    -fx-alignment: CENTER-RIGHT;
-    -fx-text-fill : #D0294F;
-    -fx-padding : 16 0 16 0 ;
-}
 
 .tree-table-view .column-header .arrow, .tree-table-view .column-header .sort-order-dot{
-    -fx-alignment: CENTER-RIGHT;
+    -fx-alignment: CENTER;
     -fx-background-color : #D0294F;
 }
+
+
 
 
 .tree-table-view .column-header-background{
     -fx-border-width : 0 0.0 1 0;
     -fx-border-color:#F3F3F3;
 }
+
 
 .tree-table-view .tree-table-cell{
     -fx-border-width:0 0 0 0;
@@ -149,4 +157,104 @@
     -fx-font-family: "Century Gothic";
     -fx-font-size: 15px;
     -fx-text-alignment: center;
+}
+
+/* PAGINATION */
+/* Remove spacing */
+.pagination > .pagination-control > .control-box {
+    -fx-spacing: 0;
+    -fx-border-radius: 5;
+}
+
+/* You can control the actual button sizes here */
+.pagination > .pagination-control > .control-box > .number-button,
+.pagination > .pagination-control > .control-box > .bullet-button,
+.pagination > .pagination-control > .control-box > .left-arrow-button,
+.pagination > .pagination-control > .control-box > .right-arrow-button {
+    -fx-background-insets: 0, 1;
+    -fx-background-color: lightgray, lightgrey;
+    -fx-min-width: 30;
+    -fx-min-height: 30;
+    -fx-border-radius: 5;
+}
+
+/* Colors on hover */
+.pagination > .pagination-control > .control-box > .number-button:hover,
+.pagination > .pagination-control > .control-box > .bullet-button:hover,
+.pagination > .pagination-control > .control-box > .left-arrow-button:hover,
+.pagination > .pagination-control > .control-box > .right-arrow-button:hover {
+    -fx-background-insets: 0;
+    -fx-background-color: lightgray;
+    -fx-border-radius: 5;
+}
+
+/* Selected toggle color */
+.pagination > .pagination-control > .control-box > .number-button:selected,
+.pagination > .pagination-control > .control-box > .bullet-button:selected{
+    -fx-background-insets: 0;
+    -fx-background-color: #D0294F;
+    -fx-text-fill: white;
+    -fx-border-radius: 5;
+}
+.pagination > .pagination-control {
+    -fx-font-size: 12px;
+    -fx-font-family: "Century Gothic";
+    -fx-border-radius: 5;
+}
+
+/*TABLE VIEW*/
+.table-view:focused .table-view-cell:selected{
+    -fx-background-color: -fx-tree-table-color  ;
+    -fx-table-cell-border-color: -fx-tree-table-color;
+}
+
+.table-view:focused .table-view-cell:selected .table-view-cell{
+    -fx-text-fill: white;
+}
+.table-view .column-header,.table-view .column-header, .table-view.column-header-background,.table-view-background .filler{
+    -fx-background-color:TRANSPARENT;
+}
+.table-view .column-header{
+    -fx-border-width : 0 1 0 1;
+    -fx-border-color: #F3F3F3;
+}
+.tree-table-view .column-header .label {
+    -fx-alignment: CENTER;
+    -fx-text-fill : #D0294F;
+    -fx-padding : 16 0 16 0 ;
+}
+
+.table-view .column-header .label{
+    -fx-alignment: CENTER;
+    -fx-text-fill : #D0294F;
+    -fx-padding : 16 0 16 0 ;
+}
+.table-view .column-header .arrow .table-view .column-header .sort-order-dot{
+    -fx-alignment: CENTER;
+    -fx-background-color : #D0294F;
+}
+.table-view .column-header-background{
+    -fx-border-width : 0 0.0 1 0;
+    -fx-border-color:#F3F3F3;
+}
+
+
+/*LIST VIEW*/
+.list-cell {
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 16px;
+    -fx-control-inner-background: #6F6F6F;
+}
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-text-fill: #D0294F;
+    -fx-background-color: #E9E5E7;
+}
+
+.list-cell:even { /* <=== changed to even */
+    -fx-background-color: #6F6F6F;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #6F6F6F;
+    -fx-text-fill: white;
 }

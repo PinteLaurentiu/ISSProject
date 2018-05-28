@@ -82,6 +82,7 @@ public class MainController {
             usersTable.getColumns().get(3).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getEmail()));
             //noinspection unchecked
             usersTable.getColumns().get(4).setCellValueFactory(x->new ReadOnlyObjectWrapper(rolesAsString(x.getValue())));
+
             usersTable.getSelectionModel().selectedItemProperty().addListener((x,y,z)->userSelectionChanged());
             userSelectionChanged();
         }

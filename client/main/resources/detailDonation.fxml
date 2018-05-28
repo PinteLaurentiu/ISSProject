@@ -2,13 +2,13 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane fx:id="pane" prefHeight="557.0" prefWidth="644.0" style="-fx-background-color: #E9E5E7;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iss.UI.DetailDonation">
+<AnchorPane fx:id="pane" prefHeight="646.0" prefWidth="644.0" style="-fx-background-color: #E9E5E7;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iss.UI.DetailDonation">
    <children>
       <Label layoutX="243.0" layoutY="20.0" prefHeight="43.0" prefWidth="180.0" text="Detalii donare" textFill="#4a4848">
          <font>
@@ -20,7 +20,7 @@
             <Font name="Century Gothic" size="19.0" />
          </font>
       </Label>
-      <AnchorPane fx:id="detailPane" layoutX="145.0" layoutY="129.0" prefHeight="340.0" prefWidth="354.0" style="-fx-background-color: #F5F1F3; -fx-border-color: #d0294f; -fx-border-radius: 5;">
+      <AnchorPane fx:id="detailPane" layoutX="145.0" layoutY="129.0" prefHeight="439.0" prefWidth="354.0" style="-fx-background-color: #F5F1F3; -fx-border-color: #d0294f; -fx-border-radius: 5;">
          <children>
             <AnchorPane fx:id="centrePane" layoutX="36.0" layoutY="30.0" prefHeight="74.0" prefWidth="300.0" style="-fx-background-color: #E9E5E7; -fx-background-radius: 5;">
                <children>
@@ -50,7 +50,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="namePane" layoutX="40.0" layoutY="234.0" prefHeight="84.0" prefWidth="300.0" style="-fx-background-color: #E9E5E7; -fx-background-radius: 5;">
+            <AnchorPane fx:id="namePane" layoutX="36.0" layoutY="341.0" prefHeight="84.0" prefWidth="300.0" style="-fx-background-color: #E9E5E7; -fx-background-radius: 5;">
                <children>
                   <JFXTextField fx:id="nameTextField" focusColor="#d0294f" layoutX="14.0" layoutY="27.0" prefHeight="25.0" prefWidth="262.0" promptText="Nume Prenume" unFocusColor="#4a4848">
                      <font>
@@ -64,9 +64,23 @@
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="stepThreePane" layoutX="22.0" layoutY="218.0" prefHeight="32.0" prefWidth="137.0" style="-fx-background-color: #F5F1F3; -fx-border-color: #d0294f; -fx-border-radius: 5;">
+            <AnchorPane fx:id="stepFourPane" layoutX="29.0" layoutY="325.0" prefHeight="32.0" prefWidth="137.0" style="-fx-background-color: #F5F1F3; -fx-border-color: #d0294f; -fx-border-radius: 5;">
                <children>
-                  <Label fx:id="stepThreeLabel" layoutX="16.0" layoutY="8.0" prefHeight="17.0" prefWidth="165.0" text="Pas 3. (*optional)" textFill="#4a4848">
+                  <Label fx:id="stepFourLabel" layoutX="16.0" layoutY="8.0" prefHeight="17.0" prefWidth="165.0" text="Pas 4. (*optional)" textFill="#4a4848">
+                     <font>
+                        <Font name="Century Gothic Bold" size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="datePane" layoutX="40.0" layoutY="233.0" prefHeight="74.0" prefWidth="300.0" style="-fx-background-color: #E9E5E7; -fx-background-radius: 5;">
+               <children>
+                  <JFXDatePicker fx:id="datePicker" defaultColor="#d0294f" layoutX="14.0" layoutY="32.0" prefHeight="28.0" prefWidth="254.0" stylesheets="@css/button.css" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="stepThreePane" layoutX="22.0" layoutY="221.0" prefHeight="32.0" prefWidth="137.0" style="-fx-background-color: #F5F1F3; -fx-border-color: #d0294f; -fx-border-radius: 5;">
+               <children>
+                  <Label fx:id="stepThreeLabel" layoutX="16.0" layoutY="8.0" prefHeight="17.0" prefWidth="165.0" text="Pas 3. Selectati data" textFill="#4a4848">
                      <font>
                         <Font name="Century Gothic Bold" size="13.0" />
                      </font>
@@ -75,7 +89,7 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <JFXButton fx:id="donateButton" layoutX="145.0" layoutY="480.0" onAction="#handleDonate" prefHeight="32.0" prefWidth="354.0" style="-fx-border-color: #6F6F6F; -fx-border-radius: 5;" stylesheets="@css/button.css" text="Mă inscriu pentru donare" textFill="#c31717">
+      <JFXButton fx:id="donateButton" layoutX="145.0" layoutY="574.0" onAction="#handleDonate" prefHeight="32.0" prefWidth="354.0" style="-fx-border-color: #6F6F6F; -fx-border-radius: 5;" stylesheets="@css/button.css" text="Mă inscriu pentru donare" textFill="#c31717">
          <font>
             <Font name="Century Gothic" size="14.0" />
          </font>
