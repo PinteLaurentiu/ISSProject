@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC
         "-//Hibernate/Hibernate Mapping DTD//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping>
+<hibernate-mapping default-lazy="false">
     <class name="com.iss.domain.Donare"
            table="donare">
         <id name="id" column="idDonare">
@@ -19,5 +19,7 @@
                      column="centru" not-null="true"/>
         <many-to-one lazy="false" name="user" class="com.iss.domain.User"
                      column="idUser" not-null="true"/>
+        <one-to-one name="consult" class="com.iss.domain.Consult"
+                    cascade="all"/>
     </class>
 </hibernate-mapping>

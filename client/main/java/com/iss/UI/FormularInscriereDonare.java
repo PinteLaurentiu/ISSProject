@@ -2,6 +2,7 @@ package com.iss.UI;
 
 import com.iss.domain.DonareStatus;
 import com.iss.domain.Spital;
+import com.iss.service.ConsultProxy;
 import com.iss.service.DonareProxy;
 import com.iss.service.ProxyFactory;
 import com.iss.service.SpitalProxy;
@@ -80,7 +81,6 @@ public class FormularInscriereDonare {
         cal.set(Calendar.SECOND, 0);
         factory.get(DonareProxy.class).add(centruCombo.getSelectionModel().getSelectedItem(),
                 cal.getTime(), pentruField.getText(), DonareStatus.PROGRAMAT);
-        factory.get(DonareProxy.class).getAll().forEach(System.out::println);
         MainController.show(stage, factory);
     }
 }

@@ -13,6 +13,14 @@ public class Donare {
     private User user;
     private Consult consult;
 
+    public Consult getConsult() {
+        return consult;
+    }
+
+    public void setConsult(Consult consult) {
+        this.consult = consult;
+    }
+
     public int getId() {
         return id;
     }
@@ -59,5 +67,18 @@ public class Donare {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Donare{" +
+                "id=" + id +
+                ", centru=" + centru +
+                ", date=" + date +
+                ", pentru='" + pentru + '\'' +
+                ", status=" + status +
+                ", user=" + user +
+                ", consult=" + consult +
+                '}';
     }
 }

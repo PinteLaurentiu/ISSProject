@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import javax.persistence.OptimisticLockException;
 import java.io.Serializable;
 import java.util.Iterator;
 
@@ -21,7 +22,7 @@ public class HibernateRepository<T,K extends Serializable> implements IRepositor
 
     @Override
     public void put(T elem) {
-        try(Session session = dataSource.getSession()){
+        try(Session session = dataSource.getSession()) {
             Transaction transaction = session.beginTransaction();
             session.saveOrUpdate(elem);
             transaction.commit();
@@ -79,6 +80,18 @@ public class HibernateRepository<T,K extends Serializable> implements IRepositor
         }
         catch (Exception e){
             throw new DatabaseException("Couldn't count all the objects!");
+        }
+    }
+
+    @Override
+    public T getById(int id) {
+        try(Session session = dataSource.getSession()){
+            Transaction transaction = session.beginTransaction();
+            T object = session.load(tClass, id);
+            transaction.commit();
+            return object;
+        }catch (Exception e){
+            throw new DatabaseException("Could not remove");
         }
     }
 }

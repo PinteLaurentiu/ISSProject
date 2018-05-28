@@ -2,11 +2,13 @@
 <!DOCTYPE hibernate-mapping PUBLIC
         "-//Hibernate/Hibernate Mapping DTD//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping>
+<hibernate-mapping default-lazy="false">
     <class name="com.iss.domain.Consult"
            table="consult">
         <id name="idConsult" column="idConsult">
-            <generator class="increment"/>
+            <generator class="foreign">
+                <param name="property">donare</param>
+            </generator>
         </id>
         <property name="greutate" column="greutate"/>
         <property name="tensiune" column="tensiune"/>
@@ -14,7 +16,7 @@
         <property name="boliDepistate" column="boliDepistate"/>
         <property name="inaltime" column="inaltime"/>
         <property name="apt" column="apt"/>
-        <one-to-one name="donare" class="com.iss.domain.Donare"
+        <one-to-one lazy="false" name="donare" class="com.iss.domain.Donare"
                     constrained="true"/>
     </class>
 </hibernate-mapping>

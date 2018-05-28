@@ -2,6 +2,8 @@ package com.iss.UI;
 
 import com.iss.exceptions.BadAuthenticationException;
 import com.iss.exceptions.NotActivatedUserException;
+import com.iss.service.ConsultProxy;
+import com.iss.service.DonareProxy;
 import com.iss.service.ProxyFactory;
 import com.iss.service.UserProxy;
 import javafx.event.ActionEvent;

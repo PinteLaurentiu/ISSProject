@@ -6,4 +6,5 @@ public interface IRepository<T, K> extends Iterable<T>{
     Iterable<T> getAll();
     Iterable<T> getAll(int count, int offset);
     int count();
+    T getById(int id);
 }

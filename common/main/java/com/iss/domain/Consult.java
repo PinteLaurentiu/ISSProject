@@ -4,14 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Consult {
     private int idConsult;
-    @JsonIgnore
-    private Donare donare;
+
     private float greutate;
     private float tensiune;
     private int puls;
     private String boliDepistate;
     private float inaltime;
     private boolean apt;
+    @JsonIgnore
+    private Donare donare;
 
     public Donare getDonare() {
         return donare;
@@ -75,5 +76,19 @@ public class Consult {
 
     public void setApt(boolean apt) {
         this.apt = apt;
+    }
+
+    @Override
+    public String toString() {
+        return "Consult{" +
+                "idConsult=" + idConsult +
+                ", donare=" + donare +
+                ", greutate=" + greutate +
+                ", tensiune=" + tensiune +
+                ", puls=" + puls +
+                ", boliDepistate='" + boliDepistate + '\'' +
+                ", inaltime=" + inaltime +
+                ", apt=" + apt +
+                '}';
     }
 }
