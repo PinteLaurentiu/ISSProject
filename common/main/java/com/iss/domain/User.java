@@ -23,7 +23,16 @@ public class User {
     @JsonIgnore
     private Activation activation;
     private Set<UserRole> roles;
+    @JsonIgnore
+    private Set<Donare> donari;
 
+    public Set<Donare> getDonari() {
+        return donari;
+    }
+
+    public void setDonari(Set<Donare> donari) {
+        this.donari = donari;
+    }
     public User() {
     }
 

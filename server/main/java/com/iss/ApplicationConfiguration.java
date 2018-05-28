@@ -12,6 +12,12 @@ public class ApplicationConfiguration {
     private static final String SMTP_STARTLE = "mail.smtp.starttls.enable";
     private static final String HOST = "host";
     private static final String SSL_SOCKET_FACTORY_CLASS = "mail.smtp.socketFactory.class";
+    private static final String MAIL_SUBJECT = "activation.mail.subject";
+    private static final String MAIL_CONTENT_FORMAT = "activation.mail";
+    private static final String MAIL_SENDER = "activation.mail.sender";
+    private static final String MAIL_PASS = "activation.mail.pass";
+    private static final String MAIL_TIMEOUT = "activation.mail.timeout";
+
 
     private Properties properties;
     private static ApplicationConfiguration instance;
@@ -52,5 +58,21 @@ public class ApplicationConfiguration {
         return properties.getProperty(SSL_SOCKET_FACTORY_CLASS);
     }
 
+    public String getMailSubject() {
+        return properties.getProperty(MAIL_SUBJECT);
+    }
+
+    public String getMailContentFormat() {
+        return properties.getProperty(MAIL_CONTENT_FORMAT);
+    }
+    public String getMailSender() {
+        return properties.getProperty(MAIL_SENDER);
+    }
+    public String getMailPass() {
+        return properties.getProperty(MAIL_PASS);
+    }
+    public Integer getMailTimeout() {
+        return Integer.valueOf(properties.getProperty(MAIL_TIMEOUT));
+    }
 
 }

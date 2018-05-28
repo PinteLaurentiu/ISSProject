@@ -47,7 +47,10 @@ public class Login {
         try {
             String password = showPasswordCheckBox.isSelected() ? passwordText.getText() : passwordHiddenText.getText();
             factory.get(UserProxy.class).login(usernameText.getText(), password);
-            MainController.show(stage, factory);
+
+//            MainController.show(stage, factory); //TODO : fut Iliuta!
+        FormularInscriereDonare.show(stage, factory);
+
         } catch (NotActivatedUserException ex) {
             Optional<ButtonType> answer = new Alert(Alert.AlertType.NONE, "Userul nu este activ! Doriti sa " +
                     "retrimitem \nlinkul de activare pe emailul specificat?", ButtonType.YES, ButtonType.NO).

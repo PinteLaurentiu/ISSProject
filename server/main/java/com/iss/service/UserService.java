@@ -56,6 +56,8 @@ public class UserService implements ICrudService<User,Integer> {
 
         user.setRoles(new HashSet<>());
 
+        user.setDonari(new HashSet<>());
+
         Activation activation = new Activation();
         activation.setGeneratedId(UUID.randomUUID().toString());
         activation.setActivated(objects.length == 13);

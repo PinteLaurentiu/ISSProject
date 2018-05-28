@@ -2,10 +2,7 @@ package com.iss.rest;
 
 import com.iss.domain.Role;
 import com.iss.domain.User;
-import com.iss.service.BaseServiceFactory;
-import com.iss.service.MailService;
-import com.iss.service.ServiceFactory;
-import com.iss.service.UserService;
+import com.iss.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,19 +18,9 @@ import java.util.concurrent.atomic.AtomicLong;
 @RequestMapping(value = "/users")
 public class UserRestService {
 
-    private class Session {
-        private Date expire;
-        private String email;
 
-        Session(Date expire, String email) {
-            this.expire = expire;
-            this.email = email;
-        }
-    }
 
     private final BaseServiceFactory factory;
-    private final AtomicLong guid = new AtomicLong(Long.MIN_VALUE);
-    private final ConcurrentHashMap<Long, Session> sessions = new ConcurrentHashMap<>();
 
     @Autowired
     public UserRestService(ServiceFactory factory) {
@@ -51,16 +38,7 @@ public class UserRestService {
         if (factory.get(UserService.class).login(email, pass)) {
             if (!factory.get(UserService.class).isActivated(email))
                 return new ResponseEntity<>(Long.MAX_VALUE, HttpStatus.OK);
-
-            long guidValue = guid.incrementAndGet();
-
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(new Date());
-            cal.add(Calendar.MINUTE, 30);
-
-            Session session = new Session(cal.getTime(), email);
-            sessions.put(guidValue, session);
-            return new ResponseEntity<>(guidValue, HttpStatus.OK);
+            return new ResponseEntity<>(factory.getService(SessionService.class).createSession(email), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
@@ -72,8 +50,8 @@ public class UserRestService {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         if (strings.length == 13) {
-            Session session = sessions.get(Long.valueOf(strings[12]));
-            List<Role> roles = (List<Role>)factory.get(UserService.class).getRoles(session.email);
+            SessionService.Session session = factory.getService(SessionService.class).getSession(Long.valueOf(strings[12]));
+            List<Role> roles = (List<Role>)factory.get(UserService.class).getRoles(session.getEmail());
             if (!roles.contains(Role.UsersEditor)) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
@@ -90,10 +68,10 @@ public class UserRestService {
 
     @RequestMapping(value = "/roles", method = RequestMethod.POST)
     public ResponseEntity<Iterable<Role>> getRoles(@RequestBody Long sessionId){
-        if (!sessions.containsKey(sessionId))
+        if (!factory.getService(SessionService.class).exists(sessionId))
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        Session session = sessions.get(sessionId);
-        return new ResponseEntity<>(factory.get(UserService.class).getRoles(session.email), HttpStatus.OK);
+        SessionService.Session session = factory.getService(SessionService.class).getSession(sessionId);
+        return new ResponseEntity<>(factory.get(UserService.class).getRoles(session.getEmail()), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/getPaginated", method = RequestMethod.POST)
@@ -101,7 +79,8 @@ public class UserRestService {
         if (values.length != 3){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        List<Role> roles = (List<Role>)factory.get(UserService.class).getRoles(sessions.get(values[2]).email);
+        SessionService.Session session = factory.getService(SessionService.class).getSession(values[2]);
+        List<Role> roles = (List<Role>)factory.get(UserService.class).getRoles(session.getEmail());
         if (!roles.contains(Role.UsersEditor)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -117,8 +96,8 @@ public class UserRestService {
     public ResponseEntity editRoles(@RequestBody User user, @PathVariable Long sessionId) {
 
         //noinspection SuspiciousMethodCalls
-        Session session = sessions.get(sessionId);
-        List<Role> roles = (List<Role>)factory.get(UserService.class).getRoles(session.email);
+        SessionService.Session session = factory.getService(SessionService.class).getSession(sessionId);
+        List<Role> roles = (List<Role>)factory.get(UserService.class).getRoles(session.getEmail());
         if (!roles.contains(Role.UsersEditor)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -131,8 +110,8 @@ public class UserRestService {
 
     @RequestMapping(value = "/{sessionId}/{key}", method = RequestMethod.DELETE)
     public ResponseEntity deleteUsers(@PathVariable Integer key, @PathVariable Long sessionId){
-        Session session = sessions.get(sessionId);
-        List<Role> roles = (List<Role>)factory.get(UserService.class).getRoles(session.email);
+        SessionService.Session session = factory.getService(SessionService.class).getSession(sessionId);
+        List<Role> roles = (List<Role>)factory.get(UserService.class).getRoles(session.getEmail());
         if (!roles.contains(Role.UsersEditor)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

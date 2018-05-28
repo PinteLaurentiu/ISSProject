@@ -26,5 +26,9 @@
             <key column="idUser" not-null="true" />
             <one-to-many class="com.iss.domain.UserRole"/>
         </set>
+        <set lazy="false" name="donari" inverse="true" cascade="all-delete-orphan" >
+            <key column="idUser" not-null="true" />
+            <one-to-many class="com.iss.domain.Donare"/>
+        </set>
     </class>
 </hibernate-mapping>

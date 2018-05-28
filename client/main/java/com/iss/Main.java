@@ -11,7 +11,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         primaryStage.setTitle("Blood Donation");
         primaryStage.setOnCloseRequest(x -> Platform.exit());
-        MainView.show(primaryStage,new ProxyFactory("http://localhost:8080"));
+        Login.show(primaryStage,new ProxyFactory("http://localhost:8080"));
     }
 
     public static void main(String[] args) {

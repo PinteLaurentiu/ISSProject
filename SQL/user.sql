@@ -29,18 +29,22 @@ CREATE TABLE activations
   CONSTRAINT activations_user_idUser_fk
   FOREIGN KEY (userId) REFERENCES user (idUser)
 );
+delimiter //
 
 CREATE PROCEDURE login(IN emailVar VARCHAR(100), IN pass VARCHAR(100))
   BEGIN
     SELECT COUNT(*) FROM user
       WHERE email = emailVar AND password = SHA1(pass);
-  END;
+  END;//
+
+DELIMITER ;
+DELIMITER //
 
 CREATE PROCEDURE setPassword(IN id INT, IN pass VARCHAR(100))
   BEGIN
     UPDATE user SET password = SHA1(pass) WHERE idUser = id;
-  END;
-
+  END;//
+DELIMITER ;
 create table userroles
 (
   idUser int not null,
@@ -57,7 +61,49 @@ create index userRoles_user_idUser_fk
   on userroles (idUser)
 ;
 
+
+DELIMITER //
 CREATE PROCEDURE activate(IN id INT, IN uid VARCHAR(100), IN active BIT)
   BEGIN
     UPDATE activations SET isActivated = active WHERE userId = id and generatedId=uid;
-  END;
+  END;//
+DELIMITER ;
+
+
+
+CREATE TABLE donare
+(
+  idDonare INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  centru INT NOT NULL,
+  ora DATETIME NOT NULL,
+  pentru VARCHAR(300),
+  status INT,
+  CONSTRAINT donare_spital_idSpital_fk FOREIGN KEY (centru) REFERENCES spital (idSpital)
+);
+
+CREATE TABLE spital
+(
+  idSpital INT AUTO_INCREMENT
+    PRIMARY KEY,
+  nume     VARCHAR(200) NOT NULL,
+  CONSTRAINT spitale_nume_uindex
+  UNIQUE (nume)
+);
+
+
+ALTER TABLE donare ADD idUser INT NOT NULL;
+ALTER TABLE donare
+ADD CONSTRAINT donare_user_idUser_fk
+FOREIGN KEY (idUser) REFERENCES user (idUser) ON DELETE CASCADE ON UPDATE CASCADE;
+
+CREATE TABLE consult
+(
+  idConsult INT PRIMARY KEY NOT NULL,
+  greutate FLOAT NOT NULL,
+  tensiune FLOAT NOT NULL,
+  puls INT NOT NULL,
+  boliDepistate VARCHAR(500),
+  inaltime FLOAT NOT NULL,
+  apt BIT NOT NULL,
+  CONSTRAINT consult_donare_idDonare_fk FOREIGN KEY (idConsult) REFERENCES donare (idDonare) ON DELETE CASCADE ON UPDATE CASCADE
+);

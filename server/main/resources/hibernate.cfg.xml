@@ -9,7 +9,7 @@
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="connection.url">jdbc:mysql://localhost:3306/iss</property>
         <property name = "hibernate.connection.username">root</property>
-        <property name = "hibernate.connection.password">123456</property>      <!--TODO: change username and password -->
+        <property name = "hibernate.connection.password">truewolf10</property>      <!--TODO: change username and password -->
         <property name="hibernate.hbm2ddl.auto">validate</property>
 
         <property name="show_sql">true</property>
@@ -18,5 +18,8 @@
         <mapping resource="user.hbm.xml"/>
         <mapping resource="activation.hbm.xml"/>
         <mapping resource="userRole.hbm.xml"/>
+        <mapping resource="spitale.hbm.xml"/>
+        <mapping resource="donare.hbm.xml"/>
+        <mapping resource="consult.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

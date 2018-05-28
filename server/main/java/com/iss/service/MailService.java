@@ -10,26 +10,20 @@ import java.util.Properties;
 
 public class MailService implements IService {
     private void sendActivationMailRun(String to, Integer id, String uuid) {
-        final String username = "noreply.donare.sange@gmail.com";
-        final String password = "sangedonare";
-        final String from = "noreply.donare.sange@gmail.com";
-        ApplicationConfiguration config = null;
-        try {
-            config = ApplicationConfiguration.getInstance();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ApplicationConfiguration config = getApplicationConfiguration();
+        if (config == null) return;
+        final String username = config.getMailSender();
+        final String password = config.getMailPass();
+        final String from = config.getMailSender();
+
         Properties props = new Properties();
-        assert config != null;
         props.put("mail.smtp.auth", config.getSmtpAuth());
         props.put("mail.smtp.starttls.enable", config.getSmtpStartle());
         props.put("mail.smtp.host", config.getSmtpHost());
         props.put("mail.smtp.port", config.getSmtpPort());
         props.put("mail.smtp.socketFactory.class", config.getSSLSocketFactoryClass());
-
-        String sb = "<h2>Confirm Registration</h2>\n" +
-                "<p><a href=\""+ config.getHost() +"/activate?id=" + id + "&uid=" + uuid;
-        sb += "\">Click it to confirm the registration. </a></p>";
+        String messageEmail = String.format(config.getMailContentFormat(), config.getHost(),
+                id, uuid);
 
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
@@ -44,19 +38,34 @@ public class MailService implements IService {
             message.setFrom(new InternetAddress(from));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(to));
-            message.setSubject("Testing Subject");
-            message.setContent(sb,"text/html");
+            message.setSubject(config.getMailSubject());
+            message.setContent(messageEmail,"text/html");
 
             Transport.send(message);
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
     }
+
+    private ApplicationConfiguration getApplicationConfiguration() {
+        ApplicationConfiguration config = null;
+        try {
+            config = ApplicationConfiguration.getInstance();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (config == null)
+            return null;
+        return config;
+    }
+
     private void createThreadAndWait(String to, Integer id, String uuid) {
+        ApplicationConfiguration config = getApplicationConfiguration();
         try {
             Thread thread = new Thread(() -> sendActivationMailRun(to, id, uuid));
             thread.start();
-            for (int i = 0; i < 30/*TODO*/; i++) {
+            if (config == null) return;
+            for (int i = 0; i < config.getMailTimeout(); i++) {
                 if (!thread.isAlive())
                     break;
                     Thread.sleep(1000);

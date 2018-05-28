@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.iss.domain.Donare"
+           table="donare">
+        <id name="id" column="idDonare">
+            <generator class="increment"/>
+        </id>
+        <property name="date" type="timestamp" column="ora"/>
+        <property name="pentru" column="pentru"/>
+        <property name="status" column="status">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.iss.domain.DonareStatus</param>
+            </type>
+        </property>
+        <many-to-one lazy="false" name="centru" class="com.iss.domain.Spital"
+                     column="centru" not-null="true"/>
+        <many-to-one lazy="false" name="user" class="com.iss.domain.User"
+                     column="idUser" not-null="true"/>
+    </class>
+</hibernate-mapping>

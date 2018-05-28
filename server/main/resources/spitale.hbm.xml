@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.iss.domain.Spital"
+           table="spital">
+        <id name="id" column="idSpital">
+            <generator class="increment"/>
+        </id>
+        <property name="nume" column="nume"/>
+        <set lazy="false" name="donari" inverse="true" cascade="all-delete-orphan" >
+            <key column="idDonare" not-null="true" />
+            <one-to-many class="com.iss.domain.Donare"/>
+        </set>
+    </class>
+</hibernate-mapping>
