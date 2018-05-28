@@ -1,0 +1,738 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane fx:id="thisScroll" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="661.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iss.UI.DonorQuestionnaire">
+   <content>
+      <AnchorPane fx:id="thisPane" prefHeight="1400.0" prefWidth="646.0" style="-fx-background-color: #E9E5E7;">
+         <children>
+            <Label layoutX="236.0" layoutY="14.0" text="CHESTIONAR" textFill="#6f6f6f">
+               <font>
+                  <Font name="Century Gothic" size="28.0" />
+               </font>
+            </Label>
+            <Label layoutX="58.0" layoutY="63.0" text="1." textFill="#d0294f">
+               <font>
+                  <Font name="Century Gothic Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="73.0" layoutY="63.0" prefHeight="22.0" prefWidth="360.0" text="Consideraţi că aveţi o stare bună de sănătate?" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <JFXCheckBox fx:id="one" checkedColor="#d0294f" layoutX="468.0" layoutY="65.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="oneN" checkedColor="#d0294f" layoutX="521.0" layoutY="65.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <Label layoutX="75.0" layoutY="91.0" prefHeight="22.0" prefWidth="184.0" text="În ultima vreme aţi avut:" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="268.0" layoutY="86.0" prefHeight="47.0" prefWidth="172.0" text="o pierdere în greutate neaşteptată" textAlignment="CENTER" textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="18.0" fitWidth="42.0" layoutX="252.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/question.png" />
+               </image>
+            </ImageView>
+            <JFXCheckBox fx:id="oneOne" checkedColor="#d0294f" layoutX="468.0" layoutY="93.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="oneOneN" checkedColor="#d0294f" layoutX="521.0" layoutY="93.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <ImageView fitHeight="18.0" fitWidth="42.0" layoutX="252.0" layoutY="133.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/question.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="270.0" layoutY="119.0" prefHeight="47.0" prefWidth="172.0" text=" febră inexplicabilă" textAlignment="CENTER" textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <JFXCheckBox fx:id="oneTwo" checkedColor="#d0294f" layoutX="468.0" layoutY="131.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="oneTwoN" checkedColor="#d0294f" layoutX="521.0" layoutY="131.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <ImageView fitHeight="18.0" fitWidth="42.0" layoutX="253.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/question.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="272.0" layoutY="143.0" prefHeight="65.0" prefWidth="184.0" text="tratament stomatologic, vaccinări " textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <JFXCheckBox fx:id="oneThree" checkedColor="#d0294f" layoutX="468.0" layoutY="160.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="oneThreeN" checkedColor="#d0294f" layoutX="521.0" layoutY="160.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <Label layoutX="58.0" layoutY="208.0" text="2." textFill="#d0294f">
+               <font>
+                  <Font name="Century Gothic Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="74.0" layoutY="208.0" prefHeight="22.0" prefWidth="360.0" text="Urmaţi vreun tratament medicamentos?" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <JFXCheckBox fx:id="two" checkedColor="#d0294f" layoutX="468.0" layoutY="210.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="twoN" checkedColor="#d0294f" layoutX="521.0" layoutY="210.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <Label layoutX="58.0" layoutY="236.0" text="3." textFill="#d0294f">
+               <font>
+                  <Font name="Century Gothic Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="74.0" layoutY="236.0" prefHeight="22.0" prefWidth="360.0" text="În ultimele 12 luni aţi avut contact sexual cu:" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="18.0" fitWidth="42.0" layoutX="115.0" layoutY="267.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/question.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="135.0" layoutY="252.0" prefHeight="47.0" prefWidth="307.0" text="un partener cu hepatită sau HIV pozitiv" textAlignment="CENTER" textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <JFXCheckBox fx:id="threeOne" checkedColor="#d0294f" layoutX="468.0" layoutY="267.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="threeOneN" checkedColor="#d0294f" layoutX="521.0" layoutY="267.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <ImageView fitHeight="18.0" fitWidth="42.0" layoutX="115.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/question.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="135.0" layoutY="276.0" prefHeight="47.0" prefWidth="307.0" text="un partener ce se droghează prin injecţii" textAlignment="CENTER" textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <JFXCheckBox fx:id="threeTwo" checkedColor="#d0294f" layoutX="468.0" layoutY="291.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="threeTwoN" checkedColor="#d0294f" layoutX="521.0" layoutY="291.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <ImageView fitHeight="18.0" fitWidth="42.0" layoutX="115.0" layoutY="314.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/question.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="135.0" layoutY="300.0" prefHeight="47.0" prefWidth="307.0" text="un partener care este plătit pentru sex " textAlignment="CENTER" textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <JFXCheckBox fx:id="threeThree" checkedColor="#d0294f" layoutX="468.0" layoutY="315.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="threeThreeN" checkedColor="#d0294f" layoutX="521.0" layoutY="316.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <ImageView fitHeight="18.0" fitWidth="42.0" layoutX="115.0" layoutY="338.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/question.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="135.0" layoutY="324.0" prefHeight="47.0" prefWidth="307.0" text="un partener cu hemofilie" textAlignment="CENTER" textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <JFXCheckBox fx:id="threeFour" checkedColor="#d0294f" layoutX="468.0" layoutY="338.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="threeFourN" checkedColor="#d0294f" layoutX="521.0" layoutY="340.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <ImageView fitHeight="18.0" fitWidth="42.0" layoutX="115.0" layoutY="362.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/question.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="135.0" layoutY="348.0" prefHeight="47.0" prefWidth="307.0" text="parteneri multipli " textAlignment="CENTER" textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <JFXCheckBox fx:id="threeFive" checkedColor="#d0294f" layoutX="468.0" layoutY="363.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="threeFiveN" checkedColor="#d0294f" layoutX="521.0" layoutY="364.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <ImageView fitHeight="18.0" fitWidth="42.0" layoutX="71.0" layoutY="395.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/question.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="89.0" layoutY="381.0" prefHeight="47.0" prefWidth="307.0" text="V-aţi injectat vreodată droguri?" textAlignment="CENTER" textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <JFXCheckBox fx:id="threeSix" checkedColor="#d0294f" layoutX="468.0" layoutY="395.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="threeSixN" checkedColor="#d0294f" layoutX="521.0" layoutY="395.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <ImageView fitHeight="18.0" fitWidth="42.0" layoutX="71.0" layoutY="419.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/question.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="90.0" layoutY="414.0" prefHeight="47.0" prefWidth="335.0" text="Aţi acceptat bani sau droguri pentru a întreţine relaţii sexuale? " textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <JFXCheckBox fx:id="threeSeven" checkedColor="#d0294f" layoutX="468.0" layoutY="428.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="threeSevenN" checkedColor="#d0294f" layoutX="521.0" layoutY="428.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <ImageView fitHeight="18.0" fitWidth="18.0" layoutX="384.0" layoutY="463.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/male.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="87.0" layoutY="448.0" prefHeight="47.0" prefWidth="335.0" text=" Aţi avut relaţii sexuale cu un alt bărbat? " textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="18.0" fitWidth="42.0" layoutX="71.0" layoutY="463.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/question.png" />
+               </image>
+            </ImageView>
+            <JFXCheckBox fx:id="threeEight" checkedColor="#d0294f" layoutX="468.0" layoutY="460.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="threeEightN" checkedColor="#d0294f" layoutX="521.0" layoutY="460.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <ImageView fitHeight="18.0" fitWidth="42.0" layoutX="71.0" layoutY="486.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/question.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="87.0" layoutY="479.0" prefHeight="47.0" prefWidth="335.0" text=" A avut partenerul dumneavoastră relaţii sexuale cu un alt bărbat?" textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <JFXCheckBox fx:id="threeNine" checkedColor="#d0294f" layoutX="468.0" layoutY="487.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="threeNineN" checkedColor="#d0294f" layoutX="521.0" layoutY="487.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <ImageView fitHeight="18.0" fitWidth="18.0" layoutX="384.0" layoutY="486.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/female.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="18.0" fitWidth="42.0" layoutX="71.0" layoutY="526.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/question.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="92.0" layoutY="519.0" prefHeight="47.0" prefWidth="335.0" text="Aţi schimbat partenerul (partenera) în ultimele 6 luni? " textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <JFXCheckBox fx:id="threeTen" checkedColor="#d0294f" layoutX="468.0" layoutY="526.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="threeTenN" checkedColor="#d0294f" layoutX="521.0" layoutY="526.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <Label layoutX="58.0" layoutY="580.0" text="4." textFill="#d0294f">
+               <font>
+                  <Font name="Century Gothic Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="74.0" layoutY="580.0" prefHeight="22.0" prefWidth="383.0" text="De la ultima donare, sau în ultimele 12 luni aţi suferit:" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="18.0" fitWidth="42.0" layoutX="115.0" layoutY="615.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/question.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="135.0" layoutY="609.0" prefHeight="47.0" prefWidth="307.0" text="o intervenţie chirurgicală sau investigaţii medicale?" textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="18.0" fitWidth="42.0" layoutX="115.0" layoutY="652.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/question.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="135.0" layoutY="647.0" prefHeight="47.0" prefWidth="307.0" text="tatuaje, acupunctură, găuri pentru cercei?" textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="18.0" fitWidth="42.0" layoutX="115.0" layoutY="694.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/question.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="135.0" layoutY="680.0" prefHeight="47.0" prefWidth="307.0" text="aţi fost însărcinată?" textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <JFXCheckBox fx:id="fourOne" checkedColor="#d0294f" layoutX="468.0" layoutY="615.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="fourTwo" checkedColor="#d0294f" layoutX="468.0" layoutY="656.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="fourThree" checkedColor="#d0294f" layoutX="468.0" layoutY="694.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="fourOneN" checkedColor="#d0294f" layoutX="521.0" layoutY="615.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="fourTwoN" checkedColor="#d0294f" layoutX="521.0" layoutY="656.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="fourThreeN" checkedColor="#d0294f" layoutX="521.0" layoutY="694.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <ImageView fitHeight="18.0" fitWidth="42.0" layoutX="71.0" layoutY="723.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/question.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="90.0" layoutY="708.0" prefHeight="47.0" prefWidth="307.0" text="Data naşterii ultimului copil " textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="18.0" fitWidth="18.0" layoutX="292.0" layoutY="723.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/female.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="18.0" fitWidth="42.0" layoutX="71.0" layoutY="751.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/question.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="90.0" layoutY="737.0" prefHeight="47.0" prefWidth="307.0" text="Data ultimei menstruaţii" textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="18.0" fitWidth="18.0" layoutX="263.0" layoutY="752.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/female.png" />
+               </image>
+            </ImageView>
+            <JFXDatePicker fx:id="fourFour" defaultColor="#d0294f" layoutX="467.0" layoutY="716.0" prefHeight="28.0" prefWidth="131.0" stylesheets="@css/button.css" />
+            <JFXDatePicker fx:id="fourFive" defaultColor="#d0294f" layoutX="467.0" layoutY="742.0" prefHeight="28.0" prefWidth="131.0" stylesheets="@css/button.css" />
+            <Label layoutX="58.0" layoutY="798.0" text="5." textFill="#d0294f">
+               <font>
+                  <Font name="Century Gothic Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="76.0" layoutY="798.0" prefHeight="22.0" prefWidth="383.0" text="V-aţi născut, aţi trăit sau călătorit în străinătate? " textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <JFXCheckBox fx:id="five" checkedColor="#d0294f" layoutX="468.0" layoutY="800.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="fiveN" checkedColor="#d0294f" layoutX="521.0" layoutY="800.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <Label layoutX="90.0" layoutY="829.0" prefHeight="22.0" prefWidth="58.0" text="Unde?" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <JFXTextField fx:id="fiveOne" focusColor="#d0294f" layoutX="148.0" layoutY="825.0" prefHeight="25.0" prefWidth="276.0" unFocusColor="#5a5a5a">
+               <font>
+                  <Font name="Century Gothic" size="12.0" />
+               </font>
+            </JFXTextField>
+            <Label layoutX="58.0" layoutY="866.0" text="6." textFill="#d0294f">
+               <font>
+                  <Font name="Century Gothic Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="80.0" layoutY="866.0" prefHeight="22.0" prefWidth="383.0" text="Aţi fost în detenţie (INCHISOARE) în ultimul an?" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <JFXCheckBox fx:id="six" checkedColor="#d0294f" layoutX="468.0" layoutY="868.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="sixN" checkedColor="#d0294f" layoutX="521.0" layoutY="868.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <Label layoutX="58.0" layoutY="899.0" text="7." textFill="#d0294f">
+               <font>
+                  <Font name="Century Gothic Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="81.0" layoutY="894.0" prefHeight="47.0" prefWidth="350.0" text="Aţi fost expuşi la hepatită(bolnavi în familie sau risc profesional)?" textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <JFXCheckBox fx:id="seven" checkedColor="#d0294f" layoutX="468.0" layoutY="901.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="sevenN" checkedColor="#d0294f" layoutX="521.0" layoutY="901.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <Label layoutX="58.0" layoutY="941.0" text="8." textFill="#d0294f">
+               <font>
+                  <Font name="Century Gothic Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="80.0" layoutY="929.0" prefHeight="47.0" prefWidth="350.0" text="Aţi suferit vreodată de:" textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="18.0" fitWidth="42.0" layoutX="78.0" layoutY="967.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/question.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="99.0" layoutY="952.0" prefHeight="47.0" prefWidth="350.0" text="icter, tuberculoză, febră reumatică, malarie?" textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="18.0" fitWidth="42.0" layoutX="78.0" layoutY="990.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/question.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="99.0" layoutY="976.0" prefHeight="47.0" prefWidth="350.0" text="boli de inimă, tensiune arterială mare sau mică?" textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="18.0" fitWidth="42.0" layoutX="80.0" layoutY="1014.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/question.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="99.0" layoutY="1000.0" prefHeight="47.0" prefWidth="350.0" text="boli transmise sexual (hiv, sifilis etc)" textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="18.0" fitWidth="42.0" layoutX="81.0" layoutY="1038.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/question.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="99.0" layoutY="1024.0" prefHeight="47.0" prefWidth="350.0" text="accidente vasculare cardiace sau cerebrale?" textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="18.0" fitWidth="42.0" layoutX="81.0" layoutY="1062.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/question.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="99.0" layoutY="1048.0" prefHeight="47.0" prefWidth="350.0" text="convulsii, boli nervoase?" textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="18.0" fitWidth="42.0" layoutX="82.0" layoutY="1086.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/question.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="99.0" layoutY="1072.0" prefHeight="47.0" prefWidth="350.0" text="boli cronice (diabet, ulcer, cancer, astm) ?" textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="83.0" layoutY="1104.0" prefHeight="47.0" prefWidth="131.0" text="Sunteţi fumător?" textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="80.0" layoutY="1129.0" prefHeight="47.0" prefWidth="250.0" text="Aţi consumat alcool recent ?" textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <JFXCheckBox fx:id="eightOne" checkedColor="#d0294f" layoutX="468.0" layoutY="967.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="eightTwo" checkedColor="#d0294f" layoutX="468.0" layoutY="990.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="eightThree" checkedColor="#d0294f" layoutX="468.0" layoutY="1014.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="eightFour" checkedColor="#d0294f" layoutX="468.0" layoutY="1039.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="eightFive" checkedColor="#d0294f" layoutX="468.0" layoutY="1062.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="eightSix" checkedColor="#d0294f" layoutX="468.0" layoutY="1087.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="eightOneN" checkedColor="#d0294f" layoutX="521.0" layoutY="967.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="eightTwoN" checkedColor="#d0294f" layoutX="521.0" layoutY="991.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="eightThreeN" checkedColor="#d0294f" layoutX="521.0" layoutY="1014.0" prefHeight="5.0" prefWidth="42.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="eightFourN" checkedColor="#d0294f" layoutX="521.0" layoutY="1039.0" prefHeight="5.0" prefWidth="42.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="eightFiveN" checkedColor="#d0294f" layoutX="521.0" layoutY="1063.0" prefHeight="5.0" prefWidth="42.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="eightSixN" checkedColor="#d0294f" layoutX="521.0" layoutY="1086.0" prefHeight="5.0" prefWidth="42.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="eightSeven" checkedColor="#d0294f" layoutX="468.0" layoutY="1118.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="eightSevenN" checkedColor="#d0294f" layoutX="521.0" layoutY="1118.0" prefHeight="5.0" prefWidth="42.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="eightEightN" checkedColor="#d0294f" layoutX="521.0" layoutY="1142.0" prefHeight="5.0" prefWidth="42.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <Label layoutX="58.0" layoutY="1181.0" text="9." textFill="#d0294f">
+               <font>
+                  <Font name="Century Gothic Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="79.0" layoutY="1169.0" prefHeight="47.0" prefWidth="383.0" text=" Aţi fost refuzat sau amânat la o donare anterioară? " textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <JFXCheckBox fx:id="eightEight" checkedColor="#d0294f" layoutX="468.0" layoutY="1144.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="nine" checkedColor="#d0294f" layoutX="468.0" layoutY="1184.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="nineN" checkedColor="#d0294f" layoutX="521.0" layoutY="1184.0" prefHeight="5.0" prefWidth="42.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <Label layoutX="54.0" layoutY="1227.0" text="10." textFill="#d0294f">
+               <font>
+                  <Font name="Century Gothic Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="83.0" layoutY="1225.0" prefHeight="65.0" prefWidth="383.0" text="Aveţi pasiuni sau ocupaţii ce necesită atenţie specială 24 orepostdonare (de ex: sofer, alpinist, scafandru, etc) ? " textFill="#4a4848" wrapText="true">
+               <font>
+                  <Font name="Century Gothic" size="15.0" />
+               </font>
+            </Label>
+            <JFXCheckBox fx:id="ten" checkedColor="#d0294f" layoutX="468.0" layoutY="1238.0" text="DA" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="tenN" checkedColor="#d0294f" layoutX="521.0" layoutY="1238.0" prefHeight="5.0" prefWidth="42.0" text="NU" textFill="#4a4848">
+               <font>
+                  <Font name="Century Gothic Bold" size="12.0" />
+               </font>
+            </JFXCheckBox>
+            <JFXButton fx:id="continueButton" layoutX="437.0" layoutY="1321.0" onAction="#handleContinue" prefHeight="32.0" prefWidth="148.0" style="-fx-border-color: #6F6F6F; -fx-border-radius: 5;" stylesheets="@css/button.css" text="Continuă" textFill="#c31717">
+               <font>
+                  <Font name="Century Gothic" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/next.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <Label layoutX="126.0" layoutY="1353.0" prefHeight="60.0" prefWidth="369.0" text="                                                                                                                                                                                                                                                                                   " wrapText="true" />
+            <StackPane fx:id="thisStack" layoutX="155.0" layoutY="56.0" prefHeight="158.0" prefWidth="305.0" />
+         </children>
+      </AnchorPane>
+   </content>
+</ScrollPane>
