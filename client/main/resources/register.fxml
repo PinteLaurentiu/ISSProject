@@ -4,40 +4,36 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="500.0" prefWidth="790.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iss.UI.Register">
-   <ImageView fitHeight="549.0" fitWidth="1153.0" layoutX="-200.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true">
-      <Image url="@background1.jpg" />
-   </ImageView>
-   <Pane layoutX="74.0" layoutY="26.0" opacity="0.86" prefHeight="449.0" prefWidth="328.0" style="-fx-background-color: #b3d9ff;">
-      <effect>
-         <Shadow blurType="GAUSSIAN" color="#d3d3da" height="40.78" radius="24.5225" width="59.31" />
-      </effect>
-   </Pane>
-   <Pane layoutX="108.0" layoutY="26.0" prefHeight="459.0" prefWidth="416.0">
-      <TextField fx:id="numeText" layoutX="52.0" layoutY="53.0" prefHeight="30.0" prefWidth="162.0" promptText="Nume" />
-      <TextField fx:id="domiciliuText" layoutX="52.0" layoutY="141.0" prefHeight="30.0" prefWidth="289.0" promptText="Domiciliu" />
-      <Button layoutX="214.0" layoutY="414.0" mnemonicParsing="false" onAction="#register" prefHeight="31.0" prefWidth="162.0" stylesheets="@style.css" text="Register">
+<Pane prefHeight="500.0" prefWidth="723.0" style="-fx-background-color: #E9E5E7;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iss.UI.Register">
+   <Pane layoutX="134.0" layoutY="99.0" prefHeight="393.0" prefWidth="464.0" style="-fx-background-color: #F5F1F3; -fx-border-color: #d0294f; -fx-border-radius: 5;" stylesheets="@style.css">
+      <TextField fx:id="numeText" layoutX="49.0" layoutY="14.0" prefHeight="30.0" prefWidth="169.0" promptText="Nume" />
+      <TextField fx:id="prenumeText" layoutX="247.0" layoutY="14.0" prefHeight="30.0" prefWidth="169.0" promptText="Prenume" />
+      <TextField fx:id="emailText" layoutX="116.0" layoutY="60.0" prefHeight="30.0" prefWidth="227.0" promptText="E-mail" />
+      <PasswordField fx:id="passwordText1" layoutX="49.0" layoutY="108.0" prefHeight="30.0" prefWidth="169.0" promptText="Password" />
+      <PasswordField fx:id="passwordText2" layoutX="247.0" layoutY="108.0" prefHeight="30.0" prefWidth="169.0" promptText="Repeat password" />
+      <DatePicker fx:id="birthdayText" layoutX="49.0" layoutY="154.0" prefHeight="30.0" prefWidth="169.0" promptText="Data nașterii" />
+      <TextField fx:id="telefonText" layoutX="247.0" layoutY="154.0" prefHeight="30.0" prefWidth="169.0" promptText="Telefon" />
+      <TextField fx:id="judet1Text" layoutX="49.0" layoutY="200.0" prefHeight="30.0" prefWidth="169.0" promptText="Județ" />
+      <TextField fx:id="judet2Text" layoutX="247.0" layoutY="200.0" prefHeight="30.0" prefWidth="169.0" promptText="Județ 2" />
+      <TextField fx:id="domiciliuText" layoutX="49.0" layoutY="248.0" prefHeight="30.0" prefWidth="169.0" promptText="Domiciliu" />
+      <TextField fx:id="resedintaText" layoutX="247.0" layoutY="248.0" prefHeight="30.0" prefWidth="169.0" promptText="Reședința" />
+      <TextField fx:id="localitate2Text" layoutX="49.0" layoutY="295.0" prefHeight="30.0" prefWidth="169.0" promptText="Localitate" />
+      <TextField fx:id="localitate1Text" layoutX="247.0" layoutY="295.0" prefHeight="30.0" prefWidth="169.0" promptText="Localitate 2" />
+      <Button layoutX="211.0" layoutY="344.0" mnemonicParsing="false" onAction="#register" prefHeight="31.0" prefWidth="162.0" stylesheets="@style.css" text="Inregistrare">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button layoutX="83.0" layoutY="414.0" mnemonicParsing="false" onAction="#cancelRegister" prefHeight="31.0" prefWidth="98.0" stylesheets="@style.css" text="Cancel" />
-      <TextField fx:id="prenumeText" layoutX="229.0" layoutY="53.0" prefHeight="30.0" prefWidth="162.0" promptText="Prenume" />
-      <DatePicker fx:id="birthdayText" layoutX="52.0" layoutY="98.0" prefHeight="30.0" prefWidth="289.0" promptText="Data nașterii" />
-      <TextField fx:id="judet1Text" layoutX="52.0" layoutY="182.0" prefHeight="30.0" prefWidth="162.0" promptText="Județ" />
-      <TextField fx:id="localitate1Text" layoutX="229.0" layoutY="182.0" prefHeight="30.0" prefWidth="162.0" promptText="Localitate" />
-      <TextField fx:id="resedintaText" layoutX="52.0" layoutY="225.0" prefHeight="30.0" prefWidth="289.0" promptText="Reședința" />
-      <TextField fx:id="judet2Text" layoutX="52.0" layoutY="267.0" prefHeight="30.0" prefWidth="162.0" promptText="Județ" />
-      <TextField fx:id="localitate2Text" layoutX="229.0" layoutY="267.0" prefHeight="30.0" prefWidth="162.0" promptText="Localitate" />
-      <TextField fx:id="emailText" layoutX="52.0" layoutY="316.0" prefHeight="30.0" prefWidth="162.0" promptText="E-mail" />
-      <TextField fx:id="telefonText" layoutX="52.0" layoutY="358.0" prefHeight="30.0" prefWidth="162.0" promptText="Telefon" />
-      <PasswordField fx:id="passwordText1" layoutX="229.0" layoutY="316.0" prefHeight="30.0" prefWidth="162.0" promptText="Password" />
-      <PasswordField fx:id="passwordText2" layoutX="229.0" layoutY="358.0" prefHeight="30.0" prefWidth="162.0" promptText="Repeat password" />
+      <Button layoutX="80.0" layoutY="344.0" mnemonicParsing="false" onAction="#cancelRegister" prefHeight="31.0" prefWidth="98.0" stylesheets="@style.css" text="Anuleaza" />
    </Pane>
+   <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="263.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@Logo.png" />
+      </image>
+   </ImageView>
 </Pane>

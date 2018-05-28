@@ -5,64 +5,45 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Glow?>
-<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0"
-      prefWidth="790.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.iss.UI.Login">
-   <ImageView fitHeight="544.0" fitWidth="805.0" layoutY="-13.0" pickOnBounds="true" preserveRatio="true">
-      <Image url="@background2.jpg"/>
-   </ImageView>
-   <Pane blendMode="DARKEN" layoutX="222.0" layoutY="44.0" opacity="0.46" prefHeight="412.0" prefWidth="361.0"
-         style="-fx-background-color: #b3d9ff;" stylesheets="@style.css">
-      <effect>
-         <Shadow blurType="GAUSSIAN" color="#b6b7c8" height="20.0" radius="9.5" width="20.0"/>
-      </effect>
-   </Pane>
-   <Pane layoutX="221.0" layoutY="44.0" prefHeight="412.0" prefWidth="361.0" stylesheets="@style.css">
-      <ImageView fitHeight="124.0" fitWidth="126.0" layoutX="119.0" layoutY="14.0" opacity="0.8" pickOnBounds="true"
-                 preserveRatio="true">
-         <Image url="@personIcon.png"/>
-      </ImageView>
-      <TextField fx:id="usernameText" layoutX="115.0" layoutY="164.0" prefHeight="30.0" prefWidth="180.0"
-                 promptText="Username"/>
-      <PasswordField fx:id="passwordHiddenText" layoutX="114.0" layoutY="213.0" minHeight="28.0" prefHeight="30.0"
-                      prefWidth="180.0" promptText="Password"/>
-      <TextField fx:id="passwordText" layoutX="114.0" layoutY="213.0" prefHeight="30.0" prefWidth="180.0"
-                 promptText="Password"/>
-      <Button layoutX="91.0" layoutY="308.0" mnemonicParsing="false" onAction="#login" prefHeight="31.0"
-              prefWidth="180.0" stylesheets="@style.css" text="Log in">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="428.0" prefWidth="689.0" style="-fx-background-color: #E9E5E7;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iss.UI.Login">
+   <Pane layoutX="197.0" layoutY="129.0" prefHeight="269.0" prefWidth="309.0" style="-fx-background-color: #F5F1F3; -fx-border-color: #d0294f; -fx-border-radius: 5;" stylesheets="@style.css">
+      <CheckBox fx:id="showPasswordCheckBox" layoutX="109.0" layoutY="115.0" mnemonicParsing="false" onAction="#showPassword" text="Arata parola">
          <font>
-            <Font size="14.0"/>
-         </font>
-      </Button>
-      <Button layoutX="101.0" layoutY="357.0" mnemonicParsing="false" onAction="#register" prefHeight="25.0"
-              prefWidth="160.0" text="Not a user? Register"/>
-      <CheckBox fx:id="showPasswordCheckBox" layoutX="200.0" layoutY="264.0" mnemonicParsing="false"
-                onAction="#showPassword" text="Show Password">
-         <font>
-            <Font name="System Bold" size="12.0"/>
+            <Font name="System Bold" size="12.0" />
          </font>
       </CheckBox>
-      <CheckBox fx:id="rememberMeCheckBox" layoutX="77.0" layoutY="265.0" mnemonicParsing="false" text="Remember me">
+      <CheckBox fx:id="rememberMeCheckBox" layoutX="103.0" layoutY="142.0" mnemonicParsing="false" text="Tine-ma minte">
          <font>
-            <Font name="System Bold" size="12.0"/>
+            <Font name="System Bold" size="12.0" />
          </font>
          <effect>
-            <Glow/>
+            <Glow />
          </effect>
       </CheckBox>
-      <ImageView fitHeight="30.0" fitWidth="47.0" layoutX="67.0" layoutY="164.0" pickOnBounds="true"
-                 preserveRatio="true">
-         <Image url="@userIcon.png"/>
+      <Button layoutX="75.0" layoutY="178.0" mnemonicParsing="false" onAction="#login" prefHeight="28.0" prefWidth="160.0" stylesheets="@style.css" text="Log in">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="76.0" layoutY="226.0" mnemonicParsing="false" onAction="#register" prefHeight="25.0" prefWidth="160.0" text="Nu esti user? Inregistreaza-te" />
+      <TextField fx:id="passwordText" layoutX="56.0" layoutY="66.0" prefHeight="28.0" prefWidth="200.0" promptText="Password" />
+      <TextField fx:id="usernameText" layoutX="56.0" layoutY="23.0" prefHeight="30.0" prefWidth="200.0" promptText="Username" />
+      <ImageView fitHeight="30.0" fitWidth="47.0" layoutX="226.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+         <Image url="@userIcon.png" />
       </ImageView>
-      <ImageView fitHeight="30.0" fitWidth="47.0" layoutX="66.0" layoutY="212.0" pickOnBounds="true"
-                 preserveRatio="true">
-         <Image url="@passwordIcon.png"/>
+      <PasswordField fx:id="passwordHiddenText" layoutX="57.0" layoutY="65.0" minHeight="28.0" prefHeight="30.0" prefWidth="200.0" promptText="Password" />
+      <ImageView fitHeight="28.0" fitWidth="30.0" layoutX="227.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+         <Image url="@passwordIcon.png" />
       </ImageView>
    </Pane>
+   <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="254.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@Logo.png" />
+      </image>
+   </ImageView>
 </Pane>
