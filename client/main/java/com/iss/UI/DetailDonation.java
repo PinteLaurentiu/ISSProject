@@ -1,13 +1,25 @@
 package com.iss.UI;
 
+import com.iss.domain.DonareStatus;
+import com.iss.domain.Spital;
+import com.iss.service.DonareProxy;
+import com.iss.service.ProxyFactory;
+import com.iss.service.SpitalProxy;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 
 public class DetailDonation {
     public AnchorPane pane;
@@ -23,7 +35,7 @@ public class DetailDonation {
     public Label completeLabel;
     public AnchorPane namePane;
     public AnchorPane oraPane;
-    public JFXComboBox<String> centreComboBox;
+    public JFXComboBox<Spital> centreComboBox;
     public JFXComboBox<String> oraComboBox;
     public JFXTextField nameTextField;
     public JFXButton donateButton;
@@ -32,12 +44,28 @@ public class DetailDonation {
     public Label stepFourLabel;
     public AnchorPane datePane;
 
-    @FXML
-    public void initialize(){
-        //TODO INIT COMBOBOX PENTRU CENTRE;
+    private ProxyFactory factory;
+    private Stage stage;
+    private Runnable goBack;
 
-        oraComboBox.setItems(FXCollections.observableArrayList("7:00","7:30","8:00","8:30","9:00","9:30","10:00",
-                "10:30","11:00","11:30","12:00","12:30"));
+    public void init(Stage stage, ProxyFactory factory){
+
+        this.stage = stage;
+        this.factory = factory;
+
+        for (Spital spital : factory.get(SpitalProxy.class).getAll()){
+            this.centreComboBox.getItems().add(spital);
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.set(Calendar.HOUR_OF_DAY, 7);
+        cal.set(Calendar.MINUTE, 30);
+        datePicker.setValue(LocalDate.now());
+
+        while(cal.get(Calendar.HOUR_OF_DAY) != 13 || cal.get(Calendar.MINUTE) != 30){
+            oraComboBox.getItems().add(cal.get(Calendar.HOUR_OF_DAY) +":"+ String.format("%02d", cal.get(Calendar.MINUTE)));
+            cal.add(Calendar.MINUTE, 30);
+        }
     }
 
     public void hideOrShow(boolean bool){
@@ -64,7 +92,26 @@ public class DetailDonation {
     }
 
     public void handleDonate(){
-        //TODO CE SE INTAMPLA DUPA CE SE INSCRIE LA DONARE
+        if (datePicker.getValue().compareTo(LocalDate.now()) <= 0){
+            new Alert(Alert.AlertType.WARNING, "Data trebuie sa fie valida", ButtonType.CLOSE).showAndWait();
+            return;
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.set(Calendar.YEAR, datePicker.getValue().getYear());
+        cal.set(Calendar.MONTH, datePicker.getValue().getMonthValue());
+        cal.set(Calendar.DAY_OF_MONTH, datePicker.getValue().getDayOfMonth());
+        String[] strings = oraComboBox.getSelectionModel().getSelectedItem().split(":");
+        cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(strings[0]));
+        cal.set(Calendar.MINUTE, Integer.parseInt(strings[1]));
+        cal.set(Calendar.SECOND, 0);
+        factory.get(DonareProxy.class).add(centreComboBox.getSelectionModel().getSelectedItem(),
+                cal.getTime(), nameTextField.getText(), DonareStatus.PROGRAMAT);
+        goBack.run();
+
     }
 
+    public void setGoBack(Runnable goBack) {
+        this.goBack = goBack;
+    }
 }

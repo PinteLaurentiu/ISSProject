@@ -1,5 +1,6 @@
 package com.iss.UI;
 
+import com.iss.service.ProxyFactory;
 import com.jfoenix.controls.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -8,16 +9,17 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
+import java.util.function.Consumer;
 
 
 public class DonorQuestionnaire {
@@ -93,10 +95,13 @@ public class DonorQuestionnaire {
     public Button continueButton;
 
     public StackPane thisStack;
+    private Runnable goBack;
+    private Stage stage;
+    private ProxyFactory factory;
 
-
-    @FXML
-    public void initialize(){
+    public void init(Stage stage, ProxyFactory factory){
+        this.factory = factory;
+        this.stage = stage;
         addNodes();
         handleChange();
     }
@@ -854,6 +859,8 @@ public class DonorQuestionnaire {
         FXMLLoader loader = new FXMLLoader(DonorQuestionnaire.class.getResource("/detailDonation.fxml"));
         AnchorPane root = loader.load();
         DetailDonation detailDonation = loader.getController();
+        detailDonation.init(stage,factory);
+        detailDonation.setGoBack(goBack);
         thisScroll.setContent(root);
         thisScroll.setVvalue(0.0);
         if(!goodOrBad) {
@@ -869,12 +876,18 @@ public class DonorQuestionnaire {
     }
 
     public void checkIfOkForDonate() throws  IOException{
-       if(oneOne.isSelected() || oneTwo.isSelected() || oneThree.isSelected() ||
-               threeOne.isSelected() || threeTwo.isSelected() || threeFour.isSelected() ||
-               threeFive.isSelected() || threeSeven.isSelected() || fourOne.isSelected() ||
-               fourTwo.isSelected() || fourThree.isSelected() || seven.isSelected() ||
-               eightOne.isSelected() || eightTwo.isSelected() || eightThree.isSelected() || eightFour.isSelected()
-               || eightFive.isSelected() || eightSix.isSelected() || eightEight.isSelected()){
+        if (oneOne.isSelected() || oneTwo.isSelected() || oneThree.isSelected() ||
+                two.isSelected() || threeOne.isSelected() || threeTwo.isSelected() ||
+                threeFour.isSelected() || threeSix.isSelected() || threeEight.isSelected()||
+                threeNine.isSelected() || fourOne.isSelected() || fourThree.isSelected() ||
+                fourFour.getValue() == null ||
+                fourFour.getValue().compareTo(LocalDate.now()) >= 0 ||
+                fourFive.getValue() == null ||
+                fourFive.getValue().compareTo(LocalDate.now()) >= 0 ||
+                five.isSelected() || six.isSelected() || seven.isSelected() ||
+                eightOne.isSelected() || eightTwo.isSelected() || eightThree.isSelected() ||
+                eightFour.isSelected() || eightFive.isSelected() || eightSix.isSelected() ||
+                eightEight.isSelected() || ten.isSelected()){
                 loadDetailDonor(false);
        }
        else{
@@ -887,4 +900,7 @@ public class DonorQuestionnaire {
     }
 
 
+    public void setGoBack(Runnable goBack) {
+        this.goBack = goBack;
+    }
 }

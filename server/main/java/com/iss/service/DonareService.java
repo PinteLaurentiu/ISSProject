@@ -64,4 +64,10 @@ public class DonareService implements ICrudService<Donare,Integer> {
         User user = factory.get(UserRepository.class).getByEmail(email);
         return user.getDonari();
     }
+
+    public void setStatus(int id, DonareStatus status) {
+        Donare donare = factory.get(DonareRepository.class).getById(id);
+        donare.setStatus(status);
+        factory.get(DonareRepository.class).put(donare);
+    }
 }

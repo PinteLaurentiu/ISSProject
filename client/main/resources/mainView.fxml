@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iss.UI.MainView">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iss.UI.MainView">
    <children>
       <JFXTabPane fx:id="mainMenu" layoutX="48.0" layoutY="18.0" prefHeight="582.0" prefWidth="747.0" stylesheets="@style.css">
          <tabs>
@@ -76,7 +76,7 @@
                                                       <Font name="Century Gothic" size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <Label fx:id="reasonLabel" layoutX="115.0" layoutY="88.0" prefHeight="38.0" prefWidth="74.0" text="Motive" textFill="#fffefe" wrapText="true">
+                                                <Label fx:id="reasonLabel" layoutX="115.0" layoutY="88.0" prefHeight="38.0" prefWidth="74.0" textFill="#fffefe" wrapText="true">
                                                    <font>
                                                       <Font name="Century Gothic" size="18.0" />
                                                    </font>
@@ -454,7 +454,7 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="413.0" prefWidth="747.0">
                                        <children>
-                                          <TableView layoutX="4.0" layoutY="2.0" prefHeight="426.0" prefWidth="367.0" stylesheets="@css/donorTab.css">
+                                          <TableView fx:id="donariForConsultTable" layoutX="4.0" layoutY="2.0" prefHeight="426.0" prefWidth="367.0" stylesheets="@css/donorTab.css">
                                             <columns>
                                               <TableColumn prefWidth="98.0" text="Nume" />
                                               <TableColumn minWidth="6.0" prefWidth="117.0" text="Prenume" />
@@ -519,7 +519,7 @@
                                                       <Font size="9.0" />
                                                    </font>
                                                    <graphic>
-                                                      <ImageView fitHeight="41.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                                                      <ImageView fx:id="addConsult" fitHeight="41.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
                                                             <Image url="@icons/addConsulation.png" />
                                                          </image>
@@ -550,7 +550,7 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <TableView layoutX="14.0" layoutY="14.0" prefHeight="293.0" prefWidth="723.0" stylesheets="@css/donorTab.css">
+                                          <TableView fx:id="consultatiiTable" layoutX="14.0" layoutY="14.0" prefHeight="293.0" prefWidth="723.0" stylesheets="@css/donorTab.css">
                                              <columns>
                                                 <TableColumn prefWidth="191.0" text="Nume" />
                                                 <TableColumn minWidth="6.0" prefWidth="174.0" text="Prenume" />

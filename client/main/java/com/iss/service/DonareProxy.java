@@ -51,6 +51,13 @@ public class DonareProxy implements ICrudService<Donare, Integer> {
 
     }
 
+    public Iterable<Donare> getAllByUser(){
+        ResponseEntity<Donare[]> responseEntity = restTemplate.getForEntity(host + "/" + parent.getSessionId().toString(),Donare[].class);
+        if (responseEntity.getStatusCode() != HttpStatus.OK)
+            throw new ServerException("getAllByUser donari exception");
+        return Arrays.asList(responseEntity.getBody());
+    }
+
     @Override
     public Iterable<Donare> getAll(int count, int offset) {
         return null;

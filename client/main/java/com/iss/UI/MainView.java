@@ -1,9 +1,9 @@
 package com.iss.UI;
 
 import com.iss.domain.Cerere;
-import com.iss.domain.Role;
-import com.iss.domain.User;
-import com.iss.domain.UserRole;
+import com.iss.domain.*;
+import com.iss.service.ConsultProxy;
+import com.iss.service.DonareProxy;
 import com.iss.service.CerereProxy;
 import com.iss.service.ProxyFactory;
 import com.iss.service.UserProxy;
@@ -18,7 +18,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -29,10 +28,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class MainView {
@@ -92,6 +91,8 @@ public class MainView {
     public TextArea boliText;
     public JFXComboBox<String> grupeCombo;
     public JFXButton completeButton;
+    public TableView<Donare> donariForConsultTable;
+    public ImageView addConsult;
 
     //FROM SPITAL VIEW
     public Tab cerereView;
@@ -99,59 +100,27 @@ public class MainView {
     public Pagination paginationCerere;
     public JFXButton deleteCerere;
     public JFXButton addCerere;
+    public TableView<Donare> consultatiiTable;
 
     private Stage stage;
     private ProxyFactory factory;
 
     private static final int RECORDS_ON_PAGE = 8;
 
-    @FXML
-    public void initialize(){
-        initGrupeCombo();
-        checkApt();
-        usersTable.setDisable(false);
-        hideDetail();
-        donorMenu.getTabs().remove(donorNowView);
-        initDonor();
-        menuListener();
-        initTable();
-    }
-
     public void initTable(){
         JFXTreeTableColumn<Analyses,String> date = new JFXTreeTableColumn<>("Data");
-        date.setPrefWidth(100);
-        date.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Analyses, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Analyses, String> param) {
-                return param.getValue().getValue().date;
-            }
-        });
-        JFXTreeTableColumn <Analyses, String > centre = new JFXTreeTableColumn<>("Centru");
-        centre.setPrefWidth(100);
-        centre.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Analyses, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Analyses, String> param) {
-                return param.getValue().getValue().centre;
-            }
-        });
-        JFXTreeTableColumn<Analyses,String> nuj = new JFXTreeTableColumn<>("Nuj");
-        nuj.setPrefWidth(95);
-        nuj.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Analyses, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Analyses, String> param) {
-                return param.getValue().getValue().nuj;
-            }
-        });
+        date.setPrefWidth(150);
+        date.setCellValueFactory(param -> param.getValue().getValue().data);
+        JFXTreeTableColumn <Analyses, String > centre = new JFXTreeTableColumn<>("Ora");
+        centre.setPrefWidth(150);
+        centre.setCellValueFactory(param -> param.getValue().getValue().ora);
+//        JFXTreeTableColumn<Analyses,String> nuj = new JFXTreeTableColumn<>("Status");
+//        nuj.setPrefWidth(95);
+//        nuj.setCellValueFactory(param -> param.getValue().getValue().status);
 
         //Populate
-        ObservableList<Analyses> analyses = FXCollections.observableArrayList();
-        analyses.add(new Analyses("23-04-2018","Suceava","nufsh"));
-        analyses.add(new Analyses("23-04-2017","Bucuresti","nush"));
-        analyses.add(new Analyses("23-04-2016","Nuj","nush"));
-
-        final TreeItem<Analyses> root = new RecursiveTreeItem<Analyses>(analyses,RecursiveTreeObject::getChildren);
-        analysisTable.getColumns().setAll(date,centre,nuj);
-        analysisTable.setRoot(root);
+        updateAnalisys();
+        analysisTable.getColumns().setAll(date,centre);
         analysisTable.setShowRoot(false);
 
         analysisTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -162,16 +131,20 @@ public class MainView {
         });
     }
 
+
     class Analyses extends RecursiveTreeObject<Analyses>{ //MUST EXTEND
-        SimpleStringProperty date;
-        SimpleStringProperty centre;
-        SimpleStringProperty nuj;
+        SimpleStringProperty data;
+        SimpleStringProperty ora;
+        SimpleStringProperty status;
 
-        public Analyses(String date, String centre, String nuj){
-            this.date = new SimpleStringProperty(date);
-            this.centre = new SimpleStringProperty(centre);
-            this.nuj = new SimpleStringProperty(nuj);
 
+        public Analyses(String data, String ora, String status){
+            this.data = new SimpleStringProperty(data);
+            this.ora = new SimpleStringProperty(ora);
+            this.status = new SimpleStringProperty(status);
+        }
+        public String getStatus() {
+            return status.getValue();
         }
     }
 
@@ -182,31 +155,56 @@ public class MainView {
         trans.setCycleCount(1);
         trans.setAutoReverse(false);
     }
-    private void showDetail(){
+    private void showDetail() {
 
-        setTransition(fadeIn,detailsPane);
+        Analyses analyses;
+        if (analysisTable.getSelectionModel().getSelectedItems().size() == 0) {
+            statusText.setText("");
+        } else {
+            analyses = analysisTable.getSelectionModel().getSelectedItem().getValue();
+            statusText.setText(analyses.getStatus());
+        }
+
+        setTransition(fadeIn, detailsPane);
         detailsPane.setVisible(true);
         fadeIn.playFromStart();
 
-        setTransition(fadeInLabel,statusText);
+        setTransition(fadeInLabel, statusText);
         statusText.setVisible(true);
         fadeInLabel.playFromStart();
 
-
-        setTransition(fadeInLabel,statusLabel);
+        setTransition(fadeInLabel, statusLabel);
         statusLabel.setVisible(true);
         fadeInLabel.playFromStart();
 
-        setTransition(fadeInLabel,reasonLabel);
+        setTransition(fadeInLabel, reasonLabel);
         reasonLabel.setVisible(true);
         fadeInLabel.playFromStart();
 
-        setTransition(fadeInLabel,analysDetailLabel);
+        setTransition(fadeInLabel, analysDetailLabel);
         analysDetailLabel.setVisible(true);
         fadeInLabel.playFromStart();
-
-
     }
+
+
+    private void updateAnalisys() {
+        ObservableList<Analyses> analyses = FXCollections.observableArrayList();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-LL-yyyy");
+        SimpleDateFormat formatter2 = new SimpleDateFormat("HH:mm");
+
+        Iterable<Donare> donares = factory.get(DonareProxy.class).getAllByUser();
+
+        for (Donare donare : donares) {
+            Analyses analiza = new Analyses(formatter.format(donare.getDate()), formatter2.format(donare.getDate()), donare.getStatus().toString());
+            analyses.add(analiza);
+        }
+
+        final TreeItem<Analyses> root = new RecursiveTreeItem<Analyses>(analyses, RecursiveTreeObject::getChildren);
+        analysisTable.setRoot(root);
+    }
+
+
     private FadeTransition fadeIn = new FadeTransition(
             Duration.millis(2000)
     );
@@ -315,8 +313,17 @@ public class MainView {
     }
 
     public void init(Stage stage, ProxyFactory factory,int tabIndex){
+
         this.stage = stage;
         this.factory = factory;
+        initGrupeCombo();
+        checkApt();
+        usersTable.setDisable(false);
+        hideDetail();
+        donorMenu.getTabs().remove(donorNowView);
+        initDonor();
+        menuListener();
+        initTable();
         List<Role> roles = (List<Role>) factory.get(UserProxy.class).getRoles();
         if(tabIndex==5) {
             mainMenu.getSelectionModel().select(adminView);
@@ -334,7 +341,31 @@ public class MainView {
             mainMenu.getSelectionModel().select(cerereView);
         }
         if (!roles.contains(Role.DoctorDonare))
-            mainMenu.getTabs().remove(labView); // TREBUIE SA FAC DOCTORDONARE
+            mainMenu.getTabs().remove(labView);
+        else {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-LL-yyyy");
+            SimpleDateFormat formatter2 = new SimpleDateFormat("HH:mm");
+            //noinspection unchecked
+            donariForConsultTable.getColumns().get(0).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getUser().getNume()));
+            //noinspection unchecked
+            donariForConsultTable.getColumns().get(1).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getUser().getPrenume()));
+            //noinspection unchecked
+            donariForConsultTable.getColumns().get(2).setCellValueFactory(x->new ReadOnlyObjectWrapper(formatter2.format(x.getValue().getDate())));
+            //noinspection unchecked
+            donariForConsultTable.getColumns().get(3).setCellValueFactory(x->new ReadOnlyObjectWrapper(formatter.format(x.getValue().getDate())));
+            updateDonariForConsult();
+
+            //noinspection unchecked
+            consultatiiTable.getColumns().get(0).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getUser().getNume()));
+            //noinspection unchecked
+            consultatiiTable.getColumns().get(1).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getUser().getPrenume()));
+            //noinspection unchecked
+            consultatiiTable.getColumns().get(2).setCellValueFactory(x->new ReadOnlyObjectWrapper(formatter2.format(x.getValue().getDate())));
+            //noinspection unchecked
+            consultatiiTable.getColumns().get(3).setCellValueFactory(x->new ReadOnlyObjectWrapper(formatter.format(x.getValue().getDate())));
+            updateConsultatii();
+
+        }
 
         if (!roles.contains(Role.DoctorLab))
             mainMenu.getTabs().remove(labView);
@@ -423,8 +454,8 @@ public class MainView {
     }
 
     public void deleteCererePressed(ActionEvent actionEvent) {
-
     }
+
 
     public void addCererePressed(ActionEvent actionEvent) throws IOException {
         CerereView.show(stage, factory);
@@ -458,33 +489,47 @@ public class MainView {
     public void handleFinal(){
         //TODO - CE SE INTAMPLA DUPA CE TERMINA DE DONAT SANGE
     }
-    public void handleAddConsult(){
-        //TODO - CE SE INTAMPLA DUPA CE L-A CONSULTAT
-        if(greutTextField.getText().isEmpty() || inaltTextField.getText().isEmpty() || tenTextField.getText().isEmpty()
-                || pulsTextField.getText().isEmpty()) {
-            //DACA NU A COMPLETAT CEVA
 
+
+    public void handleAddConsult(){
+
+        if(greutTextField.getText().isEmpty() || inaltTextField.getText().isEmpty() || tenTextField.getText().isEmpty()
+                || pulsTextField.getText().isEmpty() || !(yesCheck.isSelected() || noCheck.isSelected() ||
+                donariForConsultTable.getSelectionModel().getSelectedItems().size() != 1)) {
+            new Alert(Alert.AlertType.WARNING, "Date invalide!", ButtonType.OK).showAndWait();
         }
         else {
-            if(yesCheck.isSelected()) {
-                Float greutate = Float.parseFloat(greutTextField.getText());
-                Integer inaltime = Integer.parseInt(inaltTextField.getText());
-                Float tensiune = Float.parseFloat(tenTextField.getText());
-                Float puls = Float.parseFloat(pulsTextField.getText());
-                String boli = boliTextArea.getText();
-                //TRIMITE CE E DE TRIMIS SAU NUSH
-            }
-            else {
-                //NU POATE SA DONE*E SI TREBUIE STERS SAU NUSH
-            }
+            Float greutate = Float.parseFloat(greutTextField.getText());
+            Float inaltime = Float.parseFloat(inaltTextField.getText());
+            Float tensiune = Float.parseFloat(tenTextField.getText());
+            Integer puls = Integer.parseInt(pulsTextField.getText());
+            String boli = boliTextArea.getText();
+            Integer id = donariForConsultTable.getSelectionModel().getSelectedItem().getId();
+            factory.get(ConsultProxy.class).add(id, greutate, tensiune, puls,  boli, inaltime, yesCheck.isSelected());
         }
+        updateDonariForConsult();
+        updateAnalisys();
     }
 
     //LAB PART
-    public void initGrupeCombo(){
+    public void initGrupeCombo() {
         //TODO COMBO BOX PENTRU LOCATII
-        grupeCombo.setItems(FXCollections.observableArrayList("0I","0I-","AII","AII-","BIII","BIII-","ABIV","ABIV-"));
+        grupeCombo.setItems(FXCollections.observableArrayList("0I", "0I-", "AII", "AII-", "BIII", "BIII-", "ABIV", "ABIV-"));
+    }
 
+    private void updateDonariForConsult() {
+        donariForConsultTable.getItems().clear();
+        for (Donare donare : factory.get(DonareProxy.class).getAll()) {
+            if (donare.getConsult() == null)
+                donariForConsultTable.getItems().add(donare);
+        }
+    }
+    private void updateConsultatii() {
+        consultatiiTable.getItems().clear();
+        for (Donare donare : factory.get(DonareProxy.class).getAll()) {
+            if (donare.getConsult() != null)
+                consultatiiTable.getItems().add(donare);
+        }
     }
 
     public void handleTransfer(){
@@ -501,7 +546,11 @@ public class MainView {
 
     public void handleContinue() throws IOException{
         FXMLLoader loader = new FXMLLoader(MainView.class.getResource("/donorQuestionnaire.fxml"));
+        Node parent = donorNowView.getContent();
         ScrollPane root = loader.load();
+        DonorQuestionnaire controller = loader.getController();
+        controller.init(stage, factory);
+        controller.setGoBack(()->donorNowView.setContent(parent));
         donorNowView.setContent(root);
     }
 }

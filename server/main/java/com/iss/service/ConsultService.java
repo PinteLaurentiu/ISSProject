@@ -2,6 +2,7 @@ package com.iss.service;
 
 import com.iss.domain.Consult;
 import com.iss.domain.Donare;
+import com.iss.domain.DonareStatus;
 import com.iss.persistance.ConsultRepository;
 import com.iss.persistance.DonareRepository;
 import com.iss.persistance.RepositoryFactory;
@@ -38,6 +39,12 @@ public class ConsultService implements ICrudService<Consult, Integer> {
         consult.setDonare(donare);
         donare.setConsult(consult);
         factory.get(ConsultRepository.class).put(consult);
+
+        if (!apt) {
+            parent.get(DonareService.class).setStatus(donare.getId(), DonareStatus.RESPINS);
+        } else {
+            parent.get(DonareService.class).setStatus(donare.getId(), DonareStatus.CONSULTAT);
+        }
     }
 
     @Override

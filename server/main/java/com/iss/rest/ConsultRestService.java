@@ -40,7 +40,7 @@ public class ConsultRestService {
         Integer idConsult = Integer.valueOf(strings[0]);
         Float greutate = Float.valueOf(strings[1]);
         Float tensiune = Float.valueOf(strings[2]);
-        Integer puls = Integer.valueOf(strings[3]);
+        Integer puls = Float.valueOf(strings[3]).intValue();
         String boliDepistate = strings[4];
         Float inaltime = Float.valueOf(strings[5]);
         Boolean apt = Boolean.valueOf(strings[6]);

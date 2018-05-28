@@ -1,5 +1,7 @@
 package com.iss.domain;
 
 public enum DonareStatus {
-    PROGRAMAT
+    PROGRAMAT,
+    CONSULTAT,
+    RESPINS
 }
