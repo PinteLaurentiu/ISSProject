@@ -24,9 +24,9 @@ public class CerereProxy implements ICrudService<Cerere, Integer> {
             responseEntity = restTemplate.postForEntity(host, new String[]{
                     (String) objects[0],
                     (String) objects[1],
+                    (String) objects[2],
                     (String) objects[3],
-                    (String) objects[4],
-                    (String) objects[5]},
+                    (String) objects[4]},
                     Object.class);
             if (responseEntity.getStatusCode() != HttpStatus.OK)
                 throw new Exception();

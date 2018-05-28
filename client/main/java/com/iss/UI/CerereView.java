@@ -55,9 +55,9 @@ public class CerereView {
             factory.get(CerereProxy.class).add(
                     numeText.getText(),
                     prenumeText.getText(),
-                    cantitateaText.getText(),
                     varstaText.getText(),
-                    componentaChoice.getValue());
+                    componentaChoice.getValue(),
+                    cantitateaText.getText());
 
             new AlertBox("Success", "Cererea a fost inregistrata");
         } catch (Exception ex) {
