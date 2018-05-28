@@ -111,6 +111,7 @@ CREATE TABLE consult
 CREATE TABLE transfer
 (
     idTransfer int PRIMARY KEY NOT NULL,
+    tip bit not null,
     `from` varchar(20) NOT NULL,
     `to` varchar(20) NOT NULL
 );
