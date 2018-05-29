@@ -1,6 +1,6 @@
 package com.iss.rest;
 
-import com.iss.domain.Role;
+import com.iss.enums.Role;
 import com.iss.domain.User;
 import com.iss.service.*;
 import org.springframework.beans.factory.annotation.Autowired;

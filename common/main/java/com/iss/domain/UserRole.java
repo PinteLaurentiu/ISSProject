@@ -1,6 +1,7 @@
 package com.iss.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.iss.enums.Role;
 
 public class UserRole {
     private int idRole;

@@ -1,11 +1,10 @@
 package com.iss.UI;
 
-import com.iss.domain.Role;
+import com.iss.enums.Role;
 import com.iss.domain.User;
 import com.iss.domain.UserRole;
 import com.iss.service.ProxyFactory;
 import com.iss.service.UserProxy;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

@@ -1,6 +1,6 @@
 package com.iss.service;
 
-import com.iss.domain.Role;
+import com.iss.enums.Role;
 import com.iss.domain.User;
 import com.iss.exceptions.BadAuthenticationException;
 import com.iss.exceptions.LoginException;

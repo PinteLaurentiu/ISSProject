@@ -1,6 +1,6 @@
 package com.iss.UI;
 
-import com.iss.domain.Role;
+import com.iss.enums.Role;
 import com.iss.domain.User;
 import com.iss.domain.UserRole;
 import com.iss.service.ProxyFactory;

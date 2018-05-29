@@ -1,6 +1,6 @@
 package com.iss.UI;
 
-import com.iss.domain.ComponenteSange;
+import com.iss.enums.ComponenteSange;
 import com.iss.service.CerereProxy;
 import com.iss.service.ProxyFactory;
 import javafx.collections.FXCollections;

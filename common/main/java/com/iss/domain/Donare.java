@@ -1,6 +1,9 @@
 package com.iss.domain;
 
+import com.iss.enums.DonareStatus;
+
 import java.util.Date;
+import java.util.Set;
 
 public class Donare {
     private int id;
@@ -10,6 +13,8 @@ public class Donare {
     private DonareStatus status;
     private User user;
     private Consult consult;
+    private Set<PungaSange> pungiSange;
+    private Analiza analiza;
 
     public Consult getConsult() {
         return consult;
@@ -67,6 +72,8 @@ public class Donare {
         this.user = user;
     }
 
+
+
     @Override
     public String toString() {
         return "Donare{" +
@@ -78,5 +85,21 @@ public class Donare {
                 ", user=" + user +
                 ", consult=" + consult +
                 '}';
+    }
+
+    public Set<PungaSange> getPungiSange() {
+        return pungiSange;
+    }
+
+    public void setPungiSange(Set<PungaSange> pungiSange) {
+        this.pungiSange = pungiSange;
+    }
+
+    public Analiza getAnaliza() {
+        return analiza;
+    }
+
+    public void setAnaliza(Analiza analiza) {
+        this.analiza = analiza;
     }
 }

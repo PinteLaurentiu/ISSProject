@@ -2,6 +2,8 @@ package com.iss.UI;
 
 import com.iss.domain.Cerere;
 import com.iss.domain.*;
+import com.iss.enums.GrupaSange;
+import com.iss.enums.Role;
 import com.iss.service.ConsultProxy;
 import com.iss.service.DonareProxy;
 import com.iss.service.CerereProxy;
@@ -86,7 +88,6 @@ public class MainView {
     public JFXButton finalButton;
 
     //FROM LAB VIEW
-    public JFXComboBox<String> locatiiCombo;
     public JFXButton transferButton;
     public TextArea imunoText;
     public TextArea boliText;
@@ -104,6 +105,8 @@ public class MainView {
     public TableView<Donare> consultatiiTable;
 
     public Label usernameText;
+    public TableView<PungaSange> pungiSangeLabTable;
+    public JFXTextField locationToField;
 
     private Stage stage;
     private ProxyFactory factory;
@@ -124,7 +127,7 @@ public class MainView {
 //        nuj.setCellValueFactory(param -> param.getValue().getValue().status);
 
         //Populate
-        updateAnalisys();
+        updateTables();
         analysisTable.getColumns().setAll(date,centre);
         analysisTable.setShowRoot(false);
 
@@ -134,6 +137,26 @@ public class MainView {
                 showDetail();
             }
         });
+    }
+
+    private void updateTables(){
+        updateAnalisys();
+        updateConsultatii();
+        updateDonariForConsult();
+        updateUsers();
+        updatePungiSange();
+    }
+
+    private void updatePungiSange() {
+        pungiSangeLabTable.getItems().clear();
+        for (Donare donare : factory.get(DonareProxy.class).getAll()) {
+            if (donare.getConsult() != null && donare.getPungiSange() != null) {
+                for (PungaSange pungaSange : donare.getPungiSange()){
+                    pungaSange.setDonare(donare);
+                    pungiSangeLabTable.getItems().add(pungaSange);
+                }
+            }
+        }
     }
 
 
@@ -372,7 +395,6 @@ public class MainView {
             donariForConsultTable.getColumns().get(2).setCellValueFactory(x->new ReadOnlyObjectWrapper(formatter2.format(x.getValue().getDate())));
             //noinspection unchecked
             donariForConsultTable.getColumns().get(3).setCellValueFactory(x->new ReadOnlyObjectWrapper(formatter.format(x.getValue().getDate())));
-            updateDonariForConsult();
 
             //noinspection unchecked
             consultatiiTable.getColumns().get(0).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getUser().getNume()));
@@ -382,11 +404,23 @@ public class MainView {
             consultatiiTable.getColumns().get(2).setCellValueFactory(x->new ReadOnlyObjectWrapper(formatter2.format(x.getValue().getDate())));
             //noinspection unchecked
             consultatiiTable.getColumns().get(3).setCellValueFactory(x->new ReadOnlyObjectWrapper(formatter.format(x.getValue().getDate())));
-            updateConsultatii();
+            updateTables();
         }
 
-        if (!roles.contains(Role.DoctorLab))
+        if (!roles.contains(Role.DoctorLab)) {
             mainMenu.getTabs().remove(labView);
+        }
+        else{
+            //noinspection unchecked
+            pungiSangeLabTable.getColumns().get(0).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getDonare().getUser().getNume()));
+            //noinspection unchecked
+            pungiSangeLabTable.getColumns().get(1).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getDonare().getUser().getPrenume()));
+            //noinspection unchecked
+            pungiSangeLabTable.getColumns().get(2).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getLocatie()));
+            //noinspection unchecked
+            pungiSangeLabTable.getColumns().get(3).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getTip()));
+            updateTables();
+        }
 
         if (!roles.contains(Role.DoctorSpital))
             mainMenu.getTabs().remove(doctorView);
@@ -394,8 +428,8 @@ public class MainView {
         if (!roles.contains(Role.UsersEditor))
             mainMenu.getTabs().remove(donorView);
         else{
-            paginationUsers.currentPageIndexProperty().addListener((x,y,z)->updateUsers());
-            updateUsers();
+            paginationUsers.currentPageIndexProperty().addListener((x,y,z)->updateTables());
+            updateTables();
             //noinspection unchecked
             usersTable.getColumns().get(0).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getNume()));
             //noinspection unchecked
@@ -410,8 +444,8 @@ public class MainView {
             userSelectionChanged();
 
 
-            paginationCerere.currentPageIndexProperty().addListener((x,y,z)->updateCerere());
-            updateCerere();
+            paginationCerere.currentPageIndexProperty().addListener((x,y,z)->updateTables());
+            updateTables();
             //noinspection unchecked
             cerereTable.getColumns().get(0).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getNumePacient()));
             //noinspection unchecked
@@ -477,14 +511,14 @@ public class MainView {
         stage.initOwner(this.stage);
         stage.initModality(Modality.APPLICATION_MODAL);
         EditRoles.show(stage, factory, usersTable.getSelectionModel().getSelectedItem());
-        updateUsers();
+        updateTables();
     }
 
     @SuppressWarnings("unused")
     public void deletePressed(ActionEvent event) {
         User user = usersTable.getSelectionModel().getSelectedItem();
         factory.get(UserProxy.class).remove(user.getId());
-        updateUsers();
+        updateTables();
     }
 
     @SuppressWarnings("unused")
@@ -494,7 +528,7 @@ public class MainView {
 
     public void deleteCererePressed(ActionEvent actionEvent) {
         factory.get(CerereProxy.class).remove(cerereTable.getSelectionModel().getSelectedItem().getIdCerere());
-        updateCerere();
+        updateTables();
     }
 
     public void addCererePressed(ActionEvent actionEvent) throws IOException {
@@ -525,7 +559,14 @@ public class MainView {
     }
 
     public void handleFinal(){
-        //TODO - CE SE INTAMPLA DUPA CE TERMINA DE DONAT SANGE
+        if (consultatiiTable.getSelectionModel().getSelectedItems().size() == 0){
+            new Alert(Alert.AlertType.WARNING, "Selectati o donare!", ButtonType.OK).showAndWait();
+            return;
+        }
+        Donare donare = consultatiiTable.getSelectionModel().getSelectedItem();
+        factory.get(DonareProxy.class).finalizare(donare);
+        updateTables();
+        new Alert(Alert.AlertType.INFORMATION, "Pungile de sange au fost inregistrate!", ButtonType.OK).showAndWait();
     }
 
 
@@ -535,6 +576,7 @@ public class MainView {
                 || pulsTextField.getText().isEmpty() || !(yesCheck.isSelected() || noCheck.isSelected() ||
                 donariForConsultTable.getSelectionModel().getSelectedItems().size() != 1)) {
             new Alert(Alert.AlertType.WARNING, "Date invalide!", ButtonType.OK).showAndWait();
+            return;
         }
         else {
             Float greutate = Float.parseFloat(greutTextField.getText());
@@ -545,13 +587,11 @@ public class MainView {
             Integer id = donariForConsultTable.getSelectionModel().getSelectedItem().getId();
             factory.get(ConsultProxy.class).add(id, greutate, tensiune, puls,  boli, inaltime, yesCheck.isSelected());
         }
-        updateDonariForConsult();
-        updateAnalisys();
+        updateTables();
     }
 
     //LAB PART
     public void initGrupeCombo() {
-        //TODO COMBO BOX PENTRU LOCATII
         grupeCombo.setItems(FXCollections.observableArrayList("0I", "0I-", "AII", "AII-", "BIII", "BIII-", "ABIV", "ABIV-"));
     }
 
@@ -565,17 +605,58 @@ public class MainView {
     private void updateConsultatii() {
         consultatiiTable.getItems().clear();
         for (Donare donare : factory.get(DonareProxy.class).getAll()) {
-            if (donare.getConsult() != null)
+            if (donare.getConsult() != null && donare.getPungiSange() == null)
                 consultatiiTable.getItems().add(donare);
         }
     }
 
     public void handleTransfer(){
-        //TODO CE SE INTAMPLA DUPA CE TRANSFERA
+        if (locationToField.getText().equals("") || pungiSangeLabTable.getSelectionModel().getSelectedItems().size() == 0) {
+            new Alert(Alert.AlertType.WARNING, "Selectati o punga de sange si introduceti locatia!", ButtonType.OK).showAndWait();
+            return;
+        }
+        factory.get(DonareProxy.class).addTransfer(pungiSangeLabTable.getSelectionModel().getSelectedItem(), locationToField.getText());
+        updateTables();
     }
 
     public void handleComplete(){
-        //TODO CE SE INTAMPLA DUPA CE COMPLETEA*A
+        if (imunoText.getText().equals("") || grupeCombo.getSelectionModel().getSelectedItem() == null || pungiSangeLabTable.getSelectionModel().getSelectedItems().size() == 0) {
+            new Alert(Alert.AlertType.WARNING, "Selectati o punga de sange si introduceti locatia!", ButtonType.OK).showAndWait();
+            return;
+        }
+        GrupaSange grupaSange = null;
+        switch (grupeCombo.getSelectionModel().getSelectedItem()) {
+            case "0I":
+                grupaSange = GrupaSange.O1;
+                break;
+            case "0I-":
+                grupaSange = GrupaSange.O1M;
+                break;
+            case "AII":
+                grupaSange = GrupaSange.A2;
+                break;
+            case "AII-":
+                grupaSange = GrupaSange.A2M;
+                break;
+            case "BIII":
+                grupaSange = GrupaSange.B3;
+                break;
+            case "BIII-":
+                grupaSange = GrupaSange.B3M;
+                break;
+            case "ABIV":
+                grupaSange = GrupaSange.AB4;
+                break;
+            case "ABIV-":
+                grupaSange = GrupaSange.AB4M;
+                break;
+            default:
+                break;
+        }
+        Donare donare = pungiSangeLabTable.getSelectionModel().getSelectedItem().getDonare();
+        String imonoH = imunoText.getText();
+        String boli = boliText.getText();
+        factory.get(DonareProxy.class).addAnaliza(donare, imonoH, boli, grupaSange);
     }
     public void handleLogOut() throws IOException {
         Login.show(stage, factory);
@@ -587,7 +668,10 @@ public class MainView {
         ScrollPane root = loader.load();
         DonorQuestionnaire controller = loader.getController();
         controller.init(stage, factory);
-        controller.setGoBack(()->donorNowView.setContent(parent));
+        controller.setGoBack(()-> {
+            donorNowView.setContent(parent);
+            updateTables();
+        });
         donorNowView.setContent(root);
     }
 }

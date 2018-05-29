@@ -1,7 +1,9 @@
 package com.iss.service;
 
 import com.iss.domain.Donare;
+import com.iss.domain.PungaSange;
 import com.iss.domain.Spital;
+import com.iss.enums.GrupaSange;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
@@ -66,5 +68,26 @@ public class DonareProxy implements ICrudService<Donare, Integer> {
     @Override
     public int count() {
         return 0;
+    }
+
+    public void finalizare(Donare donare) {
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(host + "/finalizare",new String[]{parent.getSessionId().toString(),
+                                                                            String.valueOf(donare.getId())}, String.class);
+        if (responseEntity.getStatusCode() != HttpStatus.OK)
+            throw new ServerException("finalizare donari exception");
+    }
+
+    public void  addTransfer(PungaSange pungaSange, String to) {
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(host + "/transfer",new String[]{parent.getSessionId().toString(),
+                String.valueOf(pungaSange.getIdSange()), to}, String.class);
+        if (responseEntity.getStatusCode() != HttpStatus.OK)
+            throw new ServerException("addTransfer donari exception");
+    }
+
+    public void addAnaliza(Donare donare, String boli, String imunoH, GrupaSange grupaSange) {
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(host + "/analiza",new String[]{parent.getSessionId().toString(),
+                String.valueOf(donare.getId()), boli, imunoH, grupaSange.toString()}, String.class);
+        if (responseEntity.getStatusCode() != HttpStatus.OK)
+            throw new ServerException("addAnaliza donari exception");
     }
 }

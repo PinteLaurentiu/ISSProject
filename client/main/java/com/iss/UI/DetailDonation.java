@@ -1,6 +1,6 @@
 package com.iss.UI;
 
-import com.iss.domain.DonareStatus;
+import com.iss.enums.DonareStatus;
 import com.iss.domain.Spital;
 import com.iss.service.DonareProxy;
 import com.iss.service.ProxyFactory;
@@ -9,8 +9,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
-import javafx.collections.FXCollections;
-import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;

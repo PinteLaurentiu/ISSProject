@@ -1,8 +1,9 @@
 package com.iss.rest;
 
 import com.iss.domain.Donare;
-import com.iss.domain.DonareStatus;
-import com.iss.domain.Role;
+import com.iss.enums.DonareStatus;
+import com.iss.enums.GrupaSange;
+import com.iss.enums.Role;
 import com.iss.domain.Spital;
 import com.iss.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +57,85 @@ public class DonareRestService {
         SessionService.Session session = factory.getService(SessionService.class).getSession(sessionId);
         return new ResponseEntity<>(factory.get(DonareService.class).getByUser(session.getEmail()), HttpStatus.OK);
 
+    }
+
+    @RequestMapping(value = "/finalizare", method = RequestMethod.POST)
+    public ResponseEntity<String> finalizareDonare(@RequestBody String[] strings){
+
+        if (strings.length != 2){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Long sessionId = Long.valueOf(strings[0]);
+        Integer idDonare = Integer.valueOf(strings[1]);
+        if (!factory.getService(SessionService.class).exists(sessionId)){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        SessionService.Session session = factory.getService(SessionService.class).getSession(sessionId);
+        List<Role> roles = (List<Role>)factory.get(UserService.class).getRoles(session.getEmail());
+        if (!roles.contains(Role.DoctorDonare)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (!factory.get(DonareService.class).exists(idDonare)){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        factory.get(DonareService.class).finalizare(idDonare);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/transfer", method = RequestMethod.POST)
+    public ResponseEntity<String> addTransfer(@RequestBody String[] strings) {
+        if (strings.length != 3){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Long sessionId = Long.valueOf(strings[0]);
+        Integer idPunga = Integer.valueOf(strings[1]);
+        String to = strings[2];
+        if (!factory.getService(SessionService.class).exists(sessionId)){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        SessionService.Session session = factory.getService(SessionService.class).getSession(sessionId);
+        List<Role> roles = (List<Role>)factory.get(UserService.class).getRoles(session.getEmail());
+        if (!roles.contains(Role.DoctorLab)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (!factory.get(DonareService.class).existsPunga(idPunga)){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        factory.get(DonareService.class).addTransfer(idPunga, to);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/analiza", method = RequestMethod.POST)
+    public ResponseEntity<String> addAnaliza(@RequestBody String[] strings) {
+        if (strings.length != 5){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Long sessionId = Long.valueOf(strings[0]);
+        Integer idDonare = Integer.valueOf(strings[1]);
+        String boli = strings[2];
+        String imunoH = strings[3];
+        GrupaSange grupaSange = GrupaSange.valueOf(strings[4]);
+        if (!factory.getService(SessionService.class).exists(sessionId)){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        SessionService.Session session = factory.getService(SessionService.class).getSession(sessionId);
+        List<Role> roles = (List<Role>)factory.get(UserService.class).getRoles(session.getEmail());
+        if (!roles.contains(Role.DoctorLab)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (!factory.get(DonareService.class).exists(idDonare)){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        factory.get(DonareService.class).addAnaliza(idDonare, boli, imunoH, grupaSange);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

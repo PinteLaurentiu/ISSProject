@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+    <class name="com.iss.domain.Analiza"
+           table="analiza">
+        <id name="idAnaliza" column="idAnaliza">
+            <generator class="foreign">
+                <param name="property">donare</param>
+            </generator>
+        </id>
+        <one-to-one name="donare" class="com.iss.domain.Donare"
+                    constrained="true"/>
+        <property name="imunoHematologice" column="imunoHematologice"/>
+        <property name="grupaSange" column="grupaSange">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.iss.enums.GrupaSange</param>
+            </type>
+        </property>
+        <property name="boliTransmisibile" column="boliTransmisibile"/>
+    </class>
+</hibernate-mapping>

@@ -1,5 +1,7 @@
 package com.iss.domain;
 
+import com.iss.enums.ComponenteSange;
+
 public class Cerere {
     private int idCerere;
     private String numePacient;

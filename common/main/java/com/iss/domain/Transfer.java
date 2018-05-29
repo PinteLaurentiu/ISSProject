@@ -2,9 +2,9 @@ package com.iss.domain;
 
 public class Transfer {
     private int idTransfer;
-    private String tip;
     private String from;
     private String to;
+    private PungaSange pungaSange;
 
     public int getIdTransfer() {
         return idTransfer;
@@ -12,14 +12,6 @@ public class Transfer {
 
     public void setIdTransfer(int idTransfer) {
         this.idTransfer = idTransfer;
-    }
-
-    public String getTip() {
-        return tip;
-    }
-
-    public void setTip(String tip) {
-        this.tip = tip;
     }
 
     public String getFrom() {
@@ -36,5 +28,13 @@ public class Transfer {
 
     public void setTo(String to) {
         this.to = to;
+    }
+
+    public PungaSange getPungaSange() {
+        return pungaSange;
+    }
+
+    public void setPungaSange(PungaSange pungaSange) {
+        this.pungaSange = pungaSange;
     }
 }

@@ -13,7 +13,7 @@
         <property name="varsta" column="varsta"/>
         <property name="componenteSange" column="componentaSange">
             <type name="org.hibernate.type.EnumType">
-                <param name="enumClass">com.iss.domain.ComponenteSange</param>
+                <param name="enumClass">com.iss.enums.ComponenteSange</param>
             </type>
         </property>
         <property name="cantitatea" column="cantitatea"/>

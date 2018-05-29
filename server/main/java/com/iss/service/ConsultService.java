@@ -2,7 +2,7 @@ package com.iss.service;
 
 import com.iss.domain.Consult;
 import com.iss.domain.Donare;
-import com.iss.domain.DonareStatus;
+import com.iss.enums.DonareStatus;
 import com.iss.persistance.ConsultRepository;
 import com.iss.persistance.DonareRepository;
 import com.iss.persistance.RepositoryFactory;

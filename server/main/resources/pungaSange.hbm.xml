@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+    <class name="com.iss.domain.PungaSange"
+           table="pungasange">
+        <id name="idSange" column="idSange">
+            <generator class="increment"/>
+        </id>
+        <property name="tip" column="tip">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.iss.enums.TipPungaSange</param>
+            </type>
+        </property>
+        <property name="locatie" column="locatie"/>
+        <many-to-one name="donare" class="com.iss.domain.Donare"
+                     column="idDonare" not-null="true"/>
+        <set lazy="false" name="transferuri" inverse="true" cascade="all-delete-orphan" >
+            <key column="idPungaSange" not-null="true" />
+            <one-to-many class="com.iss.domain.Transfer"/>
+        </set>
+    </class>
+</hibernate-mapping>

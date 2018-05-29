@@ -1,7 +1,7 @@
 package com.iss.service;
 
 import com.iss.domain.Cerere;
-import com.iss.domain.ComponenteSange;
+import com.iss.enums.ComponenteSange;
 import com.iss.persistance.CerereRepository;
 import com.iss.persistance.RepositoryFactory;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;

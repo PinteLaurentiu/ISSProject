@@ -1,4 +1,4 @@
-package com.iss.domain;
+package com.iss.enums;
 
 public enum ComponenteSange {
     TROMBOCITE,

@@ -12,7 +12,7 @@
         <property name="pentru" column="pentru"/>
         <property name="status" column="status">
             <type name="org.hibernate.type.EnumType">
-                <param name="enumClass">com.iss.domain.DonareStatus</param>
+                <param name="enumClass">com.iss.enums.DonareStatus</param>
             </type>
         </property>
         <many-to-one lazy="false" name="centru" class="com.iss.domain.Spital"
@@ -20,6 +20,12 @@
         <many-to-one lazy="false" name="user" class="com.iss.domain.User"
                      column="idUser" not-null="true"/>
         <one-to-one name="consult" class="com.iss.domain.Consult"
+                    cascade="all"/>
+        <set lazy="false" name="pungiSange" inverse="true" cascade="all-delete-orphan" >
+            <key column="idDonare" not-null="true" />
+            <one-to-many class="com.iss.domain.PungaSange"/>
+        </set>
+        <one-to-one name="analiza" class="com.iss.domain.Analiza"
                     cascade="all"/>
     </class>
 </hibernate-mapping>

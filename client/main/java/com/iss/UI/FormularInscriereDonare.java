@@ -1,8 +1,7 @@
 package com.iss.UI;
 
-import com.iss.domain.DonareStatus;
+import com.iss.enums.DonareStatus;
 import com.iss.domain.Spital;
-import com.iss.service.ConsultProxy;
 import com.iss.service.DonareProxy;
 import com.iss.service.ProxyFactory;
 import com.iss.service.SpitalProxy;

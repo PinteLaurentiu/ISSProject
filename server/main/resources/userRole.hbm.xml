@@ -10,7 +10,7 @@
         </id>
         <property name="role" column="role">
             <type name="org.hibernate.type.EnumType">
-                <param name="enumClass">com.iss.domain.Role</param>
+                <param name="enumClass">com.iss.enums.Role</param>
             </type>
         </property>
         <many-to-one name="user" class="com.iss.domain.User"

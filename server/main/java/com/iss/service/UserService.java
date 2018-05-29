@@ -1,7 +1,7 @@
 package com.iss.service;
 
 import com.iss.domain.Activation;
-import com.iss.domain.Role;
+import com.iss.enums.Role;
 import com.iss.domain.User;
 import com.iss.domain.UserRole;
 import com.iss.persistance.RepositoryFactory;

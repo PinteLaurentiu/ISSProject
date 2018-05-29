@@ -110,12 +110,13 @@ CREATE TABLE consult
 
 CREATE TABLE transfer
 (
-    idTransfer int PRIMARY KEY NOT NULL,
-    tip bit not null,
-    `from` varchar(20) NOT NULL,
-    `to` varchar(20) NOT NULL
+    idTransfer int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    idPungaSange int NOT NULL,
+    `from` varchar(100) NOT NULL,
+    `to` varchar(100) NOT NULL,
+    CONSTRAINT transfer_pungasange_FK FOREIGN KEY (idPungaSange) REFERENCES pungaSange (idSange) ON DELETE CASCADE ON UPDATE CASCADE
 );
-CREATE UNIQUE INDEX transfer_idTransfer_uindex ON transfer (idTransfer)
+CREATE UNIQUE INDEX transfer_idTransfer_uindex ON transfer (idTransfer);
 
 CREATE TABLE cerere
 (
@@ -127,3 +128,22 @@ CREATE TABLE cerere
     cantitatea int(11)
 );
 CREATE UNIQUE INDEX Cerere_idCerere_uindex ON cerere (idCerere);
+
+
+CREATE TABLE pungaSange
+(
+  idSange INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  idDonare INT NOT NULL,
+  tip INT NOT NULL,
+  locatie VARCHAR(100) NOT NULL,
+  CONSTRAINT pungaSange_donare_idDonare_fk FOREIGN KEY (idDonare) REFERENCES donare (idDonare)
+);
+
+CREATE TABLE analiza
+(
+  idAnaliza INT PRIMARY KEY NOT NULL,
+  imunoHematologice VARCHAR(100),
+  grupaSange INT NOT NULL,
+  boliTransmisibile VARCHAR(100),
+  CONSTRAINT analiza_donare_idDonare_fk FOREIGN KEY (idAnaliza) REFERENCES donare (idDonare)
+);

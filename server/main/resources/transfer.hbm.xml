@@ -6,10 +6,11 @@
     <class name="com.iss.domain.Transfer"
            table="transfer">
         <id name="idTransfer" column="idTransfer">
-
+            <generator class="increment"/>
         </id>
-        <property name="tip" column="tip"/>
         <property name="from" column="from"/>
         <property name="to" column="to"/>
+        <many-to-one lazy="false" name="pungaSange" class="com.iss.domain.PungaSange"
+                     column="idPungaSange" not-null="true"/>
     </class>
 </hibernate-mapping>
