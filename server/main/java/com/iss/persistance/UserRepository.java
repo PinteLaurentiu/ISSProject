@@ -75,14 +75,11 @@ public class UserRepository extends HibernateRepository<User, Integer> {
     }
 
     public User getByEmail(String email) {
-        Iterable<User> users = getAll();
-        User foundUser = null;
-        for (User user: users) {
+        for (User user: getAll()) {
             if (user.getEmail().equals(email)) {
-                foundUser = user;
+                return user;
             }
         }
-
-        return foundUser;
+        return null;
     }
 }

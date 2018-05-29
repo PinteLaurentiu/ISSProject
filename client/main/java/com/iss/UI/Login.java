@@ -1,5 +1,6 @@
 package com.iss.UI;
 
+import com.iss.domain.User;
 import com.iss.exceptions.BadAuthenticationException;
 import com.iss.exceptions.NotActivatedUserException;
 import com.iss.service.ProxyFactory;
@@ -49,7 +50,8 @@ public class Login {
             String password = showPasswordCheckBox.isSelected() ? passwordText.getText() : passwordHiddenText.getText();
             factory.get(UserProxy.class).login(usernameText.getText(), password);
 
-            MainView.show(stage, factory);
+            User user = factory.get(UserProxy.class).findOne(usernameText.getText());
+            MainView.show(stage, factory, user);
         } catch (NotActivatedUserException ex) {
             Optional<ButtonType> answer = new Alert(Alert.AlertType.NONE, "Userul nu este activ! Doriti sa " +
                     "retrimitem \nlinkul de activare pe emailul specificat?", ButtonType.YES, ButtonType.NO).

@@ -129,4 +129,12 @@ public class UserProxy implements ICrudService<User, Integer> {
             throw new ServerException("Couldn't resend the email!");
         }
     }
+
+    public User findOne(String email){
+        ResponseEntity<User> responseEntity = restTemplate.getForEntity(host+"/getByEmail/"+email, User.class);
+        if (responseEntity.getStatusCode() != HttpStatus.OK){
+            throw new ServerException("Find failed");
+        }
+        return responseEntity.getBody();
+    }
 }

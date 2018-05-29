@@ -121,4 +121,9 @@ public class UserRestService {
         factory.getService(MailService.class).sendActivationMail(email, user.getId(), user.getActivation().getGeneratedId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/getByEmail/{email}", method = RequestMethod.GET)
+    public ResponseEntity<User> count(@PathVariable String email) {
+        return new ResponseEntity<>(factory.get(UserService.class).getByEmail(email), HttpStatus.OK);
+    }
 }

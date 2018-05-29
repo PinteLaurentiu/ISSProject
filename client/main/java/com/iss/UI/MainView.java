@@ -102,8 +102,12 @@ public class MainView {
     public JFXButton addCerere;
     public TableView<Donare> consultatiiTable;
 
+    public Label usernameText;
+
     private Stage stage;
     private ProxyFactory factory;
+
+    private static User currentUser;
 
     private static final int RECORDS_ON_PAGE = 8;
 
@@ -297,7 +301,8 @@ public class MainView {
 
         //ADMIN PART
         @SuppressWarnings("WeakerAccess")
-        public static void show(Stage stage, ProxyFactory factory) throws IOException {
+        public static void show(Stage stage, ProxyFactory factory, User user) throws IOException {
+            currentUser = user;
             show(stage, factory, 0);
         }
 
@@ -316,6 +321,7 @@ public class MainView {
 
         this.stage = stage;
         this.factory = factory;
+
         initGrupeCombo();
         checkApt();
         usersTable.setDisable(false);
@@ -364,7 +370,6 @@ public class MainView {
             //noinspection unchecked
             consultatiiTable.getColumns().get(3).setCellValueFactory(x->new ReadOnlyObjectWrapper(formatter.format(x.getValue().getDate())));
             updateConsultatii();
-
         }
 
         if (!roles.contains(Role.DoctorLab))
@@ -408,6 +413,8 @@ public class MainView {
             cerereSelectionChanged();
         }
         mainMenu.getSelectionModel().selectedItemProperty().addListener(this::changedTab);
+
+        this.usernameText.setText(currentUser.getNume()+" "+currentUser.getPrenume());
     }
 
     private void updateUsers() {

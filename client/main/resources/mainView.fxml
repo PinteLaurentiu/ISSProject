@@ -730,7 +730,7 @@
             </Tab>
          </tabs>
       </JFXTabPane>
-      <Label layoutX="819.0" layoutY="23.0" prefHeight="25.0" prefWidth="115.0" text="Miruna Radu" textFill="#d0294f">
+      <Label fx:id="usernameText" layoutX="819.0" layoutY="23.0" prefHeight="25.0" prefWidth="115.0" textFill="#d0294f">
          <font>
             <Font name="Century Gothic" size="18.0" />
          </font>
