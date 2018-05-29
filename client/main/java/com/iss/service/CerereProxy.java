@@ -50,7 +50,7 @@ public class CerereProxy implements ICrudService<Cerere, Integer> {
 
     @Override
     public Iterable<Cerere> getAll() {
-        return null;
+        return getAll(-1,0);
     }
 
     @Override

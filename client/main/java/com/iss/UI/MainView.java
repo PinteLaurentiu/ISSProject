@@ -150,6 +150,8 @@ public class MainView {
             updateUsers();
         if (roles.contains(Role.DoctorLab))
             updatePungiSange();
+        if (roles.contains(Role.DoctorSpital))
+            updateCerere();
     }
 
     private void updatePungiSange() {
@@ -429,6 +431,19 @@ public class MainView {
 
         if (!roles.contains(Role.DoctorSpital))
             mainMenu.getTabs().remove(cerereView);
+        else{
+            //noinspection unchecked
+            cerereTable.getColumns().get(0).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getNumePacient()));
+            //noinspection unchecked
+            cerereTable.getColumns().get(1).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getPrenumePacient()));
+            //noinspection unchecked
+            cerereTable.getColumns().get(2).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getVarsta()));
+            //noinspection unchecked
+            cerereTable.getColumns().get(3).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getComponenteSange()));
+            //noinspection unchecked
+            cerereTable.getColumns().get(3).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getCantitatea()));
+            updateTables();
+        }
 
         if (!roles.contains(Role.UsersEditor))
             mainMenu.getTabs().remove(adminView);
@@ -478,9 +493,9 @@ public class MainView {
 
     private void updateCerere() {
         cerereTable.getItems().clear();
-        for (Cerere cerere : factory.get(CerereProxy.class).getAll(RECORDS_ON_PAGE,paginationUsers.getCurrentPageIndex()))
+        for (Cerere cerere : factory.get(CerereProxy.class).getAll())
             cerereTable.getItems().add(cerere);
-        paginationUsers.setPageCount((int)Math.ceil(factory.get(CerereProxy.class).count() / (float)RECORDS_ON_PAGE));
+//        paginationUsers.setPageCount((int)Math.ceil(factory.get(CerereProxy.class).count() / (float)RECORDS_ON_PAGE));
     }
 
     private static String rolesAsString(User value) {
