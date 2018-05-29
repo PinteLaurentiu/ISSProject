@@ -140,11 +140,16 @@ public class MainView {
     }
 
     private void updateTables(){
+        List<Role> roles = (List<Role>) factory.get(UserProxy.class).getRoles();
         updateAnalisys();
-        updateConsultatii();
-        updateDonariForConsult();
-        updateUsers();
-        updatePungiSange();
+        if (roles.contains(Role.DoctorDonare)) {
+            updateConsultatii();
+            updateDonariForConsult();
+        }
+        if (roles.contains(Role.UsersEditor))
+            updateUsers();
+        if (roles.contains(Role.DoctorLab))
+            updatePungiSange();
     }
 
     private void updatePungiSange() {
@@ -383,7 +388,7 @@ public class MainView {
             mainMenu.getSelectionModel().select(cerereView);
         }
         if (!roles.contains(Role.DoctorDonare))
-            mainMenu.getTabs().remove(labView);
+            mainMenu.getTabs().remove(doctorView);
         else {
             SimpleDateFormat formatter = new SimpleDateFormat("dd-LL-yyyy");
             SimpleDateFormat formatter2 = new SimpleDateFormat("HH:mm");
@@ -423,10 +428,10 @@ public class MainView {
         }
 
         if (!roles.contains(Role.DoctorSpital))
-            mainMenu.getTabs().remove(doctorView);
+            mainMenu.getTabs().remove(cerereView);
 
         if (!roles.contains(Role.UsersEditor))
-            mainMenu.getTabs().remove(donorView);
+            mainMenu.getTabs().remove(adminView);
         else{
             paginationUsers.currentPageIndexProperty().addListener((x,y,z)->updateTables());
             updateTables();
@@ -605,7 +610,7 @@ public class MainView {
     private void updateConsultatii() {
         consultatiiTable.getItems().clear();
         for (Donare donare : factory.get(DonareProxy.class).getAll()) {
-            if (donare.getConsult() != null && donare.getPungiSange() == null)
+            if (donare.getConsult() != null && donare.getPungiSange().size() == 0)
                 consultatiiTable.getItems().add(donare);
         }
     }
