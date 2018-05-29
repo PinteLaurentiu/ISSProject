@@ -390,6 +390,22 @@ public class MainView {
             usersTable.getColumns().get(4).setCellValueFactory(x->new ReadOnlyObjectWrapper(rolesAsString(x.getValue())));
             usersTable.getSelectionModel().selectedItemProperty().addListener((x,y,z)->userSelectionChanged());
             userSelectionChanged();
+
+
+            paginationCerere.currentPageIndexProperty().addListener((x,y,z)->updateCerere());
+            updateCerere();
+            //noinspection unchecked
+            cerereTable.getColumns().get(0).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getNumePacient()));
+            //noinspection unchecked
+            cerereTable.getColumns().get(1).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getPrenumePacient()));
+            //noinspection unchecked
+            cerereTable.getColumns().get(2).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getVarsta()));
+            //noinspection unchecked
+            cerereTable.getColumns().get(3).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getComponenteSange()));
+            //noinspection unchecked
+            cerereTable.getColumns().get(4).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getCantitatea()));
+            cerereTable.getSelectionModel().selectedItemProperty().addListener((x,y,z)->cerereSelectionChanged());
+            cerereSelectionChanged();
         }
         mainMenu.getSelectionModel().selectedItemProperty().addListener(this::changedTab);
     }
@@ -425,6 +441,9 @@ public class MainView {
         deleteUsers.setDisable(usersTable.getSelectionModel().getSelectedItems().size() == 0);
     }
 
+    private void cerereSelectionChanged() {
+        deleteCerere.setDisable(cerereTable.getSelectionModel().getSelectedItems().size() == 0);
+    }
 
     @SuppressWarnings("unused")
     private void changedTab(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
@@ -454,8 +473,9 @@ public class MainView {
     }
 
     public void deleteCererePressed(ActionEvent actionEvent) {
+        factory.get(CerereProxy.class).remove(cerereTable.getSelectionModel().getSelectedItem().getIdCerere());
+        updateCerere();
     }
-
 
     public void addCererePressed(ActionEvent actionEvent) throws IOException {
         CerereView.show(stage, factory);
@@ -470,9 +490,7 @@ public class MainView {
                 if (noCheck.isSelected() && oldValue == false) {
                     yesCheck.setSelected(newValue);
                     noCheck.setSelected(false);
-
                 }
-
             }
         });
         noCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
@@ -539,9 +557,8 @@ public class MainView {
     public void handleComplete(){
         //TODO CE SE INTAMPLA DUPA CE COMPLETEA*A
     }
-    public void handleLogOut(){
-        //TODO : logout
-        System.out.println("LogOut");
+    public void handleLogOut() throws IOException {
+        Login.show(stage, factory);
     }
 
     public void handleContinue() throws IOException{

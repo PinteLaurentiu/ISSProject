@@ -686,7 +686,7 @@
                  <graphic>
                      <ImageView fx:id="adminImage" fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                          <image>
-                             <Image url="@icons/administrator2-grey.png" />
+                             <Image url="@icons/pill-grey.png" />
                          </image>
                      </ImageView>
                  </graphic>
@@ -721,7 +721,7 @@
                   </AnchorPane>
                </content>
                <graphic>
-                  <ImageView fx:id="adminImage" fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@icons/administrator2-grey.png" />
                      </image>
@@ -740,7 +740,7 @@
             <Image url="@icons/user.png" />
          </image>
       </ImageView>
-      <ImageView cache="true" cacheHint="SCALE" fitHeight="28.0" fitWidth="36.0" layoutX="933.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView cache="true" onMouseClicked="#handleLogOut" cacheHint="SCALE" fitHeight="28.0" fitWidth="36.0" layoutX="933.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@icons/logout.png" />
          </image>

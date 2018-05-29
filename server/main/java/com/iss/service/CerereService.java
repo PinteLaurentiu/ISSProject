@@ -1,6 +1,7 @@
 package com.iss.service;
 
 import com.iss.domain.Cerere;
+import com.iss.domain.ComponenteSange;
 import com.iss.persistance.CerereRepository;
 import com.iss.persistance.RepositoryFactory;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -16,7 +17,13 @@ public class CerereService implements ICrudService<Cerere,Integer> {
 
     @Override
     public void add(Object... objects) {
-        Cerere cerere = new Cerere();
+        Cerere cerere = new Cerere(
+                objects[0].toString(),
+                objects[1].toString(),
+                Integer.parseInt(objects[2].toString()),
+                ComponenteSange.valueOf(objects[3].toString()),
+                Integer.parseInt(objects[4].toString())
+        );
         factory.get(CerereRepository.class).put(cerere);
     }
 

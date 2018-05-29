@@ -22,11 +22,11 @@ public class CerereProxy implements ICrudService<Cerere, Integer> {
        try {
             ResponseEntity responseEntity;
             responseEntity = restTemplate.postForEntity(host, new String[]{
-                    (String) objects[0],
-                    (String) objects[1],
-                    (String) objects[2],
-                    (String) objects[3],
-                    (String) objects[4]},
+                    objects[0].toString(),
+                    objects[1].toString(),
+                    objects[2].toString(),
+                    objects[3].toString(),
+                    objects[4].toString()},
                     Object.class);
             if (responseEntity.getStatusCode() != HttpStatus.OK)
                 throw new Exception();
@@ -38,7 +38,7 @@ public class CerereProxy implements ICrudService<Cerere, Integer> {
     @Override
     public void remove(Integer key) {
         try {
-            restTemplate.delete(host + "/" + parent.getSessionId() + "/" + key);
+            restTemplate.delete(host + "/"  + key);
         }catch (Exception ex){
             throw new ServerException("Stergere cerere esuata");
         }

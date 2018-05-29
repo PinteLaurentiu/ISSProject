@@ -38,8 +38,8 @@ public class Login {
     private void init(Stage stage, ProxyFactory factory){
         this.stage = stage;
         this.factory = factory;
-        usernameText.setText("test@test.com");
-        passwordText.setText("parola");
+        usernameText.setText("");
+        passwordText.setText("");
         passwordHiddenText.setText("");
         showPassword(null);
     }
@@ -49,9 +49,7 @@ public class Login {
             String password = showPasswordCheckBox.isSelected() ? passwordText.getText() : passwordHiddenText.getText();
             factory.get(UserProxy.class).login(usernameText.getText(), password);
 
-            MainView.show(stage, factory); //TODO : fut Iliuta!
-//        FormularInscriereDonare.show(stage, factory);
-
+            MainView.show(stage, factory);
         } catch (NotActivatedUserException ex) {
             Optional<ButtonType> answer = new Alert(Alert.AlertType.NONE, "Userul nu este activ! Doriti sa " +
                     "retrimitem \nlinkul de activare pe emailul specificat?", ButtonType.YES, ButtonType.NO).
