@@ -44,6 +44,7 @@ public class MainView {
     public ImageView doctorImage;
     public ImageView labImage;
     public ImageView adminImage;
+    public ImageView spitalImage;
 
     //From DonourView
     public AnchorPane donorPane;
@@ -236,6 +237,9 @@ public class MainView {
         Image administratorRed = new Image("icons/administrator2.png");
         Image administratorGrey  = new Image("icons/administrator2-grey.png");
 
+        Image spitalRed = new Image("icons/pill.png");
+        Image spitalGrey  = new Image("icons/pill-grey.png");
+
         mainMenu.getSelectionModel().selectedItemProperty().addListener(
                 new ChangeListener<Tab>() {
                     @Override
@@ -243,26 +247,35 @@ public class MainView {
                         if(t1.getText().equals("Doctor")){
                             doctorImage.setImage(doctorImageRed);
                             donorImage.setImage(donorImageGrey);
-                            labImage.setImage(labImageGrey);
+                            spitalImage.setImage(spitalGrey);
                             adminImage.setImage(administratorGrey);
-
                         }
                         else if(t1.getText().equals("Donator")){
                             donorImage.setImage(donorImageRed);
                             doctorImage.setImage(doctorImageGrey);
                             labImage.setImage(labImageGrey);
+                            spitalImage.setImage(spitalGrey);
                             adminImage.setImage(administratorGrey);
                         }
                         else if(t1.getText().equals("Laborator")){
                             donorImage.setImage(donorImageGrey);
                             doctorImage.setImage(doctorImageGrey);
                             labImage.setImage(labImageRed);
+                            spitalImage.setImage(spitalGrey);
+                            adminImage.setImage(administratorGrey);
+                        }
+                        else if(t1.getText().equals("Spital")){
+                            donorImage.setImage(donorImageGrey);
+                            doctorImage.setImage(doctorImageGrey);
+                            labImage.setImage(labImageGrey);
+                            spitalImage.setImage(spitalRed);
                             adminImage.setImage(administratorGrey);
                         }
                         else if(t1.getText().equals("Admin")){
                             donorImage.setImage(donorImageGrey);
                             doctorImage.setImage(doctorImageGrey);
                             labImage.setImage(labImageGrey);
+                            spitalImage.setImage(spitalGrey);
                             adminImage.setImage(administratorRed);
                         }
                     }
