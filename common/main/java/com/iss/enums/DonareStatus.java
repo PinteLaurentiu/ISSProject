@@ -3,5 +3,7 @@ package com.iss.enums;
 public enum DonareStatus {
     PROGRAMAT,
     CONSULTAT,
-    RESPINS
+    RESPINS,
+    EFECTUAT,
+    ANALIZAT
 }

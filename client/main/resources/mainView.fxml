@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import java.net.URL?>
@@ -61,26 +62,22 @@
                                           <JFXTreeTableView fx:id="analysisTable" layoutX="2.0" layoutY="8.0" prefHeight="370.0" prefWidth="300.0" stylesheets="@css/donorTab.css" />
                                           <AnchorPane fx:id="detailsPane" layoutX="312.0" layoutY="8.0" prefHeight="370.0" prefWidth="317.0" style="-fx-background-color: radial-gradient(radius 180%, #E1365D, derive(#E1365D, -30%), derive(#E1365D, 30%));">
                                              <children>
-                                                <Label fx:id="analysDetailLabel" layoutX="89.0" layoutY="14.0" text="Detalii analiză" textFill="#fffefe" underline="true">
+                                                <Label fx:id="analysDetailLabel" layoutX="89.0" layoutY="14.0" text="Detalii donare" textFill="#fffefe" underline="true">
                                                    <font>
                                                       <Font name="Century Gothic" size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <Label fx:id="statusLabel" layoutX="89.0" layoutY="50.0" prefHeight="38.0" prefWidth="82.0" text="Status:" textFill="#fffefe">
+                                                <Label fx:id="statusLabel" layoutX="22.0" layoutY="50.0" prefHeight="38.0" prefWidth="82.0" text="Status:" textFill="#fffefe">
                                                    <font>
                                                       <Font name="Century Gothic" size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <Label fx:id="statusText" layoutX="154.0" layoutY="54.0" prefHeight="31.0" prefWidth="163.0" text="Respins" textFill="#fffefe">
+                                                <Label fx:id="statusText" alignment="CENTER" contentDisplay="CENTER" layoutX="77.0" layoutY="53.0" prefHeight="31.0" prefWidth="227.0" text="Respins" textFill="#fffefe">
                                                    <font>
                                                       <Font name="Century Gothic" size="14.0" />
                                                    </font>
                                                 </Label>
-                                                <Label fx:id="reasonLabel" layoutX="115.0" layoutY="88.0" prefHeight="38.0" prefWidth="74.0" textFill="#fffefe" wrapText="true">
-                                                   <font>
-                                                      <Font name="Century Gothic" size="18.0" />
-                                                   </font>
-                                                </Label>
+                                                <JFXTextArea fx:id="detaliiDonareArea" editable="false" layoutX="35.0" layoutY="92.0" prefHeight="262.0" prefWidth="248.0" />
                                              </children></AnchorPane>
                                        </children>
                                     </AnchorPane>
@@ -514,12 +511,12 @@
                                                       <Font name="Century Gothic Bold" size="13.0" />
                                                    </font>
                                                 </TextArea>
-                                                <JFXButton fx:id="addConsulationButton" layoutX="268.0" layoutY="14.0" onAction="#handleAddConsult" prefHeight="55.0" prefWidth="54.0" stylesheets="@css/button.css">
+                                                <JFXButton fx:id="addConsulationButton" disable="true" layoutX="268.0" layoutY="14.0" onAction="#handleAddConsult" prefHeight="55.0" prefWidth="54.0" stylesheets="@css/button.css">
                                                    <font>
                                                       <Font size="9.0" />
                                                    </font>
                                                    <graphic>
-                                                      <ImageView fx:id="addConsult" fitHeight="41.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                                                      <ImageView fx:id="addConsult" disable="true" fitHeight="41.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
                                                             <Image url="@icons/addConsulation.png" />
                                                          </image>
@@ -569,6 +566,16 @@
                               </Tab>
                            </tabs>
                         </JFXTabPane>
+                        <JFXTextField fx:id="cautaField" focusColor="#d0294f" layoutX="92.0" layoutY="486.0" prefHeight="32.0" prefWidth="276.0">
+                           <font>
+                              <Font name="Century Gothic Bold" size="16.0" />
+                           </font>
+                        </JFXTextField>
+                        <Label layoutX="14.0" layoutY="490.0" prefHeight="24.0" prefWidth="95.0" text="Caută : " textFill="#6f6f6f">
+                           <font>
+                              <Font name="Century Gothic Bold" size="19.0" />
+                           </font>
+                        </Label>
                      </children></AnchorPane>
                </content>
             </Tab>
@@ -603,7 +610,7 @@
                                     <Font name="Century Gothic Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <JFXButton fx:id="transferButton" layoutX="30.0" layoutY="170.0" onAction="#handleTransfer" prefHeight="35.0" prefWidth="274.0" style="-fx-border-color: #6F6F6F; -fx-border-radius: 5;" stylesheets="@css/button.css" text="Apasă pentru transfer" />
+                              <JFXButton fx:id="transferButton" layoutX="30.0" layoutY="170.0" onAction="#handleTransfer" prefHeight="35.0" prefWidth="274.0" style="-fx-border-color: #6F6F6F; -fx-border-radius: 5;" stylesheets="@css/button.css" text="Adaugă transfer" />
                               <JFXTextField fx:id="locationToField" focusColor="#d0294f" layoutX="32.0" layoutY="118.0" prefHeight="32.0" prefWidth="273.0" stylesheets="@css/textField.css">
                                  <font>
                                     <Font name="Century Gothic Bold" size="16.0" />
@@ -631,7 +638,7 @@
                                  </font>
                               </Label>
                               <TextArea fx:id="boliText" layoutX="27.0" layoutY="155.0" prefHeight="52.0" prefWidth="283.0" style="-fx-background-radius: 10;" stylesheets="@css/donorTab.css" />
-                              <JFXButton fx:id="completeButton" layoutX="28.0" layoutY="208.0" onAction="#handleComplete" prefHeight="25.0" prefWidth="281.0" style="-fx-border-color: #6F6F6F; -fx-border-radius: 5;" stylesheets="@css/button2.css" text="Apasă pentru completare">
+                              <JFXButton fx:id="completeButton" layoutX="28.0" layoutY="208.0" onAction="#handleComplete" prefHeight="25.0" prefWidth="281.0" style="-fx-border-color: #6F6F6F; -fx-border-radius: 5;" stylesheets="@css/button2.css" text="Adaugă analize">
                                  <font>
                                     <Font size="11.0" />
                                  </font>
