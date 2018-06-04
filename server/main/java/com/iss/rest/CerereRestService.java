@@ -1,13 +1,17 @@
 package com.iss.rest;
 
 import com.iss.domain.Cerere;
-import com.iss.service.BaseServiceFactory;
-import com.iss.service.CerereService;
-import com.iss.service.ServiceFactory;
+import com.iss.enums.TipComponenteSange;
+import com.iss.enums.GradDeUrgenta;
+import com.iss.enums.GrupaSange;
+import com.iss.enums.Role;
+import com.iss.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/cerere")
@@ -21,11 +25,30 @@ public class CerereRestService {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity add(@RequestBody String[] strings){
-        if (strings.length != 5 && strings.length != 6){
+        if (strings.length != 8){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
-        factory.get(CerereService.class).add((Object[]) strings);
+        String nume = strings[0];
+        String prenume = strings[1];
+        TipComponenteSange tipComponenteSange = TipComponenteSange.valueOf(strings[2]);
+        GrupaSange grupaSange = GrupaSange.fromString(strings[3]);
+        GradDeUrgenta gradDeUrgenta = GradDeUrgenta.valueOf(strings[4]);
+        Integer cantitatea = Integer.valueOf(strings[5]);
+        String locatie = strings[6];
+        Long sessionId = Long.valueOf(strings[7]);
+
+        if (!factory.getService(SessionService.class).exists(sessionId)){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        SessionService.Session session = factory.getService(SessionService.class).getSession(sessionId);
+        List<Role> roles = (List<Role>)factory.get(UserService.class).getRoles(session.getEmail());
+        if (!roles.contains(Role.DoctorSpital)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        factory.get(CerereService.class).add(nume, prenume, tipComponenteSange, grupaSange, gradDeUrgenta,
+                                            cantitatea, locatie);
         return new ResponseEntity(HttpStatus.OK);
     }
 

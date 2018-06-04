@@ -26,7 +26,10 @@ public class CerereProxy implements ICrudService<Cerere, Integer> {
                     objects[1].toString(),
                     objects[2].toString(),
                     objects[3].toString(),
-                    objects[4].toString()},
+                    objects[4].toString(),
+                    objects[5].toString(),
+                    objects[6].toString(),
+                    parent.getSessionId().toString()},
                     Object.class);
             if (responseEntity.getStatusCode() != HttpStatus.OK)
                 throw new Exception();

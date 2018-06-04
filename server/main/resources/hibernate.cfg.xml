@@ -26,5 +26,8 @@
         <mapping resource="pungaSange.hbm.xml"/>
         <mapping resource="transfer.hbm.xml"/>
         <mapping resource="analiza.hbm.xml"/>
+        <mapping resource="componentaSange.hbm.xml"/>
+        <mapping resource="compabilitateMajora.hbm.xml"/>
+        <mapping resource="transferComponenta.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

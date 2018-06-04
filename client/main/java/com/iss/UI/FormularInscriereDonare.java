@@ -79,7 +79,7 @@ public class FormularInscriereDonare {
         cal.set(Calendar.MINUTE, Integer.parseInt(strings[1]));
         cal.set(Calendar.SECOND, 0);
         factory.get(DonareProxy.class).add(centruCombo.getSelectionModel().getSelectedItem(),
-                cal.getTime(), pentruField.getText(), DonareStatus.PROGRAMAT);
+                cal.getTime(), pentruField.getText(), DonareStatus.Programat);
         MainController.show(stage, factory);
     }
 }

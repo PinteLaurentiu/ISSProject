@@ -41,9 +41,9 @@ public class ConsultService implements ICrudService<Consult, Integer> {
         factory.get(ConsultRepository.class).put(consult);
 
         if (!apt) {
-            parent.get(DonareService.class).setStatus(donare.getId(), DonareStatus.RESPINS);
+            parent.get(DonareService.class).setStatus(donare.getId(), DonareStatus.Respins);
         } else {
-            parent.get(DonareService.class).setStatus(donare.getId(), DonareStatus.CONSULTAT);
+            parent.get(DonareService.class).setStatus(donare.getId(), DonareStatus.Consultat);
         }
     }
 

@@ -104,7 +104,7 @@ public class DetailDonation {
         cal.set(Calendar.MINUTE, Integer.parseInt(strings[1]));
         cal.set(Calendar.SECOND, 0);
         factory.get(DonareProxy.class).add(centreComboBox.getSelectionModel().getSelectedItem(),
-                cal.getTime(), nameTextField.getText(), DonareStatus.PROGRAMAT);
+                cal.getTime(), nameTextField.getText(), DonareStatus.Programat);
         goBack.run();
 
     }

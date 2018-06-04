@@ -14,7 +14,6 @@ import com.iss.service.UserProxy;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.animation.FadeTransition;
-import javafx.beans.Observable;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -97,7 +96,7 @@ public class MainView {
     public JFXButton transferButton;
     public TextArea imunoText;
     public TextArea boliText;
-    public JFXComboBox<String> grupeCombo;
+    public JFXComboBox<GrupaSange> grupeCombo;
     public JFXButton completeButton;
     public TableView<Donare> donariForConsultTable;
     public ImageView addConsult;
@@ -163,7 +162,7 @@ public class MainView {
     private void updatePungiSange() {
         pungiSangeLabTable.getItems().clear();
         for (Donare donare : factory.get(DonareProxy.class).getAll()) {
-            if (donare.getConsult() != null && donare.getPungiSange() != null) {
+            if (donare.getConsult() != null && donare.getPungiSange().size() != 0 && donare.getComponenteSange().size() == 0) {
                 for (PungaSange pungaSange : donare.getPungiSange()){
                     pungaSange.setDonare(donare);
                     pungiSangeLabTable.getItems().add(pungaSange);
@@ -212,14 +211,14 @@ public class MainView {
 //            statusText.setText(analyses.getStatus());
 
             switch (status){
-                case PROGRAMAT:
+                case Programat:
                     statusText.setText("Donarea este programată");
                     break;
-                case CONSULTAT:
+                case Consultat:
                     statusText.setText("Consultația a fost efectuată");
                     showDetailsConsult(analyses, false);
                     break;
-                case RESPINS:
+                case Respins:
                     if (analyses.donare.getConsult() == null){
                         statusText.setText("Nu v-ati prezentat la donare! ");
 
@@ -232,13 +231,13 @@ public class MainView {
                         showDetailsAnalyses(analyses, true);
                     }
                     break;
-                case EFECTUAT:
+                case Efectuat:
                     statusText.setText("Donarea a fost efectuată");
                     detaliiDonareArea.setVisible(true);
                     detaliiDonareArea.setText("Analize in curs de procesare\n");
                     showDetailsConsult(analyses, false);
                     break;
-                case ANALIZAT:
+                case Analizat:
                     statusText.setText("Donarea a fost efectuată");
                     showDetailsConsult(analyses, false);
                     showDetailsAnalyses(analyses, false);
@@ -515,11 +514,17 @@ public class MainView {
             //noinspection unchecked
             cerereTable.getColumns().get(1).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getPrenumePacient()));
             //noinspection unchecked
-            cerereTable.getColumns().get(2).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getVarsta()));
-            //noinspection unchecked
-            cerereTable.getColumns().get(3).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getComponenteSange()));
+            cerereTable.getColumns().get(2).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getTipComponenteSange()));
             //noinspection unchecked
             cerereTable.getColumns().get(3).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getCantitatea()));
+            //noinspection unchecked
+            cerereTable.getColumns().get(4).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getGradDeUrgenta()));
+            //noinspection unchecked
+            cerereTable.getColumns().get(5).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getGrupaSange()));
+            //noinspection unchecked
+            cerereTable.getColumns().get(6).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getCerereStatus()));
+            cerereTable.getSelectionModel().selectedItemProperty().addListener((x,y,z)->cerereSelectionChanged());
+            cerereSelectionChanged();
             updateTables();
         }
 
@@ -540,22 +545,6 @@ public class MainView {
             usersTable.getColumns().get(4).setCellValueFactory(x->new ReadOnlyObjectWrapper(rolesAsString(x.getValue())));
             usersTable.getSelectionModel().selectedItemProperty().addListener((x,y,z)->userSelectionChanged());
             userSelectionChanged();
-
-
-            paginationCerere.currentPageIndexProperty().addListener((x,y,z)->updateTables());
-            updateTables();
-            //noinspection unchecked
-            cerereTable.getColumns().get(0).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getNumePacient()));
-            //noinspection unchecked
-            cerereTable.getColumns().get(1).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getPrenumePacient()));
-            //noinspection unchecked
-            cerereTable.getColumns().get(2).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getVarsta()));
-            //noinspection unchecked
-            cerereTable.getColumns().get(3).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getComponenteSange()));
-            //noinspection unchecked
-            cerereTable.getColumns().get(4).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getCantitatea()));
-            cerereTable.getSelectionModel().selectedItemProperty().addListener((x,y,z)->cerereSelectionChanged());
-            cerereSelectionChanged();
         }
         mainMenu.getSelectionModel().selectedItemProperty().addListener(this::changedTab);
 
@@ -567,7 +556,7 @@ public class MainView {
         transferButton.setDisable(!selected);
         completeButton.setDisable(!selected);
         imunoText.setText("");
-        grupeCombo.setValue("");
+        grupeCombo.setValue(null);
         boliText.setText("");
         imunoText.setDisable(false);
         grupeCombo.setDisable(false);
@@ -578,15 +567,15 @@ public class MainView {
             if (pungaSangeSelected.getTip().equals(TipPungaSange.Utilizabil)){
                 Analiza analiza = pungaSangeSelected.getDonare().getAnaliza();
                 completeButton.setText("Imparte pe componente");
+                imunoText.setDisable(true);
+                grupeCombo.setDisable(true);
+                boliText.setDisable(true);
                 if (analiza != null) {
                     completeButton.setDisable(false);
                     imunoText.setText(analiza.getImunoHematologice());
-                    imunoText.setDisable(true);
                     grupeCombo.setEditable(true);
                     grupeCombo.getEditor().setText(analiza.getGrupaSange().toString());
-                    grupeCombo.setDisable(true);
                     boliText.setText(analiza.getBoliTransmisibile());
-                    boliText.setDisable(true);
                 }
                 else {
                     completeButton.setDisable(true);
@@ -595,6 +584,17 @@ public class MainView {
             else {
                 completeButton.setDisable(false);
                 completeButton.setText("Adaugă analize");
+                Analiza analiza = pungaSangeSelected.getDonare().getAnaliza();
+                if (analiza != null) {
+                    completeButton.setDisable(true);
+                    imunoText.setText(analiza.getImunoHematologice());
+                    grupeCombo.setEditable(true);
+                    grupeCombo.getEditor().setText(analiza.getGrupaSange().toString());
+                    boliText.setText(analiza.getBoliTransmisibile());
+                    imunoText.setDisable(true);
+                    grupeCombo.setDisable(true);
+                    boliText.setDisable(true);
+                }
             }
         }
     }
@@ -766,7 +766,7 @@ public class MainView {
 
     //LAB PART
     public void initGrupeCombo() {
-        grupeCombo.setItems(FXCollections.observableArrayList("0I", "0I-", "AII", "AII-", "BIII", "BIII-", "ABIV", "ABIV-"));
+        grupeCombo.setItems(FXCollections.observableArrayList(GrupaSange.values()));
     }
 
     private void updateDonariForConsult() {
@@ -782,7 +782,7 @@ public class MainView {
 //        consultatiiTable.getItems().clear();
         consultatiiList.clear();
         for (Donare donare : factory.get(DonareProxy.class).getAll()) {
-            if (donare.getConsult() != null && donare.getPungiSange().size() == 0 && donare.getStatus() != DonareStatus.RESPINS)
+            if (donare.getConsult() != null && donare.getPungiSange().size() == 0 && donare.getStatus() != DonareStatus.Respins)
 //                consultatiiTable.getItems().add(donare);
                 consultatiiList.add(donare);
         }
@@ -798,45 +798,25 @@ public class MainView {
     }
 
     public void handleComplete(){
-        if (imunoText.getText().equals(""))
-            new Alert(Alert.AlertType.WARNING, "Completati analizele imuno-hematologice!", ButtonType.OK).showAndWait();
-        else if (grupeCombo.getSelectionModel().getSelectedItem() == null)
-            new Alert(Alert.AlertType.WARNING, "Selectați o grupă de sânge!", ButtonType.OK).showAndWait();
-        else {
-            GrupaSange grupaSange = null;
-            switch (grupeCombo.getSelectionModel().getSelectedItem()) {
-                case "0I":
-                    grupaSange = GrupaSange.O1;
-                    break;
-                case "0I-":
-                    grupaSange = GrupaSange.O1M;
-                    break;
-                case "AII":
-                    grupaSange = GrupaSange.A2;
-                    break;
-                case "AII-":
-                    grupaSange = GrupaSange.A2M;
-                    break;
-                case "BIII":
-                    grupaSange = GrupaSange.B3;
-                    break;
-                case "BIII-":
-                    grupaSange = GrupaSange.B3M;
-                    break;
-                case "ABIV":
-                    grupaSange = GrupaSange.AB4;
-                    break;
-                case "ABIV-":
-                    grupaSange = GrupaSange.AB4M;
-                    break;
-                default:
-                    break;
+        PungaSange pungaSange = pungiSangeLabTable.getSelectionModel().getSelectedItem();
+        if (pungaSange.getTip() == TipPungaSange.Proba) {
+            if (imunoText.getText().equals(""))
+                new Alert(Alert.AlertType.WARNING, "Completati analizele imuno-hematologice!", ButtonType.OK).showAndWait();
+            else if (grupeCombo.getSelectionModel().getSelectedItem() == null)
+                new Alert(Alert.AlertType.WARNING, "Selectați o grupă de sânge!", ButtonType.OK).showAndWait();
+            else {
+                Donare donare = pungaSange.getDonare();
+                GrupaSange grupaSange = grupeCombo.getValue();
+                String imonoH = imunoText.getText();
+                String boli = boliText.getText();
+                factory.get(DonareProxy.class).addAnaliza(donare, imonoH, boli, grupaSange);
             }
-            Donare donare = pungiSangeLabTable.getSelectionModel().getSelectedItem().getDonare();
-            String imonoH = imunoText.getText();
-            String boli = boliText.getText();
-            factory.get(DonareProxy.class).addAnaliza(donare, imonoH, boli, grupaSange);
         }
+        else {
+            Donare donare = pungaSange.getDonare();
+            factory.get(DonareProxy.class).addComponente(donare);
+        }
+        updateTables();
     }
     public void handleLogOut() throws IOException {
         Login.show(stage, factory);

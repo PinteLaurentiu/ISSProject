@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+    <class name="com.iss.domain.ComponentaSange"
+           table="componentasange">
+        <id name="idComponenta" column="idComponenta">
+            <generator class="increment"/>
+        </id>
+        <property name="tipComponentaSange" column="tip">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.iss.enums.TipComponenteSange</param>
+            </type>
+        </property>
+        <property name="locatie" column="locatia"/>
+        <many-to-one name="donare" class="com.iss.domain.Donare"
+                     column="idDonare" not-null="true"/>
+        <property name="dataExpirare" type="timestamp" column="dataExpirare"/>
+        <set lazy="false" name="probe" inverse="true" cascade="all-delete-orphan" >
+            <key column="idComponentaSange" not-null="true" />
+            <one-to-many class="com.iss.domain.CompabilitateMajora"/>
+        </set>
+        <set lazy="false" name="transferuri" inverse="true" cascade="all-delete-orphan" >
+            <key column="idComponenta" not-null="true" />
+            <one-to-many class="com.iss.domain.TransferComponenta"/>
+        </set>
+    </class>
+</hibernate-mapping>

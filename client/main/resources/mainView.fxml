@@ -631,7 +631,7 @@
                                     <Font name="Century Gothic" size="18.0" />
                                  </font>
                               </Label>
-                              <JFXComboBox fx:id="grupeCombo" focusColor="#6f6f6f" layoutX="179.0" layoutY="108.0" prefHeight="25.0" prefWidth="132.0" style="-fx-border-color: #6f6f6f; -fx-border-radius: 5;" />
+                              <JFXComboBox fx:id="grupeCombo" focusColor="#6f6f6f" layoutX="180.0" layoutY="106.0" prefHeight="25.0" prefWidth="132.0" style="-fx-border-color: #6f6f6f; -fx-border-radius: 5;" />
                               <Label layoutX="26.0" layoutY="135.0" text="Boli transmisibile:">
                                  <font>
                                     <Font name="Century Gothic" size="18.0" />
@@ -668,27 +668,26 @@
             </Tab>
              <Tab fx:id="cerereView" text="Spital">
                  <content>
-                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="507.0" prefWidth="747.0">
+                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="507.0" prefWidth="744.0">
                          <children>
-                             <TableView fx:id="cerereTable" layoutX="28.0" layoutY="16.0" prefHeight="305.0" prefWidth="698.0">
+                             <TableView fx:id="cerereTable" layoutX="10.0" layoutY="16.0" prefHeight="306.0" prefWidth="728.0">
                                  <columns>
-                                     <TableColumn prefWidth="99.0" text="Nume" />
-                                     <TableColumn prefWidth="125.0" text="Prenume" />
-                                     <TableColumn prefWidth="124.0" text="Varsta" />
-                                     <TableColumn prefWidth="201.0" text="Componenta" />
-                                     <TableColumn prefWidth="148.0" text="Cantitatea" />
+                                     <TableColumn prefWidth="57.60009956359863" text="Nume" />
+                                     <TableColumn prefWidth="115.19994354248047" text="Prenume" />
+                                     <TableColumn prefWidth="100.0" resizable="false" text="Componenta" />
+                                     <TableColumn prefWidth="90.0" resizable="false" text="Cantitatea" />
+                              <TableColumn prefWidth="140.0" resizable="false" text="Gradul de urgență" />
+                              <TableColumn prefWidth="110.0" resizable="false" text="Grupa sânge" />
+                              <TableColumn resizable="false" text="Status" />
                                  </columns>
                                  <stylesheets>
                                      <URL value="@css/donorTab.css" />
                                      <URL value="@css/button.css" />
                                  </stylesheets>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
                              </TableView>
-                             <Pagination fx:id="paginationCerere" layoutX="26.0" layoutY="325.0" prefHeight="51.0" prefWidth="700.0">
-                                 <stylesheets>
-                                     <URL value="@css/donorTab.css" />
-                                     <URL value="@css/button.css" />
-                                 </stylesheets>
-                             </Pagination>
                              <JFXButton fx:id="deleteCerere" layoutX="395.0" layoutY="430.0" onAction="#deleteCererePressed" prefHeight="44.0" prefWidth="200.0" style="-fx-border-color: #D0294F; -fx-border-radius: 5;" stylesheets="@css/button.css" text="Sterge" />
                              <JFXButton fx:id="addCerere" layoutX="155.0" layoutY="431.0" onAction="#addCererePressed" prefHeight="44.0" prefWidth="200.0" style="-fx-border-color: #D0294F; -fx-border-radius: 5;" stylesheets="@css/button.css" text="Adauga" />
                          </children>
