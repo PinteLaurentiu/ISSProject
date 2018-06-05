@@ -1,9 +1,6 @@
 package com.iss.service;
 
-import com.iss.domain.Cerere;
-import com.iss.domain.CompabilitateMajora;
-import com.iss.domain.ComponentaSange;
-import com.iss.domain.PungaSange;
+import com.iss.domain.*;
 import com.iss.enums.CerereStatus;
 import com.iss.enums.TipComponenteSange;
 import com.iss.enums.GradDeUrgenta;
@@ -33,9 +30,17 @@ public class CerereService implements ICrudService<Cerere,Integer> {
         cerere.setGrupaSange((GrupaSange) objects[3]);
         cerere.setGradDeUrgenta((GradDeUrgenta) objects[4]);
         cerere.setCantitatea((Integer) objects[5]);
+        cerere.setCantitateDonata(0);
         cerere.setLocatie(objects[6].toString());
         cerere.setCerereStatus(CerereStatus.Emisa);
+        List<ComponentaSange> componentaSangeList = filterComponentaSange((List<ComponentaSange>)
+                factory.get(ComponentaSangeRepository.class).getAll());
+        for (ComponentaSange componentaSange : componentaSangeList) {
+            if (componentaSange.getTipComponentaSange().equals(cerere.getTipComponenteSange()))
+                updateSolve(cerere, componentaSange.getDonare());
+        }
         factory.get(CerereRepository.class).put(cerere);
+        trySolve();
     }
 
     @Override
@@ -63,6 +68,12 @@ public class CerereService implements ICrudService<Cerere,Integer> {
         return factory.get(CerereRepository.class).count();
     }
 
+    public void updateSolve(Cerere cerere, Donare donare) {
+        if ((cerere.getNumePacient() + " " + cerere.getPrenumePacient()).equals(donare.getPentru())) {
+            cerere.setCantitateDonata(cerere.getCantitateDonata()+1);
+        }
+    }
+
     public void trySolve() {
         List<Cerere> cerereList = filterCereri((List<Cerere>) factory.get(CerereRepository.class).getAll());
         cerereList.sort(Comparator.comparingInt(x -> x.getGradDeUrgenta().ordinal() -
@@ -76,11 +87,14 @@ public class CerereService implements ICrudService<Cerere,Integer> {
         for (Cerere cerere : cerereList) {
 
             List<ComponentaSange> componentaSanges = new ArrayList<>();
-
             for (ComponentaSange componentaSange : componentaSangeList) {
+                boolean usedThis = false;
+                for (CompabilitateMajora compabilitateMajora : componentaSange.getProbe())
+                    if (compabilitateMajora.getCerere().getIdCerere() == cerere.getIdCerere())
+                        usedThis = true;
                 if (cerere.getGrupaSange().equals(componentaSange.getDonare().getAnaliza().getGrupaSange()) &&
                         cerere.getTipComponenteSange().equals(componentaSange.getTipComponentaSange()) &&
-                        !used.contains(componentaSange)) {
+                        !used.contains(componentaSange) && !usedThis) {
                     componentaSanges.add(componentaSange);
                     if (componentaSanges.size() == cerere.getCantitatea())
                         break;
@@ -104,12 +118,13 @@ public class CerereService implements ICrudService<Cerere,Integer> {
                 cerere.setProbe(new HashSet<>());
             componentaSange.getProbe().add(compabilitateMajora);
             cerere.getProbe().add(compabilitateMajora);
+            compabilitateMajora.setAcceptat(true);
         }
         cerere.setCerereStatus(CerereStatus.Transfer);
         factory.get(CerereRepository.class).put(cerere);
     }
 
-    private List<Cerere> filterCereri(List<Cerere> cereres){
+    public List<Cerere> filterCereri(List<Cerere> cereres){
         List<Cerere> cerere2 = new ArrayList<>();
         for (Cerere cerere : cereres){
             if (cerere.getCerereStatus().equals(CerereStatus.Emisa) || cerere.getCerereStatus().equals(CerereStatus.Reemisa)){
@@ -122,12 +137,36 @@ public class CerereService implements ICrudService<Cerere,Integer> {
     private List<ComponentaSange> filterComponentaSange(List<ComponentaSange> componentaSanges){
         List<ComponentaSange> componentaSanges2 = new ArrayList<>();
         for (ComponentaSange componentaSange : componentaSanges){
-//            for (CompabilitateMajora compabilitateMajora : )
-            // TODO : be right back!
-           if (componentaSange.getDataExpirare().compareTo(new Date()) >= 0)
-               componentaSanges2.add(componentaSange);
+            boolean used = false;
+            for (CompabilitateMajora compabilitateMajora : componentaSange.getProbe())
+                if (compabilitateMajora.isAcceptat())
+                    used = true;
+            if (componentaSange.getDataExpirare().compareTo(new Date()) >= 0 && !used)
+                componentaSanges2.add(componentaSange);
         }
         return componentaSanges2;
     }
 
+    public Cerere getById(Integer idCerere) {
+        return factory.get(CerereRepository.class).getById(idCerere);
+    }
+
+    public void reemit(Cerere cerere, List<Integer> ids) {
+        boolean doReemit = false;
+        for (CompabilitateMajora compabilitateMajora : cerere.getProbe()) {
+            compabilitateMajora.setAcceptat(false);
+            if (ids.contains(compabilitateMajora.getComponentaSange().getIdComponenta()))
+                compabilitateMajora.setAcceptat(true);
+            if (!compabilitateMajora.isAcceptat())
+                doReemit = true;
+        }
+        if (doReemit) {
+            cerere.setCerereStatus(CerereStatus.Reemisa);
+        }
+        else {
+            cerere.setCerereStatus(CerereStatus.Rezolvata);
+        }
+        factory.get(CerereRepository.class).put(cerere);
+        trySolve();
+    }
 }

@@ -2,10 +2,7 @@ package com.iss.UI;
 
 import com.iss.domain.Cerere;
 import com.iss.domain.*;
-import com.iss.enums.DonareStatus;
-import com.iss.enums.GrupaSange;
-import com.iss.enums.Role;
-import com.iss.enums.TipPungaSange;
+import com.iss.enums.*;
 import com.iss.service.ConsultProxy;
 import com.iss.service.DonareProxy;
 import com.iss.service.CerereProxy;
@@ -162,7 +159,8 @@ public class MainView {
     private void updatePungiSange() {
         pungiSangeLabTable.getItems().clear();
         for (Donare donare : factory.get(DonareProxy.class).getAll()) {
-            if (donare.getConsult() != null && donare.getPungiSange().size() != 0 && donare.getComponenteSange().size() == 0) {
+            if (donare.getConsult() != null && donare.getPungiSange().size() != 0 &&
+                    donare.getStatus() != DonareStatus.Respins && donare.getComponenteSange().size() == 0) {
                 for (PungaSange pungaSange : donare.getPungiSange()){
                     pungaSange.setDonare(donare);
                     pungiSangeLabTable.getItems().add(pungaSange);
@@ -516,7 +514,7 @@ public class MainView {
             //noinspection unchecked
             cerereTable.getColumns().get(2).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getTipComponenteSange()));
             //noinspection unchecked
-            cerereTable.getColumns().get(3).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getCantitatea()));
+            cerereTable.getColumns().get(3).setCellValueFactory(x->new ReadOnlyObjectWrapper(createCantitateValue(x.getValue())));
             //noinspection unchecked
             cerereTable.getColumns().get(4).setCellValueFactory(x->new ReadOnlyObjectWrapper(x.getValue().getGradDeUrgenta()));
             //noinspection unchecked
@@ -549,6 +547,14 @@ public class MainView {
         mainMenu.getSelectionModel().selectedItemProperty().addListener(this::changedTab);
 
         this.usernameText.setText(currentUser.getNume()+" "+currentUser.getPrenume());
+    }
+
+    private String createCantitateValue(Cerere value) {
+        String cantitate = "";
+        if (value.getCerereStatus().equals(CerereStatus.Emisa) || value.getCerereStatus().equals(CerereStatus.Reemisa))
+            cantitate = value.getCantitateDonata() + "/";
+        cantitate += value.getCantitatea();
+        return cantitate;
     }
 
     private void pungiSangeSelectionChanged(ObservableValue<? extends PungaSange> observable, PungaSange oldValue, PungaSange newValue) {
@@ -680,8 +686,13 @@ public class MainView {
         Register.show(stage, factory, true);
     }
 
-    public void deleteCererePressed(ActionEvent actionEvent) {
-        factory.get(CerereProxy.class).remove(cerereTable.getSelectionModel().getSelectedItem().getIdCerere());
+    public void deleteCererePressed(ActionEvent actionEvent) throws IOException {
+//        factory.get(CerereProxy.class).remove(cerereTable.getSelectionModel().getSelectedItem().getIdCerere());
+//        updateTables();
+        Stage stage = new Stage();
+        stage.initOwner(this.stage);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        EditProbaCompabilitateMajora.show(stage, factory, cerereTable.getSelectionModel().getSelectedItem());
         updateTables();
     }
 
@@ -809,7 +820,7 @@ public class MainView {
                 GrupaSange grupaSange = grupeCombo.getValue();
                 String imonoH = imunoText.getText();
                 String boli = boliText.getText();
-                factory.get(DonareProxy.class).addAnaliza(donare, imonoH, boli, grupaSange);
+                factory.get(DonareProxy.class).addAnaliza(donare, boli, imonoH, grupaSange);
             }
         }
         else {

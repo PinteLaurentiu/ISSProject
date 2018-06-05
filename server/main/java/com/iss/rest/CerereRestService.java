@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -69,5 +70,37 @@ public class CerereRestService {
     public ResponseEntity deleteUsers(@PathVariable Integer idCerere){
         factory.get(CerereService.class).remove(idCerere);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/reemit", method = RequestMethod.POST)
+    public ResponseEntity<String> reemit(@RequestBody String[] strings) {
+        if (strings.length != 3)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        Long sessionId = Long.valueOf(strings[2]);
+
+        if (!factory.getService(SessionService.class).exists(sessionId)){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        SessionService.Session session = factory.getService(SessionService.class).getSession(sessionId);
+        List<Role> roles = (List<Role>)factory.get(UserService.class).getRoles(session.getEmail());
+        if (!roles.contains(Role.DoctorSpital)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        String[] idsString = strings[1].split("\\|");
+        Integer idCerere = Integer.valueOf(strings[0]);
+        Cerere cerere = factory.get(CerereService.class).getById(idCerere);
+        if (cerere == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (idsString.length > cerere.getProbe().size()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        List<Integer> ids = new ArrayList<>();
+        for (String idString : idsString) {
+            ids.add(Integer.valueOf(idString));
+        }
+        factory.get(CerereService.class).reemit(cerere, ids);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

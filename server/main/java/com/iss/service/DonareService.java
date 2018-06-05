@@ -5,14 +5,12 @@ import com.iss.enums.DonareStatus;
 import com.iss.enums.GrupaSange;
 import com.iss.enums.TipComponenteSange;
 import com.iss.enums.TipPungaSange;
-import com.iss.persistance.DonareRepository;
-import com.iss.persistance.PungaSangeRepository;
-import com.iss.persistance.RepositoryFactory;
-import com.iss.persistance.UserRepository;
+import com.iss.persistance.*;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 public class DonareService implements ICrudService<Donare,Integer> {
     private final RepositoryFactory factory;
@@ -97,7 +95,10 @@ public class DonareService implements ICrudService<Donare,Integer> {
         sangeUtilizabil.setDonare(donare);
 
         donare.getPungiSange().add(sangeUtilizabil);
+
         factory.get(PungaSangeRepository.class).put(sangeUtilizabil);
+        donare.setStatus(DonareStatus.Efectuat);
+        factory.get(DonareRepository.class).put(donare);
     }
 
     public void addTransfer(int idPungaSange, String to) {
@@ -123,7 +124,10 @@ public class DonareService implements ICrudService<Donare,Integer> {
         Donare donare = factory.get(DonareRepository.class).getById(idDonare);
         analiza.setDonare(donare);
         donare.setAnaliza(analiza);
-
+        donare.setStatus(DonareStatus.Analizat);
+        if (!boli.equals("")) {
+            donare.setStatus(DonareStatus.Respins);
+        }
         factory.get(DonareRepository.class).put(donare);
     }
 
@@ -155,6 +159,13 @@ public class DonareService implements ICrudService<Donare,Integer> {
             donare.getComponenteSange().add(componentaSange);
         }
 
+        for (Cerere cerere : parent.get(CerereService.class).filterCereri((List<Cerere>) factory.get(CerereRepository.class).getAll())) {
+            int count = cerere.getCantitateDonata();
+            parent.get(CerereService.class).updateSolve(cerere, donare);
+            if (count != cerere.getCantitateDonata())
+                factory.get(CerereRepository.class).put(cerere);
+        }
         factory.get(DonareRepository.class).put(donare);
+        parent.get(CerereService.class).trySolve();
     }
 }

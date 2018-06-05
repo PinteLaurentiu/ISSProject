@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping default-lazy="false">
     <class name="com.iss.domain.CompabilitateMajora"
-           table="probacombalitatemajora">
+           table="probaCombalitateMajora">
         <composite-id>
             <key-many-to-one name="cerere" column="idCerere" class="com.iss.domain.Cerere" />
             <key-many-to-one name="componentaSange" column="idComponentaSange" class="com.iss.domain.ComponentaSange" />

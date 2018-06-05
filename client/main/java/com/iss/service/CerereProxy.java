@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class CerereProxy implements ICrudService<Cerere, Integer> {
     private final ProxyFactory parent;
@@ -72,5 +73,21 @@ public class CerereProxy implements ICrudService<Cerere, Integer> {
             throw new ServerException("count failed");
         }
         return responseEntity.getBody();
+    }
+
+    public void reemit(int idCerere, List<Integer> ids) {
+        String idsString = "";
+        if (ids.size() != 0) {
+            for (Integer id : ids) {
+                //noinspection StringConcatenationInLoop
+                idsString += "|"+id;
+            }
+            idsString = idsString.substring(1);
+        }
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(host + "/reemit",
+                new String[]{String.valueOf(idCerere), idsString, parent.getSessionId().toString()}, String.class);
+        if (responseEntity.getStatusCode() != HttpStatus.OK){
+            throw new ServerException("reemit failed");
+        }
     }
 }

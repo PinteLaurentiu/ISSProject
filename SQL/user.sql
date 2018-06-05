@@ -171,7 +171,7 @@ CREATE TABLE probaCombalitateMajora
   acceptat BIT NOT NULL,
   CONSTRAINT probaCombalitateMajora_idComponentaSange_idCerere_pk PRIMARY KEY (idComponentaSange, idCerere),
   CONSTRAINT probaCombalitateMajora_cerere_idCerere_fk FOREIGN KEY (idCerere) REFERENCES cerere (idCerere),
-  CONSTRAINT probaCombalitateMajora_componentasange_idComponenta_fk FOREIGN KEY (idComponentaSange) REFERENCES componentasange (idComponenta)
+  CONSTRAINT probaCombalitateMajora_componentasange_idComponenta_fk FOREIGN KEY (idComponentaSange) REFERENCES componentaSange (idComponenta)
 );
 
 CREATE TABLE transferComponenta
@@ -180,5 +180,5 @@ CREATE TABLE transferComponenta
   idComponenta INT NOT NULL,
   `from` VARCHAR(100) NOT NULL,
   `to` VARCHAR(100) NOT NULL,
-  CONSTRAINT transferComponenta_componentasange_idComponenta_fk FOREIGN KEY (idComponenta) REFERENCES componentasange (idComponenta) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT transferComponenta_componentasange_idComponenta_fk FOREIGN KEY (idComponenta) REFERENCES componentaSange (idComponenta) ON DELETE CASCADE ON UPDATE CASCADE
 );

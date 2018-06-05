@@ -122,7 +122,7 @@ public class DonareRestService {
         Integer idDonare = Integer.valueOf(strings[1]);
         String boli = strings[2];
         String imunoH = strings[3];
-        GrupaSange grupaSange = GrupaSange.valueOf(strings[4]);
+        GrupaSange grupaSange = GrupaSange.fromString(strings[4]);
 
         if (!factory.getService(SessionService.class).exists(sessionId)){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
