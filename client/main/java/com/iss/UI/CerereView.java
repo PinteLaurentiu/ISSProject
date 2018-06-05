@@ -70,6 +70,7 @@ public class CerereView {
                     locatiaText.getText());
 
             new AlertBox("Success", "Cererea a fost inregistrata");
+            MainView.show(stage, factory,4);
         } catch (Exception ex) {
             new AlertBox("Eroare la server","Something went wrong!");
         }

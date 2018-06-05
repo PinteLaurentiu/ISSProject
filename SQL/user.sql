@@ -160,7 +160,8 @@ CREATE TABLE componentaSange
   dataExpirare DATETIME NOT NULL,
   locatia VARCHAR(100),
   tip INT NOT NULL,
-  CONSTRAINT componentaSange_donare_idDonare_fk FOREIGN KEY (idDonare) REFERENCES donare (idDonare) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT componentaSange_donare_idDonare_fk FOREIGN KEY (idDonare) REFERENCES donare (idDonare)
+#     ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 

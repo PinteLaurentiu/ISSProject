@@ -11,6 +11,7 @@ import com.iss.service.UserProxy;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.animation.FadeTransition;
+import javafx.beans.Observable;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -104,7 +105,10 @@ public class MainView {
     public Pagination paginationCerere;
     public JFXButton deleteCerere;
     public JFXButton addCerere;
+    public JFXButton probaCompatibilitateBtn;
     public TableView<Donare> consultatiiTable;
+    public JFXTextField cautaCerere;
+    private ObservableList<Cerere> cerereList = FXCollections.observableArrayList();
 
     public Label usernameText;
     public TableView<PungaSange> pungiSangeLabTable;
@@ -524,6 +528,8 @@ public class MainView {
             cerereTable.getSelectionModel().selectedItemProperty().addListener((x,y,z)->cerereSelectionChanged());
             cerereSelectionChanged();
             updateTables();
+            cerereTable.setItems(cerereList.filtered(x->true));
+            cautaCerere.textProperty().addListener(this::cautaCerereChanged);
         }
 
         if (!roles.contains(Role.UsersEditor))
@@ -548,6 +554,7 @@ public class MainView {
 
         this.usernameText.setText(currentUser.getNume()+" "+currentUser.getPrenume());
     }
+
 
     private String createCantitateValue(Cerere value) {
         String cantitate = "";
@@ -624,20 +631,11 @@ public class MainView {
 
     }
 
-    private void updateUsers() {
-        usersTable.getItems().clear();
-        for (User user : factory.get(UserProxy.class).getAll(RECORDS_ON_PAGE,paginationUsers.getCurrentPageIndex()))
-            usersTable.getItems().add(user);
-        paginationUsers.setPageCount((int)Math.ceil(factory.get(UserProxy.class).count() / (float)RECORDS_ON_PAGE));
-    }
 
-    private void updateCerere() {
-        cerereTable.getItems().clear();
-        for (Cerere cerere : factory.get(CerereProxy.class).getAll())
-            cerereTable.getItems().add(cerere);
-//        paginationUsers.setPageCount((int)Math.ceil(factory.get(CerereProxy.class).count() / (float)RECORDS_ON_PAGE));
+    private void cautaCerereChanged(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+        cerereTable.setItems(cerereList.filtered(x->x.getNumePacient().contains(newValue) ||
+                                                    x.getPrenumePacient().contains(newValue)));
     }
-
     private static String rolesAsString(User value) {
         StringBuilder builder = new StringBuilder();
         int index = 0;
@@ -656,7 +654,10 @@ public class MainView {
     }
 
     private void cerereSelectionChanged() {
-        deleteCerere.setDisable(cerereTable.getSelectionModel().getSelectedItems().size() == 0);
+        boolean selected = cerereTable.getSelectionModel().getSelectedItems().size() == 0;
+        Cerere cerereSelected = cerereTable.getSelectionModel().getSelectedItem();
+        deleteCerere.setDisable(selected || !cerereSelected.getCerereStatus().equals(CerereStatus.Emisa));
+        probaCompatibilitateBtn.setDisable(selected || !cerereSelected.getCerereStatus().equals(CerereStatus.Transfer));
     }
 
     @SuppressWarnings("unused")
@@ -686,13 +687,17 @@ public class MainView {
         Register.show(stage, factory, true);
     }
 
-    public void deleteCererePressed(ActionEvent actionEvent) throws IOException {
-//        factory.get(CerereProxy.class).remove(cerereTable.getSelectionModel().getSelectedItem().getIdCerere());
-//        updateTables();
+
+    public void probaCompatibilitatePressed(ActionEvent event) throws IOException {
         Stage stage = new Stage();
         stage.initOwner(this.stage);
         stage.initModality(Modality.APPLICATION_MODAL);
         EditProbaCompabilitateMajora.show(stage, factory, cerereTable.getSelectionModel().getSelectedItem());
+        updateTables();
+    }
+
+    public void deleteCererePressed(ActionEvent actionEvent) throws IOException {
+        factory.get(CerereProxy.class).remove(cerereTable.getSelectionModel().getSelectedItem().getIdCerere());
         updateTables();
     }
 
@@ -797,6 +802,21 @@ public class MainView {
 //                consultatiiTable.getItems().add(donare);
                 consultatiiList.add(donare);
         }
+    }
+
+    private void updateUsers() {
+        usersTable.getItems().clear();
+        for (User user : factory.get(UserProxy.class).getAll(RECORDS_ON_PAGE,paginationUsers.getCurrentPageIndex()))
+            usersTable.getItems().add(user);
+        paginationUsers.setPageCount((int)Math.ceil(factory.get(UserProxy.class).count() / (float)RECORDS_ON_PAGE));
+    }
+
+    private void updateCerere() {
+//        cerereTable.getItems().clear();
+        cerereList.clear();
+        for (Cerere cerere : factory.get(CerereProxy.class).getAll())
+//            cerereTable.getItems().add(cerere);
+            cerereList.add(cerere);
     }
 
     public void handleTransfer(){

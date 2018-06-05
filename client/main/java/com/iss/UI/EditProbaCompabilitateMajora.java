@@ -96,12 +96,14 @@ public class EditProbaCompabilitateMajora {
         selectionChanged();
     }
 
-    public void submit(ActionEvent actionEvent) {
+    public void submit(ActionEvent actionEvent) throws IOException {
         List<Integer> ids = new ArrayList<>();
         for (CompabilitateMajora proba : cerere.getProbe())
             for (Donare donare : rightList.getItems())
                 if (proba.getComponentaSange().getDonare().getId() == donare.getId())
                     ids.add(proba.getComponentaSange().getIdComponenta());
         factory.get(CerereProxy.class).reemit(cerere.getIdCerere(),ids);
+        new AlertBox("Success", "Cerere rezolvata!");
+        stage.close();
     }
 }

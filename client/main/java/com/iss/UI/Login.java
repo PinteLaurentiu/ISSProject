@@ -12,7 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.Optional;
 
 public class Login {
@@ -24,6 +24,7 @@ public class Login {
 
     private Stage stage;
     private ProxyFactory factory;
+    private static final String fileName = "RememberMeFile.txt";
 
 
     public static void show(Stage stage, ProxyFactory factory ) throws IOException {
@@ -36,10 +37,20 @@ public class Login {
         stage.show();
     }
 
-    private void init(Stage stage, ProxyFactory factory){
+    private void init(Stage stage, ProxyFactory factory) throws IOException {
         this.stage = stage;
         this.factory = factory;
+
         usernameText.setText("");
+        File file = new File(fileName);
+        if (file.exists()) {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String username = "";
+            while ((username = br.readLine()) != null) {
+                usernameText.setText(username);
+            }
+            br.close();
+        }
         passwordText.setText("");
         passwordHiddenText.setText("");
         showPassword(null);
@@ -49,6 +60,12 @@ public class Login {
         try {
             String password = showPasswordCheckBox.isSelected() ? passwordText.getText() : passwordHiddenText.getText();
             factory.get(UserProxy.class).login(usernameText.getText(), password);
+
+            if (rememberMeCheckBox.isSelected()){
+                BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+                writer.write(usernameText.getText());
+                writer.close();
+            }
 
             User user = factory.get(UserProxy.class).findOne(usernameText.getText());
             MainView.show(stage, factory, user);
