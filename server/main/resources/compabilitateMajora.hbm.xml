@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+    <class name="com.iss.domain.CompabilitateMajora"
+           table="probaCombalitateMajora">
+        <composite-id>
+            <key-many-to-one name="cerere" column="idCerere" class="com.iss.domain.Cerere" />
+            <key-many-to-one name="componentaSange" column="idComponentaSange" class="com.iss.domain.ComponentaSange" />
+        </composite-id>
+        <property name="acceptat" column="acceptat"/>
+    </class>
+</hibernate-mapping>

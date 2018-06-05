@@ -2,12 +2,13 @@ package com.iss.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class Transfer {
+public class TransferComponenta {
+
     private int idTransfer;
     private String from;
     private String to;
     @JsonIgnore
-    private PungaSange pungaSange;
+    private ComponentaSange componentaSange;
 
     public int getIdTransfer() {
         return idTransfer;
@@ -33,11 +34,11 @@ public class Transfer {
         this.to = to;
     }
 
-    public PungaSange getPungaSange() {
-        return pungaSange;
+    public ComponentaSange getComponentaSange() {
+        return componentaSange;
     }
 
-    public void setPungaSange(PungaSange pungaSange) {
-        this.pungaSange = pungaSange;
+    public void setComponentaSange(ComponentaSange componentaSange) {
+        this.componentaSange = componentaSange;
     }
 }

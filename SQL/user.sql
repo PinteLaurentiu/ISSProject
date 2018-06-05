@@ -120,13 +120,18 @@ CREATE UNIQUE INDEX transfer_idTransfer_uindex ON transfer (idTransfer);
 
 CREATE TABLE cerere
 (
-    idCerere int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    numePacient varchar(50),
-    prenumePacient varchar(50),
-    varsta int(11),
-    componentaSange int(11),
-    cantitatea int(11)
+  idCerere INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  numePacient VARCHAR(100) NOT NULL,
+  prenumePacient VARCHAR(100) NOT NULL,
+  locatie VARCHAR(100) NOT NULL,
+  componentaSange INT NOT NULL,
+  status INT NOT NULL,
+  grupaSange INT NOT NULL,
+  gradDeUrgenta INT NOT NULL,
+  cantitatea INT DEFAULT 1 NOT NULL,
+  cantitateDonata INT DEFAULT 0 NOT NULL
 );
+-- TODO : stergeti fostul tabel cerere, si rulati-l pe acesta!
 CREATE UNIQUE INDEX Cerere_idCerere_uindex ON cerere (idCerere);
 
 
@@ -146,4 +151,35 @@ CREATE TABLE analiza
   grupaSange INT NOT NULL,
   boliTransmisibile VARCHAR(100),
   CONSTRAINT analiza_donare_idDonare_fk FOREIGN KEY (idAnaliza) REFERENCES donare (idDonare)
+);
+
+CREATE TABLE componentaSange
+(
+  idComponenta INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  idDonare INT NOT NULL,
+  dataExpirare DATETIME NOT NULL,
+  locatia VARCHAR(100),
+  tip INT NOT NULL,
+  CONSTRAINT componentaSange_donare_idDonare_fk FOREIGN KEY (idDonare) REFERENCES donare (idDonare)
+#     ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+CREATE TABLE probaCombalitateMajora
+(
+  idComponentaSange INT NOT NULL,
+  idCerere INT NOT NULL,
+  acceptat BIT NOT NULL,
+  CONSTRAINT probaCombalitateMajora_idComponentaSange_idCerere_pk PRIMARY KEY (idComponentaSange, idCerere),
+  CONSTRAINT probaCombalitateMajora_cerere_idCerere_fk FOREIGN KEY (idCerere) REFERENCES cerere (idCerere),
+  CONSTRAINT probaCombalitateMajora_componentasange_idComponenta_fk FOREIGN KEY (idComponentaSange) REFERENCES componentaSange (idComponenta)
+);
+
+CREATE TABLE transferComponenta
+(
+  idTransfer INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  idComponenta INT NOT NULL,
+  `from` VARCHAR(100) NOT NULL,
+  `to` VARCHAR(100) NOT NULL,
+  CONSTRAINT transferComponenta_componentasange_idComponenta_fk FOREIGN KEY (idComponenta) REFERENCES componentaSange (idComponenta) ON DELETE CASCADE ON UPDATE CASCADE
 );

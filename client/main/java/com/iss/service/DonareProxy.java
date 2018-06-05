@@ -90,4 +90,11 @@ public class DonareProxy implements ICrudService<Donare, Integer> {
         if (responseEntity.getStatusCode() != HttpStatus.OK)
             throw new ServerException("addAnaliza donari exception");
     }
+
+    public void addComponente(Donare donare) {
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(host +"/componente", new String[]{String.valueOf(donare.getId()),
+                parent.getSessionId().toString()},String.class);
+        if (responseEntity.getStatusCode() != HttpStatus.OK)
+            throw new ServerException("addAnaliza donari exception");
+    }
 }

@@ -9,13 +9,33 @@
             <generator class="increment"/>
         </id>
         <property name="numePacient" column="numePacient"/>
+        <property name="locatie" column="locatie"/>
         <property name="prenumePacient" column="prenumePacient"/>
-        <property name="varsta" column="varsta"/>
-        <property name="componenteSange" column="componentaSange">
+        <property name="tipComponenteSange" column="componentaSange">
             <type name="org.hibernate.type.EnumType">
-                <param name="enumClass">com.iss.enums.ComponenteSange</param>
+                <param name="enumClass">com.iss.enums.TipComponenteSange</param>
+            </type>
+        </property>
+        <property name="grupaSange" column="grupaSange">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.iss.enums.GrupaSange</param>
+            </type>
+        </property>
+        <property name="cerereStatus" column="status">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.iss.enums.CerereStatus</param>
+            </type>
+        </property>
+        <property name="gradDeUrgenta" column="gradDeUrgenta">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.iss.enums.GradDeUrgenta</param>
             </type>
         </property>
         <property name="cantitatea" column="cantitatea"/>
+        <set lazy="false" name="probe" inverse="true" cascade="all-delete-orphan" >
+            <key column="idCerere" not-null="true" />
+            <one-to-many class="com.iss.domain.CompabilitateMajora"/>
+        </set>
+        <property name="cantitateDonata" column="cantitateDonata"/>
     </class>
 </hibernate-mapping>

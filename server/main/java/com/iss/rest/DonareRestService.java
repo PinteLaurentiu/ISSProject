@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.ws.Response;
 import java.util.Date;
 import java.util.List;
 
@@ -121,7 +122,8 @@ public class DonareRestService {
         Integer idDonare = Integer.valueOf(strings[1]);
         String boli = strings[2];
         String imunoH = strings[3];
-        GrupaSange grupaSange = GrupaSange.valueOf(strings[4]);
+        GrupaSange grupaSange = GrupaSange.fromString(strings[4]);
+
         if (!factory.getService(SessionService.class).exists(sessionId)){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -137,5 +139,32 @@ public class DonareRestService {
 
         factory.get(DonareService.class).addAnaliza(idDonare, boli, imunoH, grupaSange);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @RequestMapping(value = "/componente", method = RequestMethod.POST)
+    public ResponseEntity<String> addComponente(@RequestBody String[] strings){
+        if (strings.length != 2){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Integer idDonare = Integer.valueOf(strings[0]);
+        Long sessionId = Long.valueOf(strings[1]);
+
+        if (!factory.getService(SessionService.class).exists(sessionId)){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        SessionService.Session session = factory.getService(SessionService.class).getSession(sessionId);
+        List<Role> roles = (List<Role>)factory.get(UserService.class).getRoles(session.getEmail());
+        if (!roles.contains(Role.DoctorLab)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (!factory.get(DonareService.class).exists(idDonare)){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        factory.get(DonareService.class).addComponente(idDonare);
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 }

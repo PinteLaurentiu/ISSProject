@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.iss.domain.TransferComponenta"
+           table="transferComponenta">
+        <id name="idTransfer" column="idTransfer">
+            <generator class="increment"/>
+        </id>
+        <property name="from" column="from"/>
+        <property name="to" column="to"/>
+        <many-to-one lazy="false" name="componentaSange" class="com.iss.domain.ComponentaSange"
+                     column="idComponenta" not-null="true"/>
+    </class>
+</hibernate-mapping>

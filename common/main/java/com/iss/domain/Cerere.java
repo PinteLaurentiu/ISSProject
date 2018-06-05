@@ -1,24 +1,50 @@
 package com.iss.domain;
 
-import com.iss.enums.ComponenteSange;
+import com.iss.enums.CerereStatus;
+import com.iss.enums.TipComponenteSange;
+import com.iss.enums.GradDeUrgenta;
+import com.iss.enums.GrupaSange;
+
+import java.util.Set;
 
 public class Cerere {
     private int idCerere;
     private String numePacient;
     private String prenumePacient;
-    private int varsta;
-    private ComponenteSange componenteSange;
+    private TipComponenteSange tipComponenteSange;
+    private GradDeUrgenta gradDeUrgenta;
+    private CerereStatus cerereStatus;
+    private GrupaSange grupaSange;
     private int cantitatea;
+    private String locatie;
+    private Set<CompabilitateMajora> probe;
+    private Integer cantitateDonata;
 
-    public Cerere() {
+    public Integer getCantitateDonata() {
+        return cantitateDonata;
     }
 
-    public Cerere(String numePacient, String prenumePacient, int varsta, ComponenteSange componenteSange, int cantitatea) {
-        this.numePacient = numePacient;
-        this.prenumePacient = prenumePacient;
-        this.varsta = varsta;
-        this.componenteSange = componenteSange;
-        this.cantitatea = cantitatea;
+    public void setCantitateDonata(Integer cantitateDonata) {
+        this.cantitateDonata = cantitateDonata;
+    }
+
+    public Set<CompabilitateMajora> getProbe() {
+        return probe;
+    }
+
+    public void setProbe(Set<CompabilitateMajora> probe) {
+        this.probe = probe;
+    }
+
+    public String getLocatie() {
+        return locatie;
+    }
+
+    public void setLocatie(String locatie) {
+        this.locatie = locatie;
+    }
+
+    public Cerere() {
     }
 
     public int getIdCerere() {
@@ -45,20 +71,12 @@ public class Cerere {
         this.prenumePacient = prenumePacient;
     }
 
-    public int getVarsta() {
-        return varsta;
+    public TipComponenteSange getTipComponenteSange() {
+        return tipComponenteSange;
     }
 
-    public void setVarsta(int varsta) {
-        this.varsta = varsta;
-    }
-
-    public ComponenteSange getComponenteSange() {
-        return componenteSange;
-    }
-
-    public void setComponenteSange(ComponenteSange componenteSange) {
-        this.componenteSange = componenteSange;
+    public void setTipComponenteSange(TipComponenteSange tipComponenteSange) {
+        this.tipComponenteSange = tipComponenteSange;
     }
 
     public int getCantitatea() {
@@ -67,5 +85,29 @@ public class Cerere {
 
     public void setCantitatea(int cantitatea) {
         this.cantitatea = cantitatea;
+    }
+
+    public GradDeUrgenta getGradDeUrgenta() {
+        return gradDeUrgenta;
+    }
+
+    public void setGradDeUrgenta(GradDeUrgenta gradDeUrgenta) {
+        this.gradDeUrgenta = gradDeUrgenta;
+    }
+
+    public GrupaSange getGrupaSange() {
+        return grupaSange;
+    }
+
+    public void setGrupaSange(GrupaSange grupaSange) {
+        this.grupaSange = grupaSange;
+    }
+
+    public CerereStatus getCerereStatus() {
+        return cerereStatus;
+    }
+
+    public void setCerereStatus(CerereStatus cerereStatus) {
+        this.cerereStatus = cerereStatus;
     }
 }

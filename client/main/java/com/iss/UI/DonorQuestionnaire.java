@@ -831,7 +831,7 @@ public class DonorQuestionnaire {
         }
     }
     public void validate() throws  IOException {
-        if(!(one.isSelected() || oneN.isSelected())) {
+        if(!completedAll()) {
                 this.thisScroll.setVvalue(0.0);
                 setBlur();
                 JFXDialogLayout layout = new JFXDialogLayout();
@@ -839,22 +839,49 @@ public class DonorQuestionnaire {
                 layout.setBody(new Text("Nu ati completat toate campurile!"));
                 JFXDialog dialog = new JFXDialog(thisStack,layout, JFXDialog.DialogTransition.TOP);
                 JFXButton button = new JFXButton("Ok");
-                button.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        setUnblur();
-                        dialog.close();
-                    }
+                button.setOnAction(event -> {
+                    setUnblur();
+                    dialog.close();
                 });
                 layout.setActions(button);
                 dialog.show();
-
             }
         else{
-
             checkIfOkForDonate();
         }
     }
+
+    private boolean completedAll() {
+            return completedCommon() && (completedMan() || completedWoman());
+    }
+
+    private boolean completedWoman() {
+        return (threeNine.isSelected() || threeNineN.isSelected()) &&
+                ((fourThree.isSelected() && fourFour.getValue() != null) || fourThreeN.isSelected()) &&
+                (fourFive.getValue() != null);
+    }
+
+    private boolean completedMan() {
+        return (threeEight.isSelected() || threeEightN.isSelected());
+    }
+
+    private boolean completedCommon() {
+        return (one.isSelected() || oneN.isSelected()) && (oneOne.isSelected() || oneOneN.isSelected()) &&
+                (oneTwo.isSelected() || oneTwoN.isSelected()) && (oneThree.isSelected() || oneThreeN.isSelected()) &&
+                (two.isSelected() || twoN.isSelected()) && (threeOne.isSelected() || threeOneN.isSelected()) &&
+                (threeTwo.isSelected() || threeTwoN.isSelected()) && (threeThree.isSelected() || threeThreeN.isSelected())&&
+                (threeFour.isSelected() || threeFourN.isSelected()) && (threeFive.isSelected() || threeFiveN.isSelected()) &&
+                (threeSix.isSelected() || threeSixN.isSelected()) && (threeSeven.isSelected() || threeSevenN.isSelected()) &&
+                (threeTen.isSelected() || threeTenN.isSelected()) && (fourOne.isSelected() || fourOneN.isSelected()) &&
+                (fourTwo.isSelected() || fourTwoN.isSelected()) && (fiveN.isSelected() || (five.isSelected() && !fiveOne.getText().isEmpty())) &&
+                (six.isSelected() || sixN.isSelected()) && (seven.isSelected() || sevenN.isSelected()) &&
+                (eightOne.isSelected() || eightOneN.isSelected()) && (eightTwo.isSelected() || eightTwoN.isSelected()) &&
+                (eightThree.isSelected() || eightThreeN.isSelected()) && (eightFour.isSelected() || eightFourN.isSelected()) &&
+                (eightFive.isSelected() || eightFiveN.isSelected()) && (eightSix.isSelected() || eightSixN.isSelected()) &&
+                (eightSeven.isSelected() || eightSevenN.isSelected()) && (eightEight.isSelected() || eightEightN.isSelected()) &&
+                (nine.isSelected() || nineN.isSelected()) && (ten.isSelected() || tenN.isSelected());
+    }
+
     public void loadDetailDonor(boolean goodOrBad) throws IOException{
         FXMLLoader loader = new FXMLLoader(DonorQuestionnaire.class.getResource("/detailDonation.fxml"));
         AnchorPane root = loader.load();
@@ -864,7 +891,7 @@ public class DonorQuestionnaire {
         thisScroll.setContent(root);
         thisScroll.setVvalue(0.0);
         if(!goodOrBad) {
-                detailDonation.titleLabel.setText("Ne pare rau , nu sunteti eligibil pentru donare.");
+                detailDonation.titleLabel.setText("Ne pare rau, nu sunteti eligibil pentru donare.");
                 detailDonation.hideOrShow(false);
         }
         else{
@@ -879,11 +906,11 @@ public class DonorQuestionnaire {
         if (oneOne.isSelected() || oneTwo.isSelected() || oneThree.isSelected() ||
                 two.isSelected() || threeOne.isSelected() || threeTwo.isSelected() ||
                 threeFour.isSelected() || threeSix.isSelected() || threeEight.isSelected()||
-                threeNine.isSelected() || fourOne.isSelected() || fourThree.isSelected() ||
-                fourFour.getValue() == null ||
-                fourFour.getValue().compareTo(LocalDate.now()) >= 0 ||
-                fourFive.getValue() == null ||
-                fourFive.getValue().compareTo(LocalDate.now()) >= 0 ||
+                threeNine.isSelected() || fourOne.isSelected() ||
+                (fourFour.getValue() != null &&
+                fourFour.getValue().compareTo(LocalDate.now()) >= 0) ||
+                (fourFive.getValue() != null &&
+                fourFive.getValue().compareTo(LocalDate.now()) >= 0) ||
                 five.isSelected() || six.isSelected() || seven.isSelected() ||
                 eightOne.isSelected() || eightTwo.isSelected() || eightThree.isSelected() ||
                 eightFour.isSelected() || eightFive.isSelected() || eightSix.isSelected() ||

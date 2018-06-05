@@ -15,6 +15,15 @@ public class Donare {
     private Consult consult;
     private Set<PungaSange> pungiSange;
     private Analiza analiza;
+    private Set<ComponentaSange> componenteSange;
+
+    public Set<ComponentaSange> getComponenteSange() {
+        return componenteSange;
+    }
+
+    public void setComponenteSange(Set<ComponentaSange> componenteSange) {
+        this.componenteSange = componenteSange;
+    }
 
     public Consult getConsult() {
         return consult;
